@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | LeafyLens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+          --leaf-white: #ffffff;
+          --leaf-cream: #f9f8f2;
+          --leaf-light: #f1f7eb;
+          --leaf-mint: #dff0d8;
+          --leaf-sage: #c6e6c3;
+          --leaf-green: #6aac5f;
+          --leaf-forest: #3c7a3e;
+          --leaf-dark: #2a5a2a;
+          --leaf-brown: #775539;
+          --leaf-tan: #d2b48c;
+          --leaf-gold: #ffd700;
+          --leaf-gold-light: #ffecb3;
+          --leaf-gold-dark: #d4af37;
+          --leaf-text: #333333;
+          --leaf-text-light: #666666;
+          --leaf-shadow: rgba(0, 0, 0, 0.05);
+          --leaf-shadow-soft: rgba(0, 0, 0, 0.03);
+          --leaf-gradient-green: linear-gradient(135deg, #6aac5f 0%, #3c7a3e 100%);
+          --leaf-gradient-gold: linear-gradient(135deg, var(--leaf-gold) 0%, var(--leaf-gold-dark) 100%);
+          --leaf-card-bg: rgba(255, 255, 255, 0.9);
+          --leaf-card-border: rgba(106, 172, 95, 0.2);
+          --leaf-glow: rgba(106, 172, 95, 0.2);
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          font-family: 'Quicksand', sans-serif;
+          background-color: var(--leaf-white);
+          color: var(--leaf-text);
+          line-height: 1.6;
+          overflow-x: hidden;
+          position: relative;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        a {
+          text-decoration: none;
+          color: var(--leaf-green);
+          transition: color 0.3s ease;
+        }
+
+        a:hover {
+          color: var(--leaf-forest);
+        }
+
+        ul {
+          list-style: none;
+        }
+
+        .section-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          text-align: center;
+          position: relative;
+          color: var(--leaf-dark);
+        }
+
+        .section-title::after {
+          content: '';
+          display: block;
+          width: 80px;
+          height: 3px;
+          background: var(--leaf-gradient-green);
+          margin: 0.7rem auto 0;
+          border-radius: 2px;
+        }
+
+        .section-subtitle {
+          font-size: 1.2rem;
+          max-width: 700px;
+          margin: 0 auto 3rem;
+          text-align: center;
+          color: var(--leaf-text-light);
+        }
+
+        /* Leaf Pattern */
+        .leaf-pattern {
+          position: absolute;
+          pointer-events: none;
+          opacity: 0.05;
+          z-index: -1;
+        }
+
+        .leaf-pattern-top-right {
+          top: 0;
+          right: 0;
+          width: 400px;
+          height: 400px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'%3E%3Cpath d='M140,40 C120,40 100,80 80,100 C60,120 40,120 20,100 C40,140 80,160 120,140 C160,120 160,80 140,40 Z' fill='%236aac5f'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          opacity: 0.07;
+        }
+
+        .leaf-pattern-bottom-left {
+          bottom: 0;
+          left: 0;
+          width: 300px;
+          height: 300px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'%3E%3Cpath d='M60,160 C80,160 100,120 120,100 C140,80 160,80 180,100 C160,60 120,40 80,60 C40,80 40,120 60,160 Z' fill='%236aac5f'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          transform: rotate(45deg);
+          opacity: 0.07;
+        }
+
+        /* Header */
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 1.2rem 0;
+          z-index: 1000;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          box-shadow: 0 2px 10px var(--leaf-shadow);
+          transition: all 0.3s ease;
+        }
+
+        header .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .logo-container {
+          display: flex;
+          align-items: center;
+        }
+
+        .logo {
+          width: 40px;
+          height: 40px;
+          margin-right: 12px;
+        }
+
+        .logo-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--leaf-forest);
+          letter-spacing: 1px;
+        }
+
+        nav ul {
+          display: flex;
+          gap: 2rem;
+        }
+
+        nav ul li a {
+          font-weight: 600;
+          position: relative;
+          color: var(--leaf-text);
+          transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+          color: var(--leaf-green);
+        }
+
+        nav ul li a::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--leaf-gradient-green);
+          transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+          width: 100%;
+        }
+
+        .download-button {
+          background: var(--leaf-gradient-green);
+          color: white;
+          padding: 0.6rem 1.3rem;
+          border-radius: 50px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px var(--leaf-shadow);
+        }
+
+        .download-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+          padding: 160px 0 80px;
+          background: linear-gradient(to bottom, var(--leaf-light) 0%, var(--leaf-white) 100%);
+          text-align: center;
+        }
+
+        .page-header h1 {
+          font-family: 'Playfair Display', serif;
+          font-size: 3rem;
+          font-weight: 700;
+          color: var(--leaf-dark);
+          margin-bottom: 1rem;
+        }
+
+        .page-header p {
+          font-size: 1.2rem;
+          color: var(--leaf-text-light);
+          max-width: 700px;
+          margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact-section {
+          padding: 80px 0;
+          background-color: var(--leaf-white);
+        }
+
+        .contact-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+          align-items: start;
+        }
+
+        .contact-info {
+          padding: 2rem;
+        }
+
+        .contact-info h3 {
+          font-size: 1.8rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          color: var(--leaf-dark);
+        }
+
+        .contact-info p {
+          margin-bottom: 2rem;
+          color: var(--leaf-text-light);
+        }
+
+        .contact-methods {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          margin-bottom: 2rem;
+        }
+
+        .contact-method {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .contact-icon {
+          background: var(--leaf-light);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--leaf-green);
+          flex-shrink: 0;
+        }
+
+        .contact-text {
+          flex-grow: 1;
+        }
+
+        .contact-text h4 {
+          font-weight: 600;
+          margin-bottom: 0.3rem;
+          color: var(--leaf-dark);
+        }
+
+        .contact-text a {
+          color: var(--leaf-green);
+        }
+
+        .contact-hours {
+          margin-bottom: 2rem;
+        }
+
+        .contact-hours h4 {
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: var(--leaf-dark);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .contact-hours p {
+          margin-bottom: 0.5rem;
+        }
+
+        .contact-hours .day {
+          font-weight: 600;
+          display: inline-block;
+          width: 100px;
+        }
+
+        .contact-socials {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .social-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: var(--leaf-light);
+          color: var(--leaf-green);
+          transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+          background: var(--leaf-green);
+          color: var(--leaf-white);
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+          background: var(--leaf-white);
+          border-radius: 20px;
+          padding: 2.5rem;
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+          border: 1px solid var(--leaf-card-border);
+        }
+
+        .form-header {
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
+
+        .form-header h3 {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: var(--leaf-dark);
+          margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+          color: var(--leaf-text-light);
+        }
+
+        .form-toggle {
+          display: flex;
+          background: var(--leaf-light);
+          border-radius: 50px;
+          margin-bottom: 2rem;
+          padding: 0.3rem;
+        }
+
+        .form-toggle-option {
+          flex: 1;
+          text-align: center;
+          padding: 0.8rem;
+          border-radius: 50px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          color: var(--leaf-text-light);
+        }
+
+        .form-toggle-option.active {
+          background: var(--leaf-white);
+          color: var(--leaf-dark);
+          box-shadow: 0 2px 10px var(--leaf-shadow-soft);
+        }
+
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: var(--leaf-dark);
+        }
+
+        .form-control {
+          width: 100%;
+          padding: 1rem;
+          border: 1px solid var(--leaf-card-border);
+          border-radius: 10px;
+          font-family: 'Quicksand', sans-serif;
+          font-size: 1rem;
+          color: var(--leaf-text);
+          background: var(--leaf-white);
+          transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+          outline: none;
+          border-color: var(--leaf-green);
+          box-shadow: 0 0 0 3px var(--leaf-glow);
+        }
+
+        textarea.form-control {
+          resize: vertical;
+          min-height: 150px;
+        }
+
+        .form-submit {
+          display: block;
+          width: 100%;
+          padding: 1rem;
+          background: var(--leaf-gradient-green);
+          color: var(--leaf-white);
+          border: none;
+          border-radius: 50px;
+          font-family: 'Quicksand', sans-serif;
+          font-size: 1.1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        .form-submit:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+        }
+
+        /* Feature Request Specific Fields */
+        .feature-fields {
+          display: none;
+        }
+
+        .feature-fields.active {
+          display: block;
+        }
+
+        /* Question Specific Fields */
+        .question-fields {
+          display: none;
+        }
+
+        .question-fields.active {
+          display: block;
+        }
+
+        /* Footer */
+        footer {
+          background: var(--leaf-white);
+          padding: 80px 0 30px;
+          border-top: 1px solid var(--leaf-card-border);
+          position: relative;
+        }
+
+        .footer-top {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: 4rem;
+          margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .footer-about {
+          color: var(--leaf-text-light);
+          margin-bottom: 1.5rem;
+          line-height: 1.7;
+        }
+
+        .footer-social {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .footer-nav {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2rem;
+        }
+
+        .footer-nav-column h4 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+          color: var(--leaf-dark);
+        }
+
+        .footer-nav-column ul li {
+          margin-bottom: 0.8rem;
+        }
+
+        .footer-nav-column ul li a {
+          color: var(--leaf-text-light);
+          transition: all 0.3s ease;
+        }
+
+        .footer-nav-column ul li a:hover {
+          color: var(--leaf-green);
+        }
+
+        .footer-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 2rem;
+          border-top: 1px solid var(--leaf-card-border);
+        }
+
+        .footer-copyright {
+          color: var(--leaf-text-light);
+          font-size: 0.9rem;
+        }
+
+        .footer-links {
+          display: flex;
+          gap: 1.5rem;
+        }
+
+        .footer-links a {
+          color: var(--leaf-text-light);
+          font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+          color: var(--leaf-green);
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 1024px) {
+          .contact-container {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          header {
+            padding: 1rem 0;
+          }
+          
+          nav ul {
+            gap: 1rem;
+          }
+          
+          .page-header h1 {
+            font-size: 2.5rem;
+          }
+          
+          .footer-top {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          
+          .footer-nav {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
+          .footer-bottom {
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: center;
+          }
+          
+          .footer-links {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+        }
+
+        @media screen and (max-width: 480px) {
+          header .container {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          
+          nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          
+          .page-header h1 {
+            font-size: 2rem;
+          }
+          
+          .contact-form-container {
+            padding: 1.5rem;
+          }
+        }
+    </style>
+</head>
+<body>
+    <div class="leaf-pattern leaf-pattern-top-right"></div>
+    <div class="leaf-pattern leaf-pattern-bottom-left"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#6AAC5F"/>
+                    <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#6AAC5F"/>
+                    <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#6AAC5F"/>
+                </svg>
+                <span class="logo-text">LeafyLens</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="manage-subscription.html">Manage Subscription</a></li>
+                    <li><a href="#download" class="download-button">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>Have a question, suggestion, or need assistance? We're here to help you with anything related to LeafyLens.</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p>We value your feedback and are committed to providing exceptional support. Reach out to us through any of the following channels:</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Email</h4>
+                                    <p><a href="mailto:support@leafylens.com">support@leafylens.com</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Phone</h4>
+                                    <p><a href="tel:+18005551234">+1 (800) 555-1234</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-method">
+                                <div class="contact-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                </div>
+                                <div class="contact-text">
+                                    <h4>Address</h4>
+                                    <p>123 Plant Way<br>Green Valley, CA 94043<br>United States</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-hours">
+                            <h4>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                Support Hours
+                            </h4>
+                            <p><span class="day">Monday:</span> 9:00 AM - 6:00 PM PST</p>
+                            <p><span class="day">Tuesday:</span> 9:00 AM - 6:00 PM PST</p>
+                            <p><span class="day">Wednesday:</span> 9:00 AM - 6:00 PM PST</p>
+                            <p><span class="day">Thursday:</span> 9:00 AM - 6:00 PM PST</p>
+                            <p><span class="day">Friday:</span> 9:00 AM - 6:00 PM PST</p>
+                            <p><span class="day">Saturday:</span> 10:00 AM - 4:00 PM PST</p>
+                            <p><span class="day">Sunday:</span> Closed</p>
+                        </div>
+                        
+                        <div class="contact-socials">
+                            <a href="#" class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                            </a>
+                            <a href="#" class="social-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <div class="form-header">
+                            <h3>Send Us a Message</h3>
+                            <p>Let us know how we can help or what's on your mind!</p>
+                        </div>
+                        
+                        <div class="form-toggle">
+                            <div class="form-toggle-option active" data-form="question">Question</div>
+                            <div class="form-toggle-option" data-form="feature">Feature Request</div>
+                        </div>
+                        
+                        <form id="contact-form" action="#" method="POST">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Your email address" required>
+                            </div>
+                            
+                            <!-- Question-specific fields -->
+                            <div class="question-fields active">
+                                <div class="form-group">
+                                    <label for="question-type" class="form-label">Question Type</label>
+                                    <select id="question-type" name="question-type" class="form-control" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="account">Account & Billing</option>
+                                        <option value="plant-id">Plant Identification</option>
+                                        <option value="diagnosis">Plant Health Diagnosis</option>
+                                        <option value="care">Plant Care Advice</option>
+                                        <option value="subscription">Subscription Issues</option>
+                                        <option value="technical">Technical Support</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="question-message" class="form-label">Your Question</label>
+                                    <textarea id="question-message" name="question-message" class="form-control" placeholder="Please describe your question in detail..." required></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="question-attachments" class="form-label">Attachments (optional)</label>
+                                    <input type="file" id="question-attachments" name="question-attachments" class="form-control">
+                                    <small style="color: var(--leaf-text-light);">You can upload images to help us better understand your question (max 5MB)</small>
+                                </div>
+                            </div>
+                            
+                            <!-- Feature Request-specific fields -->
+                            <div class="feature-fields">
+                                <div class="form-group">
+                                    <label for="feature-title" class="form-label">Feature Title</label>
+                                    <input type="text" id="feature-title" name="feature-title" class="form-control" placeholder="A short title for your feature idea" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="feature-description" class="form-label">Feature Description</label>
+                                    <textarea id="feature-description" name="feature-description" class="form-control" placeholder="Please describe your feature idea in detail..." required></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="feature-benefit" class="form-label">How would this feature benefit users?</label>
+                                    <textarea id="feature-benefit" name="feature-benefit" class="form-control" placeholder="Explain how this feature would improve the LeafyLens experience..." required></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="feature-priority" class="form-label">Priority Level</label>
+                                    <select id="feature-priority" name="feature-priority" class="form-control" required>
+                                        <option value="" disabled selected>Select priority</option>
+                                        <option value="low">Nice to have</option>
+                                        <option value="medium">Helpful addition</option>
+                                        <option value="high">Important improvement</option>
+                                        <option value="critical">Critical functionality</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="feature-attachments" class="form-label">Mockups or Sketches (optional)</label>
+                                    <input type="file" id="feature-attachments" name="feature-attachments" class="form-control">
+                                    <small style="color: var(--leaf-text-light);">Visual examples can help us better understand your idea (max 5MB)</small>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="form-submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">
+                        <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#6AAC5F"/>
+                            <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#6AAC5F"/>
+                            <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#6AAC5F"/>
+                        </svg>
+                        <span class="logo-text">LeafyLens</span>
+                    </div>
+                    <p class="footer-about">LeafyLens is the ultimate plant identification and care app, using advanced AI to help you identify, understand, and nurture your plants.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-nav-column">
+                        <h4>App</h4>
+                        <ul>
+                            <li><a href="features.html">Features</a></li>
+                            <li><a href="pricing.html">Pricing</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="download.html">Download</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="team.html">Our Team</a></li>
+                            <li><a href="careers.html">Careers</a></li>
+                            <li><a href="press.html">Press</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="plant-encyclopedia.html">Plant Encyclopedia</a></li>
+                            <li><a href="care-guides.html">Care Guides</a></li>
+                            <li><a href="tutorials.html">Tutorials</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="help-center.html">Help Center</a></li>
+                            <li><a href="manage-subscription.html">Manage Subscription</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2025 LeafyLens. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="cookies.html">Cookie Policy</a>
+                    <a href="sitemap.html">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const formToggleOptions = document.querySelectorAll('.form-toggle-option');
+            const questionFields = document.querySelector('.question-fields');
+            const featureFields = document.querySelector('.feature-fields');
+            
+            formToggleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update active toggle
+                    formToggleOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show/hide appropriate fields
+                    const formType = this.getAttribute('data-form');
+                    if (formType === 'question') {
+                        questionFields.classList.add('active');
+                        featureFields.classList.remove('active');
+                        
+                        // Set required fields
+                        document.querySelectorAll('.question-fields [required]').forEach(field => {
+                            field.required = true;
+                        });
+                        document.querySelectorAll('.feature-fields [required]').forEach(field => {
+                            field.required = false;
+                        });
+                    } else {
+                        questionFields.classList.remove('active');
+                        featureFields.classList.add('active');
+                        
+                        // Set required fields
+                        document.querySelectorAll('.question-fields [required]').forEach(field => {
+                            field.required = false;
+                        });
+                        document.querySelectorAll('.feature-fields [required]').forEach(field => {
+                            field.required = true;
+                        });
+                    }
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                const submitButton = this.querySelector('.form-submit');
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Show success message
+                    alert('Thank you for your message! We will get back to you soon.');
+                    
+                    // Reset button
+                    submitButton.textContent = 'Send Message';
+                    submitButton.disabled = false;
+                }, 1500);
+            });
+            
+            // Sticky header
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                    header.style.padding = '0.8rem 0';
+                } else {
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+                    header.style.padding = '1.2rem 0';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
