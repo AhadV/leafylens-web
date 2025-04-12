@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | LeafyLens</title>
+    <title>LeafyLens | The Ultimate Plant Companion App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <style>
+        /* ====== LEAFYLENS CSS ====== */
         /* Base Styles */
         :root {
           --leaf-white: #ffffff;
@@ -74,11 +77,16 @@
           list-style: none;
         }
 
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
         .section-title {
           font-family: 'Playfair Display', serif;
           font-size: 2.5rem;
           font-weight: 700;
-          margin-bottom: 1.5rem;
+          margin-bottom: 2rem;
           text-align: center;
           position: relative;
           color: var(--leaf-dark);
@@ -102,7 +110,7 @@
           color: var(--leaf-text-light);
         }
 
-        /* Leaf Pattern */
+        /* Patterns */
         .leaf-pattern {
           position: absolute;
           pointer-events: none;
@@ -216,264 +224,1060 @@
           color: white;
         }
 
-        /* Page Header */
-        .page-header {
-          padding: 160px 0 80px;
+        .premium-badge {
+          position: relative;
+          margin-left: 0.5rem;
+          display: inline-block;
+          background: var(--leaf-gradient-gold);
+          color: white;
+          font-size: 0.7rem;
+          font-weight: bold;
+          padding: 0.2rem 0.5rem;
+          border-radius: 50px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+          padding: 160px 0 100px;
+          position: relative;
+          overflow: hidden;
           background: linear-gradient(to bottom, var(--leaf-light) 0%, var(--leaf-white) 100%);
-          text-align: center;
         }
 
-        .page-header h1 {
-          font-family: 'Playfair Display', serif;
-          font-size: 3rem;
-          font-weight: 700;
-          color: var(--leaf-dark);
-          margin-bottom: 1rem;
-        }
-
-        .page-header p {
-          font-size: 1.2rem;
-          color: var(--leaf-text-light);
-          max-width: 700px;
-          margin: 0 auto;
-        }
-
-        /* Contact Section */
-        .contact-section {
-          padding: 80px 0;
-          background-color: var(--leaf-white);
-        }
-
-        .contact-container {
+        .hero .container {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 3rem;
-          align-items: start;
+          align-items: center;
         }
 
-        .contact-info {
-          padding: 2rem;
+        .hero-content {
+          z-index: 2;
         }
 
-        .contact-info h3 {
-          font-size: 1.8rem;
+        .hero-content h1 {
+          font-family: 'Playfair Display', serif;
+          font-size: 3.5rem;
           font-weight: 700;
+          line-height: 1.2;
           margin-bottom: 1.5rem;
           color: var(--leaf-dark);
         }
 
-        .contact-info p {
-          margin-bottom: 2rem;
-          color: var(--leaf-text-light);
+        .hero-content h1 span {
+          color: var(--leaf-green);
         }
 
-        .contact-methods {
+        .hero-content p {
+          font-size: 1.2rem;
+          margin-bottom: 2.5rem;
+          color: var(--leaf-text-light);
+          max-width: 540px;
+        }
+
+        .hero-badges {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+          flex-wrap: wrap;
+        }
+
+        .hero-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--leaf-white);
+          padding: 0.5rem 1rem;
+          border-radius: 50px;
+          box-shadow: 0 2px 10px var(--leaf-shadow-soft);
+          font-weight: 600;
+          font-size: 0.9rem;
+          color: var(--leaf-text);
+        }
+
+        .hero-badge svg {
+          color: var(--leaf-green);
+        }
+
+        .gold-badge {
+          background: var(--leaf-gradient-gold);
+          color: white;
+        }
+
+        .gold-badge svg {
+          color: white;
+        }
+
+        .hero-cta {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .cta-button {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--leaf-gradient-green);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 50px;
+          font-weight: 600;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        .cta-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px var(--leaf-shadow);
+          color: white;
+        }
+
+        .cta-button-secondary {
+          background: var(--leaf-white);
+          color: var(--leaf-dark);
+          border: 2px solid var(--leaf-green);
+        }
+
+        .cta-button-secondary:hover {
+          background: var(--leaf-mint);
+          color: var(--leaf-dark);
+        }
+
+        .hero-image {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          justify-content: center;
+        }
+
+        .hero-mockup {
+          position: relative;
+          z-index: 1;
+        }
+
+        .hero-mockup img {
+          border-radius: 30px;
+          box-shadow: 0 20px 50px var(--leaf-shadow);
+          max-width: 350px;
+        }
+
+        .hero-glow {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 600px;
+          height: 600px;
+          background: radial-gradient(circle, var(--leaf-mint) 0%, rgba(255, 255, 255, 0) 70%);
+          opacity: 0.7;
+          z-index: -1;
+        }
+
+        .floating-leaves {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .floating-leaf {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A4.49,4.49,0,0,0,8,20a4,4,0,0,0,4-4,4,4,0,0,0-4-4,4.18,4.18,0,0,0-1.26.2L9.8,5.4A2.85,2.85,0,0,1,12,3,8.57,8.57,0,0,1,18.75,7a2.34,2.34,0,0,1,.25,1h1A3.89,3.89,0,0,0,16,4a8.3,8.3,0,0,0-7,4Z' fill='%236aac5f' opacity='0.4'/%3E%3C/svg%3E");
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+
+        .floating-leaf:nth-child(1) {
+          top: 15%;
+          right: 10%;
+          animation: float 25s ease-in-out infinite;
+        }
+
+        .floating-leaf:nth-child(2) {
+          top: 35%;
+          left: 15%;
+          animation: float 20s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+
+        .floating-leaf:nth-child(3) {
+          bottom: 20%;
+          right: 25%;
+          animation: float 22s ease-in-out infinite;
+          animation-delay: 4s;
+        }
+
+        .floating-leaf:nth-child(4) {
+          bottom: 30%;
+          left: 30%;
+          animation: float 18s ease-in-out infinite;
+          animation-delay: 6s;
+        }
+
+        @keyframes float {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          25% {
+            transform: translate(20px, -30px) rotate(90deg);
+          }
+          50% {
+            transform: translate(0, -50px) rotate(180deg);
+          }
+          75% {
+            transform: translate(-20px, -20px) rotate(270deg);
+          }
+          100% {
+            transform: translate(0, 0) rotate(360deg);
+          }
+        }
+
+        /* Sponsors Section */
+        .sponsors {
+          padding: 50px 0;
+          background-color: var(--leaf-white);
+          border-top: 1px solid var(--leaf-mint);
+          border-bottom: 1px solid var(--leaf-mint);
+        }
+
+        .sponsors-content {
+          text-align: center;
+        }
+
+        .sponsors-content h3 {
+          font-size: 1.1rem;
+          color: var(--leaf-text-light);
+          margin-bottom: 1.5rem;
+          font-weight: 500;
+        }
+
+        .sponsors-logos {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 3rem;
+          flex-wrap: wrap;
+        }
+
+        .sponsor-logo {
+          filter: grayscale(1);
+          opacity: 0.7;
+          transition: all 0.3s ease;
+          max-width: 120px;
+        }
+
+        .sponsor-logo:hover {
+          filter: grayscale(0);
+          opacity: 1;
+        }
+
+        /* Features Section */
+        .features {
+          padding: 100px 0;
+          background-color: var(--leaf-white);
+          position: relative;
+        }
+
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .feature-card {
+          background: var(--leaf-card-bg);
+          border-radius: 20px;
+          padding: 2.5rem 2rem;
+          transition: all 0.3s ease;
+          border: 1px solid var(--leaf-card-border);
+          box-shadow: 0 5px 20px var(--leaf-shadow);
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
-          margin-bottom: 2rem;
+          align-items: center;
+          text-align: center;
         }
 
-        .contact-method {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
+        .feature-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 30px var(--leaf-shadow);
+          border-color: var(--leaf-green);
         }
 
-        .contact-icon {
-          background: var(--leaf-light);
-          width: 40px;
-          height: 40px;
+        .feature-icon {
+          background: var(--leaf-mint);
+          width: 80px;
+          height: 80px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--leaf-green);
+          margin-bottom: 1.5rem;
+          position: relative;
+        }
+
+        .feature-icon::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid var(--leaf-green);
+          opacity: 0.2;
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+          50% {
+            transform: scale(1.2);
+            opacity: 0.1;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+        }
+
+        .feature-card h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: var(--leaf-dark);
+        }
+
+        .feature-card p {
+          color: var(--leaf-text-light);
+          font-size: 1rem;
+          line-height: 1.7;
+        }
+
+        .feature-card .premium-badge {
+          margin-left: 0;
+          margin-bottom: 1rem;
+          font-size: 0.7rem;
+          padding: 0.15rem 0.5rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+          padding: 100px 0;
+          background-color: var(--leaf-light);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .steps {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+          max-width: 800px;
+          margin: 0 auto;
+          position: relative;
+        }
+
+        .steps::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 40px;
+          width: 2px;
+          background: var(--leaf-green);
+          opacity: 0.3;
+        }
+
+        .step {
+          display: flex;
+          gap: 2rem;
+          position: relative;
+          z-index: 1;
+        }
+
+        .step-number {
           flex-shrink: 0;
+          width: 80px;
+          height: 80px;
+          background: var(--leaf-white);
+          border: 2px solid var(--leaf-green);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: var(--leaf-green);
+          box-shadow: 0 5px 15px var(--leaf-shadow);
         }
 
-        .contact-text {
+        .step-content {
           flex-grow: 1;
+          padding-top: 1rem;
         }
 
-        .contact-text h4 {
+        .step-content h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: var(--leaf-dark);
+        }
+
+        .step-content p {
+          color: var(--leaf-text-light);
+          line-height: 1.7;
+          margin-bottom: 1.5rem;
+        }
+
+        .step-image {
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 5px 20px var(--leaf-shadow);
+        }
+
+        .step-image img {
+          width: 100%;
+          display: block;
+          object-fit: cover;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+          padding: 100px 0;
+          background-color: var(--leaf-white);
+          position: relative;
+        }
+
+        .testimonial-slider {
+          overflow: hidden;
+          margin-bottom: 2rem;
+        }
+
+        .testimonial-container {
+          display: flex;
+          transition: all 0.5s ease;
+        }
+
+        .testimonial {
+          min-width: 100%;
+          padding: 0 1rem;
+        }
+
+        .testimonial-content {
+          background: var(--leaf-white);
+          border-radius: 20px;
+          padding: 3rem;
+          position: relative;
+          border: 1px solid var(--leaf-card-border);
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+        }
+
+        .testimonial-content::before {
+          content: '"';
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          font-size: 5rem;
+          color: var(--leaf-green);
+          opacity: 0.2;
+          font-family: 'Playfair Display', serif;
+          line-height: 1;
+        }
+
+        .testimonial-content p {
+          font-size: 1.2rem;
+          line-height: 1.8;
+          margin-bottom: 1.5rem;
+          position: relative;
+          z-index: 1;
+          color: var(--leaf-text);
+        }
+
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .author-avatar {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+
+        .author-avatar img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .author-info {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .author-name {
+          font-weight: 600;
+          font-size: 1.1rem;
+          color: var(--leaf-dark);
+        }
+
+        .author-title {
+          font-size: 0.9rem;
+          color: var(--leaf-text-light);
+        }
+
+        .author-rating {
+          display: flex;
+          gap: 0.2rem;
+          margin-top: 0.3rem;
+          color: var(--leaf-gold);
+        }
+
+        .testimonial-controls {
+          display: flex;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .testimonial-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--leaf-text-light);
+          opacity: 0.3;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+          background: var(--leaf-green);
+          opacity: 1;
+          transform: scale(1.2);
+        }
+
+        /* App Showcase Section */
+        .app-showcase {
+          padding: 100px 0;
+          background: linear-gradient(to bottom, var(--leaf-white), var(--leaf-light));
+          position: relative;
+        }
+
+        .app-showcase-row {
+          display: flex;
+          align-items: center;
+          gap: 4rem;
+          margin-bottom: 6rem;
+        }
+
+        .app-showcase-row:nth-child(even) {
+          flex-direction: row-reverse;
+        }
+
+        .app-showcase-content {
+          flex: 1;
+        }
+
+        .app-showcase-content h3 {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          color: var(--leaf-dark);
+          font-family: 'Playfair Display', serif;
+        }
+
+        .app-showcase-content p {
+          color: var(--leaf-text-light);
+          line-height: 1.7;
+          margin-bottom: 2rem;
+        }
+
+        .app-features-list {
+          margin-bottom: 2rem;
+        }
+
+        .app-feature-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .app-feature-icon {
+          color: var(--leaf-green);
+          margin-top: 0.3rem;
+        }
+
+        .app-feature-text {
+          flex: 1;
+        }
+
+        .app-feature-text h4 {
           font-weight: 600;
           margin-bottom: 0.3rem;
           color: var(--leaf-dark);
         }
 
-        .contact-text a {
-          color: var(--leaf-green);
+        .app-feature-text p {
+          margin-bottom: 0;
+          font-size: 0.95rem;
         }
 
-        .contact-hours {
-          margin-bottom: 2rem;
+        .app-showcase-image {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          position: relative;
         }
 
-        .contact-hours h4 {
-          font-weight: 600;
-          margin-bottom: 1rem;
-          color: var(--leaf-dark);
+        .phone-mockup {
+          position: relative;
+          z-index: 1;
+        }
+
+        .phone-mockup img {
+          max-width: 300px;
+          border-radius: 30px;
+          box-shadow: 0 20px 50px var(--leaf-shadow);
+        }
+
+        .feature-badge {
+          position: absolute;
+          background: var(--leaf-white);
+          border-radius: 50px;
+          padding: 0.5rem 1rem;
           display: flex;
           align-items: center;
           gap: 0.5rem;
-        }
-
-        .contact-hours p {
-          margin-bottom: 0.5rem;
-        }
-
-        .contact-hours .day {
+          box-shadow: 0 5px 15px var(--leaf-shadow);
           font-weight: 600;
-          display: inline-block;
-          width: 100px;
+          font-size: 0.9rem;
+          color: var(--leaf-dark);
+          z-index: 2;
         }
 
-        .contact-socials {
+        .feature-badge svg {
+          color: var(--leaf-green);
+        }
+
+        .feature-badge-top-right {
+          top: 10%;
+          right: 5%;
+        }
+
+        .feature-badge-top-left {
+          top: 10%;
+          left: 5%;
+        }
+
+        .feature-badge-bottom-right {
+          bottom: 10%;
+          right: 5%;
+        }
+
+        .feature-badge-bottom-left {
+          bottom: 10%;
+          left: 5%;
+        }
+
+        /* Pricing Section */
+        .pricing {
+          padding: 100px 0;
+          background-color: var(--leaf-white);
+          position: relative;
+        }
+
+        .pricing-toggle {
           display: flex;
+          justify-content: center;
+          align-items: center;
           gap: 1rem;
+          margin-bottom: 3rem;
         }
 
-        .social-icon {
+        .pricing-label {
+          font-weight: 600;
+          color: var(--leaf-text-light);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .pricing-label.active {
+          color: var(--leaf-dark);
+        }
+
+        .toggle-switch {
+          position: relative;
+          width: 60px;
+          height: 30px;
+          background: var(--leaf-gradient-green);
+          border-radius: 50px;
+          cursor: pointer;
+          padding: 3px;
+        }
+
+        .toggle-slider {
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          width: 24px;
+          height: 24px;
+          background: var(--leaf-white);
+          border-radius: 50%;
+          transition: all 0.3s ease;
+        }
+
+        .toggle-slider.right {
+          left: calc(100% - 27px);
+        }
+
+        .save-badge {
+          display: inline-block;
+          margin-left: 1rem;
+          background: var(--leaf-gold-light);
+          color: var(--leaf-gold-dark);
+          padding: 0.3rem 0.8rem;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 0.9rem;
+        }
+
+        .pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .pricing-card {
+          background: var(--leaf-white);
+          border-radius: 20px;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+          border: 1px solid var(--leaf-card-border);
+          position: relative;
+        }
+
+        .pricing-card.popular {
+          transform: scale(1.05);
+          z-index: 2;
+          box-shadow: 0 15px 40px var(--leaf-shadow);
+          border-color: var(--leaf-gold);
+        }
+
+        .popular-tag {
+          position: absolute;
+          top: -15px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--leaf-gradient-gold);
+          color: white;
+          padding: 0.5rem 1.5rem;
+          border-radius: 50px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+          white-space: nowrap;
+        }
+
+        .pricing-header {
+          padding: 2.5rem 2rem;
+          text-align: center;
+          background: var(--leaf-light);
+          border-bottom: 1px solid var(--leaf-card-border);
+        }
+
+        .pricing-name {
+          font-size: 1.8rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: var(--leaf-dark);
+        }
+
+        .pricing-price {
+          font-size: 3rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          color: var(--leaf-dark);
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+        }
+
+        .pricing-price .currency {
+          font-size: 1.5rem;
+          margin-right: 0.3rem;
+        }
+
+        .pricing-price .period {
+          font-size: 1rem;
+          font-weight: 400;
+          color: var(--leaf-text-light);
+          margin-left: 0.3rem;
+        }
+
+        .pricing-description {
+          font-size: 0.9rem;
+          color: var(--leaf-text-light);
+        }
+
+        .pricing-features {
+          padding: 2rem;
+        }
+
+        .pricing-feature-item {
+          padding: 0.8rem 0;
+          color: var(--leaf-text);
           display: flex;
           align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: var(--leaf-light);
+          gap: 0.8rem;
+          line-height: 1.4;
+        }
+
+        .pricing-feature-icon {
+          color: var(--leaf-green);
+          flex-shrink: 0;
+        }
+
+        .pricing-feature-text {
+          flex: 1;
+        }
+
+        .pricing-feature-badge {
+          background: var(--leaf-gradient-gold);
+          color: white;
+          padding: 0.2rem 0.5rem;
+          border-radius: 50px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          margin-left: 0.5rem;
+        }
+
+        .pricing-cta {
+          display: block;
+          margin: 0 2rem 2rem;
+          text-align: center;
+          background: var(--leaf-gradient-green);
+          color: white;
+          padding: 1rem;
+          border-radius: 50px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        .pricing-cta:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+        }
+
+        .pricing-card.popular .pricing-cta {
+          background: var(--leaf-gradient-gold);
+          box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .pricing-card.popular .pricing-cta:hover {
+          box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* FAQ Section */
+        .faq {
+          padding: 100px 0;
+          background-color: var(--leaf-light);
+          position: relative;
+        }
+
+        .faq-container {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .faq-item {
+          background: var(--leaf-white);
+          border-radius: 10px;
+          padding: 1.5rem 2rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+          border: 1px solid var(--leaf-card-border);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 25px var(--leaf-shadow);
+          border-color: var(--leaf-green);
+        }
+
+        .faq-question {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: 600;
+          color: var(--leaf-dark);
+          font-size: 1.1rem;
+        }
+
+        .faq-icon {
           color: var(--leaf-green);
           transition: all 0.3s ease;
         }
 
-        .social-icon:hover {
-          background: var(--leaf-green);
-          color: var(--leaf-white);
-          transform: translateY(-3px);
-          box-shadow: 0 5px 15px var(--leaf-shadow);
+        .faq-icon.open {
+          transform: rotate(45deg);
         }
 
-        /* Contact Form */
-        .contact-form-container {
-          background: var(--leaf-white);
-          border-radius: 20px;
-          padding: 2.5rem;
-          box-shadow: 0 10px 30px var(--leaf-shadow);
-          border: 1px solid var(--leaf-card-border);
+        .faq-answer {
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px solid var(--leaf-card-border);
+          color: var(--leaf-text-light);
+          display: none;
         }
 
-        .form-header {
-          margin-bottom: 1.5rem;
-          text-align: center;
+        .faq-answer.open {
+          display: block;
         }
 
-        .form-header h3 {
-          font-size: 1.8rem;
+        /* Download Section */
+        .download {
+          padding: 100px 0;
+          background: linear-gradient(to bottom, var(--leaf-white), var(--leaf-light));
+          position: relative;
+          overflow: hidden;
+        }
+
+        .download .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        .download-content {
+          z-index: 2;
+        }
+
+        .download-content h2 {
+          font-family: 'Playfair Display', serif;
+          font-size: 2.5rem;
           font-weight: 700;
-          color: var(--leaf-dark);
-          margin-bottom: 0.5rem;
-        }
-
-        .form-header p {
-          color: var(--leaf-text-light);
-        }
-
-        .form-toggle {
-          display: flex;
-          background: var(--leaf-light);
-          border-radius: 50px;
-          margin-bottom: 2rem;
-          padding: 0.3rem;
-        }
-
-        .form-toggle-option {
-          flex: 1;
-          text-align: center;
-          padding: 0.8rem;
-          border-radius: 50px;
-          cursor: pointer;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          color: var(--leaf-text-light);
-        }
-
-        .form-toggle-option.active {
-          background: var(--leaf-white);
-          color: var(--leaf-dark);
-          box-shadow: 0 2px 10px var(--leaf-shadow-soft);
-        }
-
-        .form-group {
+          line-height: 1.2;
           margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-          display: block;
-          margin-bottom: 0.5rem;
-          font-weight: 600;
           color: var(--leaf-dark);
         }
 
-        .form-control {
-          width: 100%;
-          padding: 1rem;
-          border: 1px solid var(--leaf-card-border);
-          border-radius: 10px;
-          font-family: 'Quicksand', sans-serif;
-          font-size: 1rem;
-          color: var(--leaf-text);
-          background: var(--leaf-white);
-          transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-          outline: none;
-          border-color: var(--leaf-green);
-          box-shadow: 0 0 0 3px var(--leaf-glow);
-        }
-
-        textarea.form-control {
-          resize: vertical;
-          min-height: 150px;
-        }
-
-        .form-submit {
-          display: block;
-          width: 100%;
-          padding: 1rem;
-          background: var(--leaf-gradient-green);
-          color: var(--leaf-white);
-          border: none;
-          border-radius: 50px;
-          font-family: 'Quicksand', sans-serif;
+        .download-content p {
           font-size: 1.1rem;
+          margin-bottom: 2.5rem;
+          color: var(--leaf-text-light);
+          max-width: 540px;
+        }
+
+        .download-badges {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          margin-bottom: 2rem;
+        }
+
+        .download-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--leaf-white);
+          padding: 0.5rem 1rem;
+          border-radius: 10px;
           font-weight: 600;
-          cursor: pointer;
+          color: var(--leaf-dark);
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        .download-badge svg {
+          color: var(--leaf-green);
+        }
+
+        .download-buttons {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .app-store-button {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background: var(--leaf-dark);
+          color: white;
+          padding: 0.8rem 1.5rem;
+          border-radius: 12px;
           transition: all 0.3s ease;
           box-shadow: 0 5px 15px var(--leaf-shadow);
         }
 
-        .form-submit:hover {
-          transform: translateY(-2px);
+        .app-store-button span {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .app-store-button small {
+          font-size: 0.8rem;
+          opacity: 0.8;
+        }
+
+        .app-store-button strong {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        .app-store-button:hover {
+          transform: translateY(-3px);
           box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+          background: var(--leaf-forest);
         }
 
-        /* Feature Request Specific Fields */
-        .feature-fields {
-          display: none;
+        .download-image {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          z-index: 1;
         }
 
-        .feature-fields.active {
-          display: block;
+        .download-device {
+          position: relative;
+          max-width: 350px;
         }
 
-        /* Question Specific Fields */
-        .question-fields {
-          display: none;
+        .download-device img {
+          border-radius: 30px;
+          box-shadow: 0 20px 50px var(--leaf-shadow);
         }
 
-        .question-fields.active {
-          display: block;
+        .download-device::before {
+          content: '';
+          position: absolute;
+          width: 120%;
+          height: 120%;
+          background: radial-gradient(circle, var(--leaf-mint) 0%, rgba(255, 255, 255, 0) 70%);
+          z-index: -1;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
 
         /* Footer */
@@ -506,6 +1310,25 @@
         .footer-social {
           display: flex;
           gap: 1rem;
+        }
+
+        .social-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: var(--leaf-light);
+          color: var(--leaf-green);
+          transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+          background: var(--leaf-green);
+          color: white;
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px var(--leaf-shadow);
         }
 
         .footer-nav {
@@ -563,8 +1386,49 @@
 
         /* Media Queries */
         @media screen and (max-width: 1024px) {
-          .contact-container {
+          .hero-content h1 {
+            font-size: 2.8rem;
+          }
+          
+          .features-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
+          .app-showcase-row {
+            flex-direction: column;
+            gap: 3rem;
+          }
+          
+          .app-showcase-row:nth-child(even) {
+            flex-direction: column;
+          }
+          
+          .pricing-grid {
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 500px;
+            margin: 0 auto;
+          }
+          
+          .pricing-card.popular {
+            transform: scale(1);
+          }
+          
+          .download .container {
             grid-template-columns: 1fr;
+          }
+          
+          .download-image {
+            grid-row: 1;
+            margin-bottom: 2rem;
+          }
+          
+          .footer-top {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          
+          .footer-nav {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
 
@@ -577,17 +1441,49 @@
             gap: 1rem;
           }
           
-          .page-header h1 {
-            font-size: 2.5rem;
+          .hero .container {
+            grid-template-columns: 1fr;
           }
           
-          .footer-top {
+          .hero-content {
+            text-align: center;
+            margin-bottom: 3rem;
+          }
+          
+          .hero-content p {
+            margin: 0 auto 2.5rem;
+          }
+          
+          .hero-badges, .hero-cta {
+            justify-content: center;
+          }
+          
+          .features-grid {
             grid-template-columns: 1fr;
-            gap: 2rem;
+            max-width: 400px;
+            margin: 0 auto;
+          }
+          
+          .step {
+            flex-direction: column;
+            text-align: center;
+          }
+          
+          .steps::before {
+            left: 50%;
+            transform: translateX(-50%);
+          }
+          
+          .step-number {
+            margin: 0 auto;
+          }
+          
+          .testimonial-content {
+            padding: 2rem;
           }
           
           .footer-nav {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
           }
           
           .footer-bottom {
@@ -613,12 +1509,28 @@
             justify-content: center;
           }
           
-          .page-header h1 {
+          .hero-content h1 {
+            font-size: 2.2rem;
+          }
+          
+          .section-title {
             font-size: 2rem;
           }
           
-          .contact-form-container {
-            padding: 1.5rem;
+          .hero-mockup img, .phone-mockup img, .download-device img {
+            max-width: 280px;
+          }
+          
+          .testimonial-content p {
+            font-size: 1rem;
+          }
+          
+          .download-content h2 {
+            font-size: 2rem;
+          }
+          
+          .download-buttons {
+            flex-direction: column;
           }
         }
     </style>
@@ -652,167 +1564,656 @@
     </header>
 
     <main>
-        <section class="page-header">
+        <section class="hero">
             <div class="container">
-                <h1>Contact Us</h1>
-                <p>Have a question, suggestion, or need assistance? We're here to help you with anything related to LeafyLens.</p>
+                <div class="hero-content">
+                    <h1>Bringing plants and <span>people</span> together</h1>
+                    <p>LeafyLens is your intelligent plant companion, helping you identify, understand, and care for your plants with unmatched precision and personalized guidance.</p>
+                    <div class="hero-badges">
+                        <div class="hero-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                            500,000+ Plant Species
+                        </div>
+                        <div class="hero-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            99.2% Accuracy
+                        </div>
+                        <div class="hero-badge gold-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            #1 Plant App
+                        </div>
+                    </div>
+                    <div class="hero-cta">
+                        <a href="#download" class="cta-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download Now
+                        </a>
+                        <a href="#features" class="cta-button cta-button-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-mockup">
+                        <img src="/api/placeholder/400/800" alt="LeafyLens app on iPhone showcasing plant identification" />
+                    </div>
+                    <div class="hero-glow"></div>
+                </div>
+            </div>
+            <div class="floating-leaves">
+                <div class="floating-leaf"></div>
+                <div class="floating-leaf"></div>
+                <div class="floating-leaf"></div>
+                <div class="floating-leaf"></div>
             </div>
         </section>
 
-        <section class="contact-section">
+        <section class="sponsors">
             <div class="container">
-                <div class="contact-container">
-                    <div class="contact-info">
-                        <h3>Get in Touch</h3>
-                        <p>We value your feedback and are committed to providing exceptional support. Reach out to us through any of the following channels:</p>
-                        
-                        <div class="contact-methods">
-                            <div class="contact-method">
-                                <div class="contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                </div>
-                                <div class="contact-text">
-                                    <h4>Email</h4>
-                                    <p><a href="mailto:support@leafylens.com">support@leafylens.com</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-method">
-                                <div class="contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                </div>
-                                <div class="contact-text">
-                                    <h4>Phone</h4>
-                                    <p><a href="tel:+18005551234">+1 (800) 555-1234</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-method">
-                                <div class="contact-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                </div>
-                                <div class="contact-text">
-                                    <h4>Address</h4>
-                                    <p>123 Plant Way<br>Green Valley, CA 94043<br>United States</p>
-                                </div>
-                            </div>
+                <div class="sponsors-content">
+                    <h3>Trusted by gardening experts worldwide</h3>
+                    <div class="sponsors-logos">
+                        <img src="/api/placeholder/120/40" alt="Gardening Magazine" class="sponsor-logo" />
+                        <img src="/api/placeholder/120/40" alt="Plant Science Journal" class="sponsor-logo" />
+                        <img src="/api/placeholder/120/40" alt="Botanical Gardens Association" class="sponsor-logo" />
+                        <img src="/api/placeholder/120/40" alt="Global Green Initiative" class="sponsor-logo" />
+                        <img src="/api/placeholder/120/40" alt="Home & Garden Network" class="sponsor-logo" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Smart features for plant lovers</h2>
+                <p class="section-subtitle">Discover how LeafyLens transforms your relationship with plants through innovative technology and personalized care.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
                         </div>
-                        
-                        <div class="contact-hours">
-                            <h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                Support Hours
-                            </h4>
-                            <p><span class="day">Monday:</span> 9:00 AM - 6:00 PM PST</p>
-                            <p><span class="day">Tuesday:</span> 9:00 AM - 6:00 PM PST</p>
-                            <p><span class="day">Wednesday:</span> 9:00 AM - 6:00 PM PST</p>
-                            <p><span class="day">Thursday:</span> 9:00 AM - 6:00 PM PST</p>
-                            <p><span class="day">Friday:</span> 9:00 AM - 6:00 PM PST</p>
-                            <p><span class="day">Saturday:</span> 10:00 AM - 4:00 PM PST</p>
-                            <p><span class="day">Sunday:</span> Closed</p>
+                        <h3>Instant Plant Recognition</h3>
+                        <p>Identify any plant in seconds with our advanced AI that recognizes over 500,000 species with 99.2% accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         </div>
-                        
-                        <div class="contact-socials">
-                            <a href="#" class="social-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                            </a>
-                            <a href="#" class="social-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-                            </a>
+                        <span class="premium-badge">Premium</span>
+                        <h3>Plant Health Diagnostics</h3>
+                        <p>Diagnose plant diseases and get customized treatment plans with step-by-step guidance to nurse your plants back to health.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <h3>Expert Consultation</h3>
+                        <p>Connect with botanists and plant specialists for personalized advice on any plant-related question or concern.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-6"></path></svg>
+                        </div>
+                        <h3>Smart Growth Analytics</h3>
+                        <p>Track your plants' growth over time with visual timelines and receive data-driven recommendations to optimize care.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
+                        <span class="premium-badge">Premium</span>
+                        <h3>Care Scheduling</h3>
+                        <p>Never forget to water or fertilize with smart reminders that adapt to each plant's needs and your local climate conditions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3C7A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        </div>
+                        <h3>Community Garden</h3>
+                        <p>Share your plant journey with fellow enthusiasts, exchange care tips, and participate in seasonal challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How LeafyLens Works</h2>
+                <p class="section-subtitle">Experience the simplicity and power of LeafyLens in three easy steps.</p>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Snap a Photo</h3>
+                            <p>Simply take a picture of any plant you'd like to identify. LeafyLens works with all plants—from common houseplants to rare wildflowers, trees, and even garden weeds.</p>
+                            <div class="step-image">
+                                <img src="/api/placeholder/400/250" alt="Person taking photo of a plant with LeafyLens app" />
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="contact-form-container">
-                        <div class="form-header">
-                            <h3>Send Us a Message</h3>
-                            <p>Let us know how we can help or what's on your mind!</p>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Get Instant Results</h3>
+                            <p>Our advanced AI analyzes your photo and provides immediate identification with details about the plant's characteristics, native habitat, growth requirements, and interesting facts.</p>
+                            <div class="step-image">
+                                <img src="/api/placeholder/400/250" alt="LeafyLens app showing plant identification results" />
+                            </div>
                         </div>
-                        
-                        <div class="form-toggle">
-                            <div class="form-toggle-option active" data-form="question">Question</div>
-                            <div class="form-toggle-option" data-form="feature">Feature Request</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Receive Personalized Care</h3>
+                            <p>Add identified plants to your virtual garden and get customized care instructions, reminders, and health monitoring to help your plants thrive in your specific environment.</p>
+                            <div class="step-image">
+                                <img src="/api/placeholder/400/250" alt="LeafyLens app showing plant care instructions" />
+                            </div>
                         </div>
-                        
-                        <form id="contact-form" action="#" method="POST">
-                            <div class="form-group">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" name="name" class="form-control" placeholder="Your name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Your email address" required>
-                            </div>
-                            
-                            <!-- Question-specific fields -->
-                            <div class="question-fields active">
-                                <div class="form-group">
-                                    <label for="question-type" class="form-label">Question Type</label>
-                                    <select id="question-type" name="question-type" class="form-control" required>
-                                        <option value="" disabled selected>Select a category</option>
-                                        <option value="account">Account & Billing</option>
-                                        <option value="plant-id">Plant Identification</option>
-                                        <option value="diagnosis">Plant Health Diagnosis</option>
-                                        <option value="care">Plant Care Advice</option>
-                                        <option value="subscription">Subscription Issues</option>
-                                        <option value="technical">Technical Support</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="question-message" class="form-label">Your Question</label>
-                                    <textarea id="question-message" name="question-message" class="form-control" placeholder="Please describe your question in detail..." required></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="question-attachments" class="form-label">Attachments (optional)</label>
-                                    <input type="file" id="question-attachments" name="question-attachments" class="form-control">
-                                    <small style="color: var(--leaf-text-light);">You can upload images to help us better understand your question (max 5MB)</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Plant Lovers Say</h2>
+                <p class="section-subtitle">Join thousands of satisfied users who have transformed their plant care experience with LeafyLens.</p>
+                <div class="testimonial-slider">
+                    <div class="testimonial-container">
+                        <div class="testimonial">
+                            <div class="testimonial-content">
+                                <p>"LeafyLens completely changed how I care for my plants. The identification is incredibly accurate, and the care suggestions are tailored to my home's conditions. My monstera was struggling for months, but after following LeafyLens's advice, it's putting out new leaves!"</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="/api/placeholder/60/60" alt="Sarah T." />
+                                    </div>
+                                    <div class="author-info">
+                                        <span class="author-name">Sarah T.</span>
+                                        <span class="author-title">Indoor Garden Enthusiast</span>
+                                        <div class="author-rating">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <!-- Feature Request-specific fields -->
-                            <div class="feature-fields">
-                                <div class="form-group">
-                                    <label for="feature-title" class="form-label">Feature Title</label>
-                                    <input type="text" id="feature-title" name="feature-title" class="form-control" placeholder="A short title for your feature idea" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="feature-description" class="form-label">Feature Description</label>
-                                    <textarea id="feature-description" name="feature-description" class="form-control" placeholder="Please describe your feature idea in detail..." required></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="feature-benefit" class="form-label">How would this feature benefit users?</label>
-                                    <textarea id="feature-benefit" name="feature-benefit" class="form-control" placeholder="Explain how this feature would improve the LeafyLens experience..." required></textarea>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="feature-priority" class="form-label">Priority Level</label>
-                                    <select id="feature-priority" name="feature-priority" class="form-control" required>
-                                        <option value="" disabled selected>Select priority</option>
-                                        <option value="low">Nice to have</option>
-                                        <option value="medium">Helpful addition</option>
-                                        <option value="high">Important improvement</option>
-                                        <option value="critical">Critical functionality</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="feature-attachments" class="form-label">Mockups or Sketches (optional)</label>
-                                    <input type="file" id="feature-attachments" name="feature-attachments" class="form-control">
-                                    <small style="color: var(--leaf-text-light);">Visual examples can help us better understand your idea (max 5MB)</small>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-content">
+                                <p>"As a professional landscaper, I need an app I can trust. LeafyLens has become my go-to tool in the field. The weed identification feature alone has saved me countless hours, and my clients are impressed when I can instantly identify unusual plants in their gardens."</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="/api/placeholder/60/60" alt="Marcus J." />
+                                    </div>
+                                    <div class="author-info">
+                                        <span class="author-name">Marcus J.</span>
+                                        <span class="author-title">Professional Landscaper</span>
+                                        <div class="author-rating">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="form-submit">Send Message</button>
-                        </form>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-content">
+                                <p>"I never had a green thumb before LeafyLens. The app has taught me so much about my plants, and the reminders are life-changing! I haven't killed a single plant since I started using it, and I've even managed to get my orchid to rebloom after three years of trying."</p>
+                                <div class="testimonial-author">
+                                    <div class="author-avatar">
+                                        <img src="/api/placeholder/60/60" alt="Elena K." />
+                                    </div>
+                                    <div class="author-info">
+                                        <span class="author-name">Elena K.</span>
+                                        <span class="author-title">Self-proclaimed Plant Novice</span>
+                                        <div class="author-rating">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-controls">
+                    <button class="testimonial-dot active"></button>
+                    <button class="testimonial-dot"></button>
+                    <button class="testimonial-dot"></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="app-showcase">
+            <div class="container">
+                <h2 class="section-title">Explore LeafyLens Features</h2>
+                <p class="section-subtitle">Discover the innovative tools that make LeafyLens the most comprehensive plant care app available.</p>
+                <div class="app-showcase-row">
+                    <div class="app-showcase-content">
+                        <h3>Advanced Plant Identification</h3>
+                        <p>Our proprietary AI can recognize over 500,000 plant species with incredible accuracy, even when plants are partially visible or in varying lighting conditions.</p>
+                        <div class="app-features-list">
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Multi-Angle Recognition</h4>
+                                    <p>Take up to 4 photos from different angles for even more accurate identification of challenging species.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Offline Identification</h4>
+                                    <p>Identify common plants even without an internet connection—perfect for hiking and remote areas.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Detailed Plant Profiles</h4>
+                                    <p>Access comprehensive information about each plant, including native habitat, growth patterns, and historical uses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-showcase-image">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/300/600" alt="LeafyLens plant identification screen" />
+                        </div>
+                        <div class="feature-badge feature-badge-top-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                            AI-Powered
+                        </div>
+                        <div class="feature-badge feature-badge-bottom-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            99.2% Accuracy
+                        </div>
+                    </div>
+                </div>
+                <div class="app-showcase-row">
+                    <div class="app-showcase-content">
+                        <h3>Personalized Plant Care</h3>
+                        <p>LeafyLens creates custom care plans for each of your plants based on their species, your local climate, and your home's specific conditions.</p>
+                        <div class="app-features-list">
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Smart Watering Schedule</h4>
+                                    <p>Receive precise watering recommendations that adjust based on your local weather and seasonal changes.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Light Meter</h4>
+                                    <p>Use your phone's camera to measure light levels and find the perfect spot for each plant in your home.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Toxicity Alerts</h4>
+                                    <p>Get immediate warnings about plants that may be harmful to children or pets, with emergency care instructions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-showcase-image">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/300/600" alt="LeafyLens plant care dashboard" />
+                        </div>
+                        <div class="feature-badge feature-badge-top-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                            Custom Care
+                        </div>
+                        <div class="feature-badge feature-badge-bottom-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                            Save Favorites
+                        </div>
+                    </div>
+                </div>
+                <div class="app-showcase-row">
+                    <div class="app-showcase-content">
+                        <h3>Plant Health Diagnostics</h3>
+                        <p>Identify and treat plant diseases, pest infestations, and nutritional deficiencies with our advanced diagnostic tool.</p>
+                        <div class="app-features-list">
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><rect x="9" y="9" width="6" height="6"></rect></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Visual Disease Recognition</h4>
+                                    <p>Snap a photo of affected areas and receive instant diagnosis of over 200 common plant diseases and conditions.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Treatment Plans</h4>
+                                    <p>Get step-by-step treatment instructions with both organic and conventional options for any plant problem.</p>
+                                </div>
+                            </div>
+                            <div class="app-feature-item">
+                                <div class="app-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                </div>
+                                <div class="app-feature-text">
+                                    <h4>Expert Second Opinion</h4>
+                                    <p>For complex cases, connect with professional botanists and plant pathologists for personalized advice.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-showcase-image">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/300/600" alt="LeafyLens plant health diagnosis" />
+                        </div>
+                        <div class="feature-badge feature-badge-top-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            Plant Protection
+                        </div>
+                        <div class="feature-badge feature-badge-bottom-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            <span style="color: var(--leaf-gold-dark)">Premium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="container">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your plant care needs.</p>
+                <div class="pricing-toggle">
+                    <span class="pricing-label active">Monthly</span>
+                    <div class="toggle-switch">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span class="pricing-label">Yearly</span>
+                    <span class="save-badge">Save 40%</span>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Free</h3>
+                            <div class="pricing-price">
+                                <span class="currency">$</span>0
+                            </div>
+                            <p class="pricing-description">Perfect for casual plant enthusiasts</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">5 plant identifications per month</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Basic plant care information</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Track up to 10 plants</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Community access (browse only)</div>
+                            </li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Download Free</a>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-tag">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Premium</h3>
+                            <div class="pricing-price">
+                                <span class="currency">$</span>7.99<span class="period">/mo</span>
+                            </div>
+                            <p class="pricing-description">For dedicated plant enthusiasts</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Unlimited plant identifications</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Advanced plant diagnostics <span class="pricing-feature-badge">Premium</span></div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Personalized care reminders</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Unlimited plant collection</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Full community access</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">30 expert consultations/month</div>
+                            </li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Try 7 Days Free</a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3 class="pricing-name">Expert</h3>
+                            <div class="pricing-price">
+                                <span class="currency">$</span>14.99<span class="period">/mo</span>
+                            </div>
+                            <p class="pricing-description">For professionals & collectors</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">All Premium features</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Priority plant identification</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Unlimited expert consultations <span class="pricing-feature-badge">Exclusive</span></div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Advanced growth analytics</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Early access to new features</div>
+                            </li>
+                            <li class="pricing-feature-item">
+                                <div class="pricing-feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </div>
+                                <div class="pricing-feature-text">Offline plant database</div>
+                            </li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Try 14 Days Free</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Get answers to common questions about LeafyLens.</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How accurate is LeafyLens at identifying plants?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>LeafyLens boasts a remarkable 99.2% accuracy rate for plant identification, making it the most reliable plant ID app available. Our proprietary AI has been trained on millions of plant images across all growth stages and viewing angles. For best results, take clear photos in good lighting, and try to include distinctive features like flowers, leaves, or bark patterns.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do I need to create an account to use LeafyLens?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can use LeafyLens's basic functions without creating an account, but to save your identified plants, track your collection, and access personalized care reminders, you'll need to sign up. Creating an account is free and takes just a few seconds. For premium features, you'll need to subscribe to one of our paid plans.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can LeafyLens identify sick or diseased plants?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! Our plant diagnostic feature can identify over 200 common plant diseases, nutrient deficiencies, and pest infestations. Simply take a clear photo of the affected area, and LeafyLens will analyze the symptoms and provide a diagnosis along with a customized treatment plan. This feature is available to Premium and Expert subscribers.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do I cancel my subscription?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can cancel your subscription at any time by visiting the Manage Subscription page in your account settings or by contacting our support team. If you cancel during your free trial period, you won't be charged. If you cancel after being billed, you'll continue to have access to premium features until the end of your current billing cycle.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Does LeafyLens work offline?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The free version of LeafyLens requires an internet connection for plant identification. Expert subscribers can download our offline database to identify common plants without an internet connection—perfect for hiking, travel, or areas with poor reception. Note that some advanced features still require connectivity.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Who are the experts behind LeafyLens's consultation feature?</span>
+                            <div class="faq-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our expert consultation team consists of professional botanists, horticulturists, and plant pathologists from around the world. All consultants have advanced degrees in their fields and extensive practical experience. They're available to answer your questions about plant identification, care, disease treatment, and propagation techniques.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <div class="download-content">
+                    <h2>Download LeafyLens Today</h2>
+                    <p>Join over 5 million plant lovers who trust LeafyLens to identify and care for their plants. Start your green journey today!</p>
+                    <div class="download-badges">
+                        <div class="download-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                            <span>4.9 Star Rating</span>
+                        </div>
+                        <div class="download-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <span>5M+ Active Users</span>
+                        </div>
+                        <div class="download-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            <span>Free Download</span>
+                        </div>
+                    </div>
+                    <div class="download-buttons">
+                        <a href="#" class="app-store-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                            </svg>
+                            <span>
+                                <small>Download on the</small>
+                                <strong>App Store</strong>
+                            </span>
+                        </a>
+                        <a href="#" class="app-store-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                            </svg>
+                            <span>
+                                <small>GET IT ON</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="download-image">
+                    <div class="download-device">
+                        <img src="/api/placeholder/350/700" alt="LeafyLens app on smartphone" />
                     </div>
                 </div>
             </div>
@@ -899,70 +2300,8 @@
     </footer>
 
     <script>
-        // Form toggle functionality
+        // Initialize functionality when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            const formToggleOptions = document.querySelectorAll('.form-toggle-option');
-            const questionFields = document.querySelector('.question-fields');
-            const featureFields = document.querySelector('.feature-fields');
-            
-            formToggleOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Update active toggle
-                    formToggleOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Show/hide appropriate fields
-                    const formType = this.getAttribute('data-form');
-                    if (formType === 'question') {
-                        questionFields.classList.add('active');
-                        featureFields.classList.remove('active');
-                        
-                        // Set required fields
-                        document.querySelectorAll('.question-fields [required]').forEach(field => {
-                            field.required = true;
-                        });
-                        document.querySelectorAll('.feature-fields [required]').forEach(field => {
-                            field.required = false;
-                        });
-                    } else {
-                        questionFields.classList.remove('active');
-                        featureFields.classList.add('active');
-                        
-                        // Set required fields
-                        document.querySelectorAll('.question-fields [required]').forEach(field => {
-                            field.required = false;
-                        });
-                        document.querySelectorAll('.feature-fields [required]').forEach(field => {
-                            field.required = true;
-                        });
-                    }
-                });
-            });
-            
-            // Form submission
-            const contactForm = document.getElementById('contact-form');
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Simulate form submission
-                const submitButton = this.querySelector('.form-submit');
-                submitButton.textContent = 'Sending...';
-                submitButton.disabled = true;
-                
-                // Simulate API call delay
-                setTimeout(() => {
-                    // Reset form
-                    contactForm.reset();
-                    
-                    // Show success message
-                    alert('Thank you for your message! We will get back to you soon.');
-                    
-                    // Reset button
-                    submitButton.textContent = 'Send Message';
-                    submitButton.disabled = false;
-                }, 1500);
-            });
-            
             // Sticky header
             const header = document.querySelector('header');
             
@@ -974,6 +2313,132 @@
                     header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
                     header.style.padding = '1.2rem 0';
                 }
+            });
+            
+            // Testimonial slider
+            const testimonialDots = document.querySelectorAll('.testimonial-dot');
+            const testimonials = document.querySelector('.testimonial-container');
+            let currentTestimonial = 0;
+            
+            testimonialDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    // Update active dot
+                    testimonialDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    
+                    // Move slider
+                    currentTestimonial = index;
+                    testimonials.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+                });
+            });
+            
+            // Auto-advance testimonials every 5 seconds
+            setInterval(() => {
+                currentTestimonial = (currentTestimonial + 1) % testimonialDots.length;
+                testimonialDots[currentTestimonial].click();
+            }, 5000);
+            
+            // Pricing toggle
+            const pricingToggle = document.querySelector('.toggle-switch');
+            const pricingLabels = document.querySelectorAll('.pricing-label');
+            const toggleSlider = document.querySelector('.toggle-slider');
+            const pricingPrices = document.querySelectorAll('.pricing-price');
+            const monthlyPrices = ['0', '7.99', '14.99'];
+            const yearlyPrices = ['0', '4.99', '8.99'];
+            
+            pricingToggle.addEventListener('click', () => {
+                // Toggle active state
+                pricingLabels.forEach(label => label.classList.toggle('active'));
+                toggleSlider.classList.toggle('right');
+                
+                // Update prices based on selected billing cycle
+                const isYearly = toggleSlider.classList.contains('right');
+                const prices = isYearly ? yearlyPrices : monthlyPrices;
+                const period = isYearly ? '/yr' : '/mo';
+                
+                pricingPrices.forEach((price, index) => {
+                    if (index === 0) return; // Skip free tier
+                    const priceAmount = price.querySelector('.pricing-price');
+                    const currency = price.querySelector('.currency');
+                    const periodElem = price.querySelector('.period');
+                    
+                    if (periodElem) {
+                        periodElem.textContent = period;
+                    }
+                    
+                    // Animate price change
+                    price.style.transform = 'translateY(-10px)';
+                    price.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        if (prices[index] !== '0') {
+                            price.innerHTML = `<span class="currency">$</span>${prices[index]}<span class="period">${period}</span>`;
+                        }
+                        price.style.transform = 'translateY(0)';
+                        price.style.opacity = '1';
+                    }, 200);
+                });
+            });
+            
+            // FAQ accordions
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.faq-icon');
+                
+                question.addEventListener('click', () => {
+                    // Toggle this FAQ item
+                    answer.classList.toggle('open');
+                    icon.classList.toggle('open');
+                    
+                    // Close other FAQ items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.faq-answer').classList.remove('open');
+                            otherItem.querySelector('.faq-icon').classList.remove('open');
+                        }
+                    });
+                });
+            });
+            
+            // Open first FAQ by default
+            faqItems[0].querySelector('.faq-question').click();
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (!targetElement) return;
+                    
+                    const headerHeight = header.offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Animate floating leaves
+            const leaves = document.querySelectorAll('.floating-leaf');
+            
+            leaves.forEach(leaf => {
+                const randomX = Math.random() * 100 - 50;
+                const randomY = Math.random() * 100 - 50;
+                const randomRotation = Math.random() * 360;
+                const randomScale = Math.random() * 0.5 + 0.8;
+                const randomDuration = Math.random() * 10 + 15;
+                
+                leaf.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRotation}deg) scale(${randomScale})`;
+                leaf.style.animationDuration = `${randomDuration}s`;
             });
         });
     </script>
