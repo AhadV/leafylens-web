@@ -3,427 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeafyLens | The Intelligent Plant Companion</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <title>PictureThis - Plant Identifier</title>
+    <!-- Google Fonts: Poppins for modern, clean look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Sticky Header */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2e7d32;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://via.placeholder.com/1920x800?text=Plant+Background') no-repeat center/cover;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #1b5e20;
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #f5f7f5;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card img {
+            width: 60px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 20px;
+            text-align: center;
+            background: white;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-slide {
+            display: none;
+            padding: 20px;
+        }
+
+        .testimonial-slide.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .testimonial-slide p {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-slide h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        /* App Download Section */
+        .app-download {
+            padding: 80px 20px;
+            background: #e8f5e9;
+            text-align: center;
+        }
+
+        .app-download h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 30px;
+        }
+
+        .app-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .app-buttons img {
+            width: 180px;
+            transition: transform 0.3s;
+        }
+
+        .app-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #1b5e20;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .app-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 80px 20px;
+            }
+
+            .features h2, .testimonials h2, .app-download h2 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="noise-overlay"></div>
-    
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="logo-container">
-                <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#8BC34A"/>
-                    <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#8BC34A"/>
-                    <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#8BC34A"/>
-                </svg>
-                <span class="logo-text">LeafyLens</span>
-            </div>
+        <div class="nav-container">
+            <div class="logo">PictureThis</div>
             <nav>
                 <ul>
                     <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#download" class="download-button">Download</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Where plants thrive and plant parents flourish</h1>
-                    <p>LeafyLens doesn't just identify plants—it understands them. With advanced AI capable of recognizing over 500,000 species with 99% accuracy, transform your relationship with plants through personalized care, smart home integration, and a thriving community.</p>
-                    <div class="hero-cta">
-                        <a href="#download" class="cta-button">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.2 2C17.72 2 22.2 6.48 22.2 12C22.2 17.52 17.72 22 12.2 22C6.68 22 2.2 17.52 2.2 12C2.2 6.48 6.68 2 12.2 2ZM17.6 11H13.2V6.5H11.2V11H6.8V13H11.2V17.5H13.2V13H17.6V11Z" fill="currentColor"/>
-                            </svg>
-                            Download on App Store
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <div class="phone-mockup">
-                        <img src="/api/placeholder/300/600" alt="LeafyLens app on iPhone" class="phone-screen" />
-                        <div class="glow-effect"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="leaf-particles">
-                <div class="leaf leaf-1"></div>
-                <div class="leaf leaf-2"></div>
-                <div class="leaf leaf-3"></div>
-                <div class="leaf leaf-4"></div>
-                <div class="leaf leaf-5"></div>
-            </div>
-        </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Discover Plants with Ease</h1>
+        <p>Identify flowers, trees, and more in seconds with our AI-powered plant recognition app.</p>
+        <a href="#download" class="cta-button">Try It Now</a>
+    </section>
 
-        <section id="features" class="features">
-            <div class="container">
-                <h2 class="section-title">Intelligence rooted in nature</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 38C13.8 38 8 32.2 8 25C8 17.8 13.8 12 21 12C28.2 12 34 17.8 34 25C34 32.2 28.2 38 21 38ZM21 14C14.9 14 10 18.9 10 25C10 31.1 14.9 36 21 36C27.1 36 32 31.1 32 25C32 18.9 27.1 14 21 14Z" fill="#8BC34A"/>
-                                <path d="M35 36L30 31L31.4 29.6L35 33.2L42.6 25.6L44 27L35 36Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Instant Plant Recognition</h3>
-                        <p>Take a photo of any plant, and LeafyLens will instantly identify it, providing comprehensive care information tailored to your specific environment.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M40 16H30V6H18V16H8L24 32L40 16ZM8 36V40H40V36H8Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Health Detective</h3>
-                        <p>Notice yellow leaves or wilting stems? Our diagnostic technology pinpoints exactly what's wrong and shows you precisely how to fix it with visual guides highlighting problem areas.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 4C18.5 4 14 8.5 14 14C14 19.5 18.5 24 24 24C29.5 24 34 19.5 34 14C34 8.5 29.5 4 24 4ZM24 22C19.6 22 16 18.4 16 14C16 9.6 19.6 6 24 6C28.4 6 32 9.6 32 14C32 18.4 28.4 22 24 22Z" fill="#8BC34A"/>
-                                <path d="M36 24.6C35.4 24.2 34.7 24 34 24H14C13.3 24 12.6 24.2 12 24.6C5.6 28.6 6 40 6 40H42C42 40 42.4 28.6 36 24.6Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Smart Location Matching</h3>
-                        <p>Snap photos of your home's empty spots, and our app analyzes light levels, humidity, and spatial dimensions to recommend the perfect plants for each location.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M38 6H10C7.8 6 6 7.8 6 10V38C6 40.2 7.8 42 10 42H38C40.2 42 42 40.2 42 38V10C42 7.8 40.2 6 38 6ZM38 38H10V10H38V38Z" fill="#8BC34A"/>
-                                <path d="M20 32H16V24H20V32ZM26 32H22V16H26V32ZM32 32H28V20H32V32Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Personalized Care Hub</h3>
-                        <p>Your personalized plant care command center shows at a glance which plants need attention today, tracks your care history, and celebrates your growth as a plant parent.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M34 6H14C11.8 6 10 7.8 10 10V38C10 40.2 11.8 42 14 42H34C36.2 42 38 40.2 38 38V10C38 7.8 36.2 6 34 6ZM34 38H14V10H34V38Z" fill="#8BC34A"/>
-                                <path d="M20 16H28V18H20V16ZM20 22H28V24H20V22ZM20 28H28V30H20V28Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Digital Plant Journal</h3>
-                        <p>Document your plant's journey with photos and notes to track progress, troubleshoot issues, and celebrate growth milestones with seasonal care checklists based on your local climate.</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 4C12.96 4 4 12.96 4 24C4 35.04 12.96 44 24 44C35.04 44 44 35.04 44 24C44 12.96 35.04 4 24 4ZM24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40Z" fill="#8BC34A"/>
-                                <path d="M26 14H22V26L32.2 32.2L34 29.28L26 24V14Z" fill="#8BC34A"/>
-                            </svg>
-                        </div>
-                        <h3>Stemley Jim: Your Personal Plant Coach</h3>
-                        <p>Chat with Stemley Jim, your friendly plant mentor who offers personalized advice, answers care questions, and provides encouragement when you face plant challenges.</p>
-                    </div>
-                </div>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>Why PictureThis?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/60?text=Scan" alt="Scan Icon">
+                <h3>Instant Identification</h3>
+                <p>Snap a photo and instantly learn the name and details of any plant.</p>
             </div>
-        </section>
-
-        <section class="testimonials">
-            <div class="container">
-                <h2 class="section-title">Cultivating happiness</h2>
-                <div class="testimonial-slider">
-                    <div class="testimonial">
-                        <div class="testimonial-content">
-                            <p>"My monstera had mysterious brown spots appearing on new leaves. LeafyLens identified a fungal infection and recommended a simple homemade solution that cleared it up within days."</p>
-                            <div class="testimonial-author">
-                                <span class="author-name">Sarah T.</span>
-                                <span class="plant-count">32 plants</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial">
-                        <div class="testimonial-content">
-                            <p>"Setting a goal to get my orchid to rebloom seemed ambitious, but following LeafyLens's specialized guidance, I succeeded for the first time in three years!"</p>
-                            <div class="testimonial-author">
-                                <span class="author-name">Devon W.</span>
-                                <span class="plant-count">17 plants</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial">
-                        <div class="testimonial-content">
-                            <p>"Through the community feature, I connected with someone in my neighborhood who had cuttings of a rare philodendron I'd been searching for!"</p>
-                            <div class="testimonial-author">
-                                <span class="author-name">Jordan K.</span>
-                                <span class="plant-count">45 plants</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-controls">
-                    <button class="testimonial-dot active"></button>
-                    <button class="testimonial-dot"></button>
-                    <button class="testimonial-dot"></button>
-                </div>
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/60?text=Care" alt="Care Icon">
+                <h3>Plant Care Tips</h3>
+                <p>Get tailored advice to keep your plants thriving year-round.</p>
             </div>
-        </section>
-
-        <section class="app-showcase">
-            <div class="container">
-                <div class="phone-carousel">
-                    <div class="phone-slide active">
-                        <div class="phone-mockup">
-                            <img src="/api/placeholder/280/550" alt="Plant identification screen" class="phone-screen" />
-                        </div>
-                        <div class="slide-caption">
-                            <h3>Instant Recognition</h3>
-                            <p>Identify any plant with a single photo</p>
-                        </div>
-                    </div>
-                    <div class="phone-slide">
-                        <div class="phone-mockup">
-                            <img src="/api/placeholder/280/550" alt="Plant health diagnostic screen" class="phone-screen" />
-                        </div>
-                        <div class="slide-caption">
-                            <h3>Plant Health</h3>
-                            <p>Diagnose and treat plant problems with AI assistance</p>
-                        </div>
-                    </div>
-                    <div class="phone-slide">
-                        <div class="phone-mockup">
-                            <img src="/api/placeholder/280/550" alt="Plant care dashboard" class="phone-screen" />
-                        </div>
-                        <div class="slide-caption">
-                            <h3>Care Dashboard</h3>
-                            <p>Manage your entire collection from one screen</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-dot active"></button>
-                    <button class="carousel-dot"></button>
-                    <button class="carousel-dot"></button>
-                </div>
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/60?text=Community" alt="Community Icon">
+                <h3>Vibrant Community</h3>
+                <p>Connect with plant lovers to share tips and inspiration.</p>
             </div>
-        </section>
-
-        <section id="pricing" class="pricing">
-            <div class="container">
-                <h2 class="section-title">Choose your growth plan</h2>
-                <div class="pricing-grid">
-                    <div class="pricing-card free">
-                        <div class="pricing-header">
-                            <h3>Seedling</h3>
-                            <p class="price">Free</p>
-                            <p class="description">Perfect for beginners</p>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Plant identification (limited to 5/month)</li>
-                            <li>Basic care instructions</li>
-                            <li>Plant collection tracking (up to 10 plants)</li>
-                            <li>Community access (read-only)</li>
-                        </ul>
-                        <a href="#download" class="pricing-cta">Download Free</a>
-                    </div>
-                    <div class="pricing-card premium">
-                        <div class="popular-tag">Most Popular</div>
-                        <div class="pricing-header">
-                            <h3>Bloom</h3>
-                            <p class="price">$7.99<span>/month</span></p>
-                            <p class="description">For serious plant parents</p>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Unlimited plant identification</li>
-                            <li>Advanced plant health diagnostics</li>
-                            <li>Unlimited collection tracking</li>
-                            <li>Smart location analysis</li>
-                            <li>Seasonal care guides</li>
-                            <li>Full community access</li>
-                            <li>30 Stemley Jim consultations/month</li>
-                        </ul>
-                        <a href="#download" class="pricing-cta">Try 7 Days Free</a>
-                    </div>
-                    <div class="pricing-card ultimate">
-                        <div class="pricing-header">
-                            <h3>Flourish</h3>
-                            <p class="price">$59.99<span>/year</span></p>
-                            <p class="description">Save 38% with annual plan</p>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>All Bloom features</li>
-                            <li>Priority plant identification</li>
-                            <li>Unlimited Stemley Jim consultations</li>
-                            <li>Advanced growth analytics</li>
-                            <li>Early access to new features</li>
-                            <li>Ad-free experience</li>
-                        </ul>
-                        <a href="#download" class="pricing-cta">Try 14 Days Free</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="download" class="download">
-            <div class="container">
-                <div class="download-content">
-                    <h2>Ready to transform your relationship with plants?</h2>
-                    <p>Download LeafyLens today and join thousands of thriving plant parents.</p>
-                    <div class="download-buttons">
-                        <a href="#" class="app-store-button">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.8 4.6L13.4 3.2C13 2.8 12.4 2.7 11.9 3L8.9 5C8.3 5.4 8 6.1 8 6.9V17.1C8 17.9 8.3 18.6 8.9 19L11.9 21C12.4 21.3 13 21.2 13.4 20.8L14.8 19.4C15.1 19.1 15.3 18.8 15.3 18.4V5.6C15.3 5.2 15.1 4.9 14.8 4.6ZM19.3 12L17.5 10.2C17.3 10 17 10 16.8 10.2L16 11C15.8 11.2 15.8 11.5 16 11.7L17 12.7L16 13.7C15.8 13.9 15.8 14.2 16 14.4L16.8 15.2C17 15.4 17.3 15.4 17.5 15.2L19.3 13.4C19.5 13.2 19.5 12.8 19.3 12Z" fill="currentColor"/>
-                            </svg>
-                            <span>Download on<br><strong>App Store</strong></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="download-image">
-                    <img src="/api/placeholder/400/400" alt="LeafyLens app screens" class="app-screens" />
-                </div>
-            </div>
-            <div class="leaf-particles bottom">
-                <div class="leaf leaf-1"></div>
-                <div class="leaf leaf-2"></div>
-                <div class="leaf leaf-3"></div>
-                <div class="leaf leaf-4"></div>
-                <div class="leaf leaf-5"></div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-logo">
-                    <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#8BC34A"/>
-                        <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#8BC34A"/>
-                        <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#8BC34A"/>
-                    </svg>
-                    <span class="logo-text">LeafyLens</span>
-                </div>
-                <div class="footer-nav">
-                    <div class="footer-nav-column">
-                        <h4>App</h4>
-                        <ul>
-                            <li><a href="#features">Features</a></li>
-                            <li><a href="#pricing">Pricing</a></li>
-                            <li><a href="#download">Download</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-nav-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#careers">Careers</a></li>
-                            <li><a href="#press">Press</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-nav-column">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="#blog">Blog</a></li>
-                            <li><a href="#help">Help Center</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-nav-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><a href="#terms">Terms</a></li>
-                            <li><a href="#privacy">Privacy</a></li>
-                            <li><a href="#cookies">Cookies</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 LeafyLens. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
-                        </svg>
-                    </a>
-                </div>
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/60?text=Database" alt="Database Icon">
+                <h3>Extensive Database</h3>
+                <p>Access millions of plant species with detailed information.</p>
             </div>
         </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <h2>What Our Users Say</h2>
+        <div class="testimonial-carousel">
+            <div class="testimonial-slide active">
+                <p>"This app transformed my gardening! I identify plants on hikes and get care tips instantly."</p>
+                <h4>– Sarah M., Gardener</h4>
+            </div>
+            <div class="testimonial-slide">
+                <p>"So easy to use! I love the community feature to share my plant photos."</p>
+                <h4>– John D., Plant Enthusiast</h4>
+            </div>
+            <div class="testimonial-slide">
+                <p>"The accuracy is amazing. Identified rare plants I couldn’t find anywhere else."</p>
+                <h4>– Emily R., Botanist</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="app-download" id="download">
+        <h2>Download PictureThis Today</h2>
+        <div class="app-buttons">
+            <a href="https://www.apple.com/app-store/"><img src="https://via.placeholder.com/180x60?text=App+Store" alt="Download on the App Store"></a>
+            <a href="https://play.google.com/store"><img src="https://via.placeholder.com/180x60?text=Google+Play" alt="Get it on Google Play"></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+            <a href="#">FAQ</a>
+        </div>
+        <p>© 2025 PictureThis. All rights reserved.</p>
     </footer>
 
     <script>
-        // Simple carousel functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize GSAP animations
-            gsap.registerPlugin(ScrollTrigger);
-            
-            // Animate feature cards on scroll
-            gsap.utils.toArray('.feature-card').forEach((card, i) => {
-                gsap.from(card, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 80%",
-                    },
-                    delay: i * 0.1
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector(anchor.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-            });
-            
-            // Animate testimonials
-            gsap.from('.testimonial', {
-                x: 100,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: '.testimonials',
-                    start: "top 70%",
-                }
-            });
-            
-            // Animate pricing cards
-            gsap.utils.toArray('.pricing-card').forEach((card, i) => {
-                gsap.from(card, {
-                    y: 50,
-                    opacity: 0,
-                    duration: 0.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 80%",
-                    },
-                    delay: i * 0.2
-                });
-            });
-            
-            // Animate leaf particles
-            gsap.to('.leaf', {
-                y: 'random(-100, 100)',
-                x: 'random(-100, 100)',
-                rotation: 'random(-180, 180)',
-                duration: 'random(15, 30)',
-                repeat: -1,
-                ease: "none",
-                yoyo: true
             });
         });
+
+        // Testimonial Carousel
+        const slides = document.querySelectorAll('.testimonial-slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Auto-rotate testimonials every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Initialize first slide
+        showSlide(currentSlide);
     </script>
 </body>
 </html>
