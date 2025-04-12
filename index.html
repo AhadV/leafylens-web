@@ -1,167 +1,1492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LeafyLens – Plant Identifier</title>
-  <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeafyLens | The Intelligent Plant Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        /* ====== LEAFYLENS CSS ====== */
+        /* Base Styles */
+        :root {
+          --leaf-dark: #0a1015;
+          --leaf-darker: #050a0d;
+          --leaf-medium: #152028;
+          --leaf-light: #1c2a33;
+          --leaf-accent: #8BC34A;
+          --leaf-accent-dark: #689F38;
+          --leaf-accent-light: #AED581;
+          --leaf-text: #e6f0f7;
+          --leaf-text-muted: #92a8b8;
+          --leaf-shadow: rgba(0, 0, 0, 0.4);
+          --leaf-gradient: linear-gradient(135deg, #8BC34A 0%, #4CAF50 100%);
+          --leaf-gradient-dark: linear-gradient(135deg, #689F38 0%, #2E7D32 100%);
+          --leaf-card-bg: rgba(28, 42, 51, 0.7);
+          --leaf-card-border: rgba(139, 195, 74, 0.3);
+          --leaf-glow: rgba(139, 195, 74, 0.4);
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f5f1;
-      color: #1a3d2a;
-      line-height: 1.6;
-    }
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
 
-    header {
-      background-color: #2d6a4f;
-      padding: 1rem 0;
-      color: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+        html {
+          scroll-behavior: smooth;
+        }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
+        body {
+          font-family: 'Montserrat', sans-serif;
+          background-color: var(--leaf-dark);
+          color: var(--leaf-text);
+          line-height: 1.6;
+          overflow-x: hidden;
+          position: relative;
+        }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
+        .container {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
 
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
+        a {
+          text-decoration: none;
+          color: var(--leaf-text);
+          transition: color 0.3s ease;
+        }
 
-    .nav-links li a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
+        a:hover {
+          color: var(--leaf-accent);
+        }
 
-    .hero {
-      background: linear-gradient(to bottom right, #95d5b2, #d8f3dc);
-      text-align: center;
-      padding: 5rem 1rem;
-    }
+        ul {
+          list-style: none;
+        }
 
-    .hero h1 {
-      font-size: 3rem;
-      color: #1b4332;
-    }
+        img {
+          max-width: 100%;
+          height: auto;
+        }
 
-    .hero p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-    }
+        .section-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 3rem;
+          text-align: center;
+          position: relative;
+        }
 
-    #identify-btn {
-      margin-top: 2rem;
-      background-color: #1b4332;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .section-title::after {
+          content: '';
+          display: block;
+          width: 80px;
+          height: 4px;
+          background: var(--leaf-gradient);
+          margin: 1rem auto 0;
+          border-radius: 2px;
+        }
 
-    #identify-btn:hover {
-      background-color: #40916c;
-    }
+        /* Noise Overlay */
+        .noise-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=');
+          pointer-events: none;
+          z-index: 100;
+          opacity: 0.4;
+        }
 
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 3rem 1rem;
-      background-color: white;
-      gap: 2rem;
-    }
+        /* Header */
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 1.5rem 0;
+          z-index: 1000;
+          background: rgba(10, 16, 21, 0.8);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(139, 195, 74, 0.1);
+        }
 
-    .feature {
-      background-color: #e9f5ec;
-      border-radius: 10px;
-      padding: 2rem;
-      width: 300px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
+        header .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
 
-    .feature h2 {
-      color: #2d6a4f;
-      margin-bottom: 0.5rem;
-    }
+        .logo-container {
+          display: flex;
+          align-items: center;
+        }
 
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      background-color: #2d6a4f;
-      color: white;
-    }
-  </style>
+        .logo {
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+        }
+
+        .logo-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          background: var(--leaf-gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          letter-spacing: 1px;
+        }
+
+        nav ul {
+          display: flex;
+          gap: 2rem;
+        }
+
+        nav ul li a {
+          font-weight: 500;
+          position: relative;
+        }
+
+        nav ul li a::after {
+          content: '';
+          position: absolute;
+          bottom: -5px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--leaf-gradient);
+          transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+          width: 100%;
+        }
+
+        .download-button {
+          background: var(--leaf-gradient);
+          color: white;
+          padding: 0.5rem 1.2rem;
+          border-radius: 25px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px var(--leaf-shadow);
+        }
+
+        .download-button:hover {
+          background: var(--leaf-gradient-dark);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+          padding: 180px 0 100px;
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(to bottom, var(--leaf-darker), var(--leaf-dark));
+        }
+
+        .hero .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        .hero-content {
+          z-index: 2;
+        }
+
+        .hero-content h1 {
+          font-size: 3.5rem;
+          font-weight: 700;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+          background: linear-gradient(90deg, var(--leaf-text) 0%, var(--leaf-accent-light) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+          font-size: 1.1rem;
+          margin-bottom: 2.5rem;
+          color: var(--leaf-text-muted);
+          max-width: 540px;
+        }
+
+        .hero-cta {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .cta-button {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--leaf-gradient);
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 30px;
+          font-weight: 600;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          box-shadow: 0 8px 25px var(--leaf-shadow);
+        }
+
+        .cta-button:hover {
+          background: var(--leaf-gradient-dark);
+          transform: translateY(-3px);
+          box-shadow: 0 12px 30px var(--leaf-shadow);
+          color: white;
+        }
+
+        .hero-image {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          justify-content: center;
+        }
+
+        .phone-mockup {
+          position: relative;
+          width: 300px;
+          height: 600px;
+          background: var(--leaf-darker);
+          border-radius: 40px;
+          padding: 12px;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .phone-screen {
+          width: 100%;
+          height: 100%;
+          border-radius: 30px;
+          object-fit: cover;
+          object-position: top;
+        }
+
+        .glow-effect {
+          position: absolute;
+          top: -20%;
+          left: -20%;
+          width: 140%;
+          height: 140%;
+          background: radial-gradient(
+            circle at 30% 30%,
+            var(--leaf-glow) 0%,
+            rgba(139, 195, 74, 0) 70%
+          );
+          opacity: 0.8;
+          pointer-events: none;
+          z-index: -1;
+          animation: glow 8s infinite alternate;
+        }
+
+        @keyframes glow {
+          0% {
+            opacity: 0.4;
+            transform: translate(0, 0) scale(1);
+          }
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="logo">LeafyLens</div>
-      <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Plant Encyclopedia</a></li>
-        <li><a href="#">Care Guide</a></li>
-        <li><a href="#">Identify</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </nav>
-  </header>
+    <div class="noise-overlay"></div>
+    
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#8BC34A"/>
+                    <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#8BC34A"/>
+                    <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#8BC34A"/>
+                </svg>
+                <span class="logo-text">LeafyLens</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#download" class="download-button">Download</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <main>
-    <section class="hero">
-      <h1>Identify Plants Instantly</h1>
-      <p>Snap a photo. Get a match. Know your plant and how to care for it.</p>
-      <button id="identify-btn">Try It Now</button>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Where plants thrive and plant parents flourish</h1>
+                    <p>LeafyLens doesn't just identify plants—it understands them. With advanced AI capable of recognizing over 500,000 species with 99% accuracy, transform your relationship with plants through personalized care, smart home integration, and a thriving community.</p>
+                    <div class="hero-cta">
+                        <a href="#download" class="cta-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.2 2C17.72 2 22.2 6.48 22.2 12C22.2 17.52 17.72 22 12.2 22C6.68 22 2.2 17.52 2.2 12C2.2 6.48 6.68 2 12.2 2ZM17.6 11H13.2V6.5H11.2V11H6.8V13H11.2V17.5H13.2V13H17.6V11Z" fill="currentColor"/>
+                            </svg>
+                            Download on App Store
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="phone-mockup">
+                        <img src="/api/placeholder/300/600" alt="LeafyLens app on iPhone" class="phone-screen" />
+                        <div class="glow-effect"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="leaf-particles">
+                <div class="leaf leaf-1"></div>
+                <div class="leaf leaf-2"></div>
+                <div class="leaf leaf-3"></div>
+                <div class="leaf leaf-4"></div>
+                <div class="leaf leaf-5"></div>
+            </div>
+        </section>
 
-    <section class="features">
-      <div class="feature">
-        <h2>Auto Diagnosis</h2>
-        <p>Detect plant issues from photos and get instant solutions.</p>
-      </div>
-      <div class="feature">
-        <h2>Care Guides</h2>
-        <p>Personalized watering, light, and feeding tips for every plant.</p>
-      </div>
-      <div class="feature">
-        <h2>Expert Support</h2>
-        <p>Chat with real botanists to help your green friends thrive.</p>
-      </div>
-    </section>
-  </main>
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Intelligence rooted in nature</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 38C13.8 38 8 32.2 8 25C8 17.8 13.8 12 21 12C28.2 12 34 17.8 34 25C34 32.2 28.2 38 21 38ZM21 14C14.9 14 10 18.9 10 25C10 31.1 14.9 36 21 36C27.1 36 32 31.1 32 25C32 18.9 27.1 14 21 14Z" fill="#8BC34A"/>
+                                <path d="M35 36L30 31L31.4 29.6L35 33.2L42.6 25.6L44 27L35 36Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Instant Plant Recognition</h3>
+                        <p>Take a photo of any plant, and LeafyLens will instantly identify it, providing comprehensive care information tailored to your specific environment.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M40 16H30V6H18V16H8L24 32L40 16ZM8 36V40H40V36H8Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Health Detective</h3>
+                        <p>Notice yellow leaves or wilting stems? Our diagnostic technology pinpoints exactly what's wrong and shows you precisely how to fix it with visual guides highlighting problem areas.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 4C18.5 4 14 8.5 14 14C14 19.5 18.5 24 24 24C29.5 24 34 19.5 34 14C34 8.5 29.5 4 24 4ZM24 22C19.6 22 16 18.4 16 14C16 9.6 19.6 6 24 6C28.4 6 32 9.6 32 14C32 18.4 28.4 22 24 22Z" fill="#8BC34A"/>
+                                <path d="M36 24.6C35.4 24.2 34.7 24 34 24H14C13.3 24 12.6 24.2 12 24.6C5.6 28.6 6 40 6 40H42C42 40 42.4 28.6 36 24.6Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Smart Location Matching</h3>
+                        <p>Snap photos of your home's empty spots, and our app analyzes light levels, humidity, and spatial dimensions to recommend the perfect plants for each location.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M38 6H10C7.8 6 6 7.8 6 10V38C6 40.2 7.8 42 10 42H38C40.2 42 42 40.2 42 38V10C42 7.8 40.2 6 38 6ZM38 38H10V10H38V38Z" fill="#8BC34A"/>
+                                <path d="M20 32H16V24H20V32ZM26 32H22V16H26V32ZM32 32H28V20H32V32Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Personalized Care Hub</h3>
+                        <p>Your personalized plant care command center shows at a glance which plants need attention today, tracks your care history, and celebrates your growth as a plant parent.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M34 6H14C11.8 6 10 7.8 10 10V38C10 40.2 11.8 42 14 42H34C36.2 42 38 40.2 38 38V10C38 7.8 36.2 6 34 6ZM34 38H14V10H34V38Z" fill="#8BC34A"/>
+                                <path d="M20 16H28V18H20V16ZM20 22H28V24H20V22ZM20 28H28V30H20V28Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Digital Plant Journal</h3>
+                        <p>Document your plant's journey with photos and notes to track progress, troubleshoot issues, and celebrate growth milestones with seasonal care checklists based on your local climate.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 4C12.96 4 4 12.96 4 24C4 35.04 12.96 44 24 44C35.04 44 44 35.04 44 24C44 12.96 35.04 4 24 4ZM24 40C15.16 40 8 32.84 8 24C8 15.16 15.16 8 24 8C32.84 8 40 15.16 40 24C40 32.84 32.84 40 24 40Z" fill="#8BC34A"/>
+                                <path d="M26 14H22V26L32.2 32.2L34 29.28L26 24V14Z" fill="#8BC34A"/>
+                            </svg>
+                        </div>
+                        <h3>Stemley Jim: Your Personal Plant Coach</h3>
+                        <p>Chat with Stemley Jim, your friendly plant mentor who offers personalized advice, answers care questions, and provides encouragement when you face plant challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <footer>
-    <p>&copy; 2025 LeafyLens. All rights reserved.</p>
-  </footer>
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title">Cultivating happiness</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            <p>"My monstera had mysterious brown spots appearing on new leaves. LeafyLens identified a fungal infection and recommended a simple homemade solution that cleared it up within days."</p>
+                            <div class="testimonial-author">
+                                <span class="author-name">Sarah T.</span>
+                                <span class="plant-count">32 plants</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            <p>"Setting a goal to get my orchid to rebloom seemed ambitious, but following LeafyLens's specialized guidance, I succeeded for the first time in three years!"</p>
+                            <div class="testimonial-author">
+                                <span class="author-name">Devon W.</span>
+                                <span class="plant-count">17 plants</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            <p>"Through the community feature, I connected with someone in my neighborhood who had cuttings of a rare philodendron I'd been searching for!"</p>
+                            <div class="testimonial-author">
+                                <span class="author-name">Jordan K.</span>
+                                <span class="plant-count">45 plants</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-controls">
+                    <button class="testimonial-dot active"></button>
+                    <button class="testimonial-dot"></button>
+                    <button class="testimonial-dot"></button>
+                </div>
+            </div>
+        </section>
 
-  <script>
-    document.getElementById('identify-btn').addEventListener('click', () => {
-      alert("This is a demo. Imagine uploading a plant photo and getting ID + care tips!");
-    });
-  </script>
+        <section class="app-showcase">
+            <div class="container">
+                <div class="phone-carousel">
+                    <div class="phone-slide active">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/280/550" alt="Plant identification screen" class="phone-screen" />
+                        </div>
+                        <div class="slide-caption">
+                            <h3>Instant Recognition</h3>
+                            <p>Identify any plant with a single photo</p>
+                        </div>
+                    </div>
+                    <div class="phone-slide">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/280/550" alt="Plant health diagnostic screen" class="phone-screen" />
+                        </div>
+                        <div class="slide-caption">
+                            <h3>Plant Health</h3>
+                            <p>Diagnose and treat plant problems with AI assistance</p>
+                        </div>
+                    </div>
+                    <div class="phone-slide">
+                        <div class="phone-mockup">
+                            <img src="/api/placeholder/280/550" alt="Plant care dashboard" class="phone-screen" />
+                        </div>
+                        <div class="slide-caption">
+                            <h3>Care Dashboard</h3>
+                            <p>Manage your entire collection from one screen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-dot active"></button>
+                    <button class="carousel-dot"></button>
+                    <button class="carousel-dot"></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2 class="section-title">Choose your growth plan</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card free">
+                        <div class="pricing-header">
+                            <h3>Seedling</h3>
+                            <p class="price">Free</p>
+                            <p class="description">Perfect for beginners</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Plant identification (limited to 5/month)</li>
+                            <li>Basic care instructions</li>
+                            <li>Plant collection tracking (up to 10 plants)</li>
+                            <li>Community access (read-only)</li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Download Free</a>
+                    </div>
+                    <div class="pricing-card premium">
+                        <div class="popular-tag">Most Popular</div>
+                        <div class="pricing-header">
+                            <h3>Bloom</h3>
+                            <p class="price">$7.99<span>/month</span></p>
+                            <p class="description">For serious plant parents</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Unlimited plant identification</li>
+                            <li>Advanced plant health diagnostics</li>
+                            <li>Unlimited collection tracking</li>
+                            <li>Smart location analysis</li>
+                            <li>Seasonal care guides</li>
+                            <li>Full community access</li>
+                            <li>30 Stemley Jim consultations/month</li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Try 7 Days Free</a>
+                    </div>
+                    <div class="pricing-card ultimate">
+                        <div class="pricing-header">
+                            <h3>Flourish</h3>
+                            <p class="price">$59.99<span>/year</span></p>
+                            <p class="description">Save 38% with annual plan</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>All Bloom features</li>
+                            <li>Priority plant identification</li>
+                            <li>Unlimited Stemley Jim consultations</li>
+                            <li>Advanced growth analytics</li>
+                            <li>Early access to new features</li>
+                            <li>Ad-free experience</li>
+                        </ul>
+                        <a href="#download" class="pricing-cta">Try 14 Days Free</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <div class="download-content">
+                    <h2>Ready to transform your relationship with plants?</h2>
+                    <p>Download LeafyLens today and join thousands of thriving plant parents.</p>
+                    <div class="download-buttons">
+                        <a href="#" class="app-store-button">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.8 4.6L13.4 3.2C13 2.8 12.4 2.7 11.9 3L8.9 5C8.3 5.4 8 6.1 8 6.9V17.1C8 17.9 8.3 18.6 8.9 19L11.9 21C12.4 21.3 13 21.2 13.4 20.8L14.8 19.4C15.1 19.1 15.3 18.8 15.3 18.4V5.6C15.3 5.2 15.1 4.9 14.8 4.6ZM19.3 12L17.5 10.2C17.3 10 17 10 16.8 10.2L16 11C15.8 11.2 15.8 11.5 16 11.7L17 12.7L16 13.7C15.8 13.9 15.8 14.2 16 14.4L16.8 15.2C17 15.4 17.3 15.4 17.5 15.2L19.3 13.4C19.5 13.2 19.5 12.8 19.3 12Z" fill="currentColor"/>
+                            </svg>
+                            <span>Download on<br><strong>App Store</strong></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="download-image">
+                    <img src="/api/placeholder/400/400" alt="LeafyLens app screens" class="app-screens" />
+                </div>
+            </div>
+            <div class="leaf-particles bottom">
+                <div class="leaf leaf-1"></div>
+                <div class="leaf leaf-2"></div>
+                <div class="leaf leaf-3"></div>
+                <div class="leaf leaf-4"></div>
+                <div class="leaf leaf-5"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <svg class="logo" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 5C14.5 5 10 9.5 10 15C10 20.5 14.5 25 20 25C25.5 25 30 20.5 30 15C30 9.5 25.5 5 20 5ZM20 22C16.1 22 13 18.9 13 15C13 11.1 16.1 8 20 8C23.9 8 27 11.1 27 15C27 18.9 23.9 22 20 22Z" fill="#8BC34A"/>
+                        <path d="M29 30C29 27.8 27.2 26 25 26H15C12.8 26 11 27.8 11 30V35H14V30C14 29.4 14.4 29 15 29H25C25.6 29 26 29.4 26 30V35H29V30Z" fill="#8BC34A"/>
+                        <path d="M20 3C16.5 3 13.4 4.3 11 6.3V4H8V12H16V9H12.8C14.7 7.1 17.2 6 20 6C26.1 6 31 10.9 31 17C31 23.1 26.1 28 20 28V31C27.7 31 34 24.7 34 17C34 9.3 27.7 3 20 3Z" fill="#8BC34A"/>
+                    </svg>
+                    <span class="logo-text">LeafyLens</span>
+                </div>
+                <div class="footer-nav">
+                    <div class="footer-nav-column">
+                        <h4>App</h4>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#download">Download</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#careers">Careers</a></li>
+                            <li><a href="#press">Press</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="#help">Help Center</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-nav-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#terms">Terms</a></li>
+                            <li><a href="#privacy">Privacy</a></li>
+                            <li><a href="#cookies">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LeafyLens. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Register ScrollTrigger plugin
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate feature cards on scroll
+            gsap.utils.toArray('.feature-card').forEach((card, i) => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                    },
+                    delay: i * 0.1
+                });
+            });
+            
+            // Animate testimonials
+            gsap.from('.testimonial', {
+                x: 100,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: '.testimonials',
+                    start: "top 70%",
+                }
+            });
+            
+            // Animate pricing cards
+            gsap.utils.toArray('.pricing-card').forEach((card, i) => {
+                gsap.from(card, {
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                    },
+                    delay: i * 0.2
+                });
+            });
+            
+            // Animate leaf particles
+            gsap.to('.leaf', {
+                y: 'random(-100, 100)',
+                x: 'random(-100, 100)',
+                rotation: 'random(-180, 180)',
+                duration: 'random(15, 30)',
+                repeat: -1,
+                ease: "none",
+                yoyo: true
+            });
+
+            // Testimonial slider functionality
+            const testimonialDots = document.querySelectorAll('.testimonial-dot');
+            const testimonials = document.querySelectorAll('.testimonial');
+            
+            testimonialDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    // Update active dot
+                    testimonialDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    
+                    // Move slider
+                    testimonials.forEach((testimonial, i) => {
+                        testimonial.style.transform = `translateX(${(index - i) * 100}%)`;
+                        testimonial.style.opacity = i === index ? '1' : '0';
+                    });
+                });
+            });
+            
+            // App showcase carousel functionality
+            const carouselDots = document.querySelectorAll('.carousel-dot');
+            const slides = document.querySelectorAll('.phone-slide');
+            
+            carouselDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    // Update active dot
+                    carouselDots.forEach(d => d.classList.remove('active'));
+                    dot.classList.add('active');
+                    
+                    // Update active slide
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    slides[index].classList.add('active');
+                });
+            });
+            
+            // Sticky header
+            const header = document.querySelector('header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+                    header.style.padding = '1rem 0';
+                } else {
+                    header.style.boxShadow = 'none';
+                    header.style.padding = '1.5rem 0';
+                }
+            });
+            
+            // Smooth scroll for navigation links
+            document.querySelectorAll('nav a, .cta-button, .pricing-cta').forEach(link => {
+                link.addEventListener('click', e => {
+                    if (link.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href');
+                        if (targetId !== '#') {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                const headerHeight = header.offsetHeight;
+                                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
-</html>
+</html>100% {
+            opacity: 0.6;
+            transform: translate(5%, 5%) scale(1.1);
+          }
+        }
 
+        .leaf-particles {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        .leaf-particles.bottom {
+          top: auto;
+          bottom: 0;
+        }
+
+        .leaf {
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238BC34A' opacity='0.2'%3E%3Cpath d='M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A4.49,4.49,0,0,0,8,20a4,4,0,0,0,4-4,4,4,0,0,0-4-4,4.18,4.18,0,0,0-1.26.2L9.8,5.4A2.85,2.85,0,0,1,12,3,8.57,8.57,0,0,1,18.75,7a2.34,2.34,0,0,1,.25,1h1A3.89,3.89,0,0,0,16,4a8.3,8.3,0,0,0-7,4Z'/%3E%3C/svg%3E");
+          background-size: contain;
+          background-repeat: no-repeat;
+          opacity: 0.3;
+        }
+
+        .leaf-1 {
+          top: 15%;
+          left: 10%;
+          transform: rotate(45deg) scale(1.5);
+        }
+
+        .leaf-2 {
+          top: 45%;
+          left: 15%;
+          transform: rotate(-30deg) scale(2.2);
+        }
+
+        .leaf-3 {
+          top: 20%;
+          right: 20%;
+          transform: rotate(10deg) scale(1.8);
+        }
+
+        .leaf-4 {
+          bottom: 25%;
+          right: 10%;
+          transform: rotate(-70deg) scale(1.3);
+        }
+
+        .leaf-5 {
+          bottom: 10%;
+          left: 30%;
+          transform: rotate(20deg) scale(1.6);
+        }
+
+        /* Features Section */
+        .features {
+          padding: 100px 0;
+          background: linear-gradient(to bottom, var(--leaf-dark), var(--leaf-medium));
+          position: relative;
+        }
+
+        .feature-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .feature-card {
+          background: var(--leaf-card-bg);
+          border-radius: 20px;
+          padding: 2.5rem 2rem;
+          transition: all 0.3s ease;
+          border: 1px solid var(--leaf-card-border);
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 15px 40px var(--leaf-shadow);
+          border-color: var(--leaf-accent);
+        }
+
+        .feature-icon {
+          background: rgba(139, 195, 74, 0.1);
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1.5rem;
+          position: relative;
+        }
+
+        .feature-icon::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          border: 2px solid var(--leaf-accent);
+          opacity: 0.3;
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+          50% {
+            transform: scale(1.2);
+            opacity: 0.1;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+        }
+
+        .feature-card h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: var(--leaf-accent-light);
+        }
+
+        .feature-card p {
+          color: var(--leaf-text-muted);
+          font-size: 1rem;
+          line-height: 1.7;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+          padding: 100px 0;
+          background: var(--leaf-medium);
+          position: relative;
+        }
+
+        .testimonial-slider {
+          display: flex;
+          overflow: hidden;
+          margin-bottom: 2rem;
+        }
+
+        .testimonial {
+          min-width: 100%;
+          padding: 0 1rem;
+        }
+
+        .testimonial-content {
+          background: var(--leaf-card-bg);
+          border-radius: 20px;
+          padding: 3rem;
+          position: relative;
+          border: 1px solid var(--leaf-card-border);
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+        }
+
+        .testimonial-content::before {
+          content: '"';
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          font-size: 5rem;
+          color: var(--leaf-accent);
+          opacity: 0.2;
+          font-family: 'Georgia', serif;
+          line-height: 1;
+        }
+
+        .testimonial-content p {
+          font-size: 1.2rem;
+          line-height: 1.8;
+          margin-bottom: 1.5rem;
+          position: relative;
+          z-index: 1;
+        }
+
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .author-name {
+          font-weight: 600;
+          font-size: 1.1rem;
+          color: var(--leaf-accent-light);
+        }
+
+        .plant-count {
+          font-size: 0.9rem;
+          color: var(--leaf-text-muted);
+          background: rgba(139, 195, 74, 0.1);
+          padding: 0.3rem 0.8rem;
+          border-radius: 20px;
+        }
+
+        .testimonial-controls {
+          display: flex;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .testimonial-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--leaf-text-muted);
+          opacity: 0.3;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+          background: var(--leaf-accent);
+          opacity: 1;
+          transform: scale(1.2);
+        }
+
+        /* App Showcase Section */
+        .app-showcase {
+          padding: 100px 0;
+          background: linear-gradient(to bottom, var(--leaf-medium), var(--leaf-dark));
+        }
+
+        .phone-carousel {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 3rem;
+          position: relative;
+          height: 650px;
+        }
+
+        .phone-slide {
+          position: absolute;
+          opacity: 0;
+          transform: translateX(50px);
+          transition: all 0.5s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .phone-slide.active {
+          opacity: 1;
+          transform: translateX(0);
+        }
+
+        .slide-caption {
+          text-align: center;
+          margin-top: 2rem;
+        }
+
+        .slide-caption h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          color: var(--leaf-accent-light);
+        }
+
+        .slide-caption p {
+          color: var(--leaf-text-muted);
+        }
+
+        .carousel-controls {
+          display: flex;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .carousel-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--leaf-text-muted);
+          opacity: 0.3;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+          background: var(--leaf-accent);
+          opacity: 1;
+          transform: scale(1.2);
+        }
+
+        /* Pricing Section */
+        .pricing {
+          padding: 100px 0;
+          background: var(--leaf-dark);
+        }
+
+        .pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+
+        .pricing-card {
+          background: var(--leaf-card-bg);
+          border-radius: 20px;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 10px 30px var(--leaf-shadow);
+          border: 1px solid var(--leaf-card-border);
+          position: relative;
+        }
+
+        .pricing-card.premium {
+          transform: scale(1.05);
+          z-index: 2;
+          box-shadow: 0 15px 40px var(--leaf-shadow);
+          border-color: var(--leaf-accent);
+        }
+
+        .popular-tag {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: var(--leaf-gradient);
+          color: white;
+          padding: 0.3rem 1rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          box-shadow: 0 5px 15px rgba(139, 195, 74, 0.3);
+        }
+
+        .pricing-header {
+          padding: 2.5rem 2rem;
+          text-align: center;
+          background: linear-gradient(to bottom, var(--leaf-light), var(--leaf-medium));
+          border-bottom: 1px solid var(--leaf-card-border);
+        }
+
+        .pricing-header h3 {
+          font-size: 1.8rem;
+          font-weight: 700;
+          margin-bottom: 0.5rem;
+          color: var(--leaf-accent-light);
+        }
+
+        .pricing-header .price {
+          font-size: 3rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+        }
+
+        .pricing-header .price span {
+          font-size: 1rem;
+          font-weight: 400;
+          color: var(--leaf-text-muted);
+        }
+
+        .pricing-header .description {
+          font-size: 0.9rem;
+          color: var(--leaf-text-muted);
+        }
+
+        .pricing-features {
+          padding: 2rem;
+        }
+
+        .pricing-features li {
+          padding: 0.8rem 0;
+          color: var(--leaf-text);
+          display: flex;
+          align-items: center;
+          line-height: 1.4;
+        }
+
+        .pricing-features li::before {
+          content: '✓';
+          margin-right: 0.8rem;
+          color: var(--leaf-accent);
+          font-weight: bold;
+        }
+
+        .pricing-cta {
+          display: block;
+          margin: 0 2rem 2rem;
+          text-align: center;
+          background: var(--leaf-gradient);
+          color: white;
+          padding: 1rem;
+          border-radius: 30px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 5px 15px var(--leaf-shadow);
+        }
+
+        .pricing-cta:hover {
+          background: var(--leaf-gradient-dark);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+        }
+
+        .pricing-card.free .pricing-cta,
+        .pricing-card.ultimate .pricing-cta {
+          background: transparent;
+          border: 2px solid var(--leaf-accent);
+          color: var(--leaf-accent);
+        }
+
+        .pricing-card.free .pricing-cta:hover,
+        .pricing-card.ultimate .pricing-cta:hover {
+          background: var(--leaf-gradient);
+          color: white;
+        }
+
+        /* Download Section */
+        .download {
+          padding: 100px 0;
+          background: linear-gradient(to top, var(--leaf-darker), var(--leaf-dark));
+          position: relative;
+          overflow: hidden;
+        }
+
+        .download .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+
+        .download-content {
+          z-index: 2;
+        }
+
+        .download-content h2 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          line-height: 1.2;
+          margin-bottom: 1.5rem;
+        }
+
+        .download-content p {
+          font-size: 1.1rem;
+          margin-bottom: 2.5rem;
+          color: var(--leaf-text-muted);
+        }
+
+        .download-buttons {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .app-store-button {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background: var(--leaf-medium);
+          color: white;
+          padding: 0.8rem 1.5rem;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          border: 1px solid var(--leaf-card-border);
+        }
+
+        .app-store-button span {
+          font-size: 0.8rem;
+          line-height: 1.2;
+        }
+
+        .app-store-button strong {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        .app-store-button:hover {
+          background: var(--leaf-light);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px var(--leaf-shadow);
+          color: white;
+          border-color: var(--leaf-accent);
+        }
+
+        .download-image {
+          position: relative;
+          text-align: center;
+        }
+
+        .app-screens {
+          border-radius: 20px;
+          box-shadow: 0 20px 50px var(--leaf-shadow);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer */
+        footer {
+          background: var(--leaf-darker);
+          padding: 80px 0 30px;
+          border-top: 1px solid var(--leaf-card-border);
+        }
+
+        .footer-top {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: 4rem;
+          margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.5rem;
+        }
+
+        .footer-nav {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 2rem;
+        }
+
+        .footer-nav-column h4 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+          color: var(--leaf-accent-light);
+        }
+
+        .footer-nav-column ul li {
+          margin-bottom: 0.8rem;
+        }
+
+        .footer-nav-column ul li a {
+          color: var(--leaf-text-muted);
+          transition: all 0.3s ease;
+        }
+
+        .footer-nav-column ul li a:hover {
+          color: var(--leaf-accent);
+        }
+
+        .footer-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-bottom p {
+          color: var(--leaf-text-muted);
+          font-size: 0.9rem;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .social-link {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: var(--leaf-medium);
+          color: var(--leaf-text-muted);
+          transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+          background: var(--leaf-gradient);
+          color: white;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 15px var(--leaf-shadow);
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 1024px) {
+          .hero-content h1 {
+            font-size: 2.8rem;
+          }
+          
+          .feature-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
+          .pricing-grid {
+            grid-template-columns: repeat(1, 1fr);
+            max-width: 500px;
+            margin: 0 auto;
+          }
+          
+          .pricing-card.premium {
+            transform: scale(1);
+          }
+          
+          .download .container {
+            grid-template-columns: 1fr;
+          }
+          
+          .download-image {
+            grid-row: 1;
+            margin-bottom: 3rem;
+          }
+          
+          .footer-top {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          
+          .footer-nav {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          header {
+            padding: 1rem 0;
+          }
+          
+          nav ul {
+            gap: 1rem;
+          }
+          
+          .hero .container {
+            grid-template-columns: 1fr;
+          }
+          
+          .hero-content {
+            text-align: center;
+            margin-bottom: 3rem;
+          }
+          
+          .hero-content p {
+            margin: 0 auto 2.5rem;
+          }
+          
+          .hero-cta {
+            justify-content: center;
+          }
+          
+          .feature-grid {
+            grid-template-columns: 1fr;
+            max-width: 400px;
+            margin: 0 auto;
+          }
+          
+          .testimonial-content {
+            padding: 2rem;
+          }
+          
+          .footer-nav {
+            grid-template-columns: 1fr;
+          }
+          
+          .footer-bottom {
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: center;
+          }
+        }
+
+        @media screen and (max-width: 480px) {
+          header .container {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          
+          nav ul {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          
+          .hero-content h1 {
+            font-size: 2.2rem;
+          }
+          
+          .section-title {
+            font-size: 2rem;
+          }
+          
+          .phone-mockup {
+            width: 250px;
+            height: 500px;
+          }
+          
+          .testimonial-content p {
+            font-size: 1rem;
+          }
+          
+          .download-content h2 {
+            font-size: 2rem;
+          }
+        }
