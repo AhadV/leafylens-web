@@ -1,17 +1,162 @@
 /* styles.css */
+
+/* Root color variables for the dark moody theme */
+:root {
+  --background: #121A16;
+  --surface: rgba(26, 61, 42, 0.9);
+  --primary: #2D6A4F;
+  --secondary: #95D5B2;
+  --accent: #D8B365;
+  --gold: #D4AF37;
+  --text: #FFFFFF;
+  --text-secondary: rgba(149, 213, 178, 0.7);
+  --font: 'Helvetica Neue', sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #e8f5e9;
+  margin: 0;
+  font-family: var(--font);
+  background-color: var(--background);
+  color: var(--text);
+  line-height: 1.6;
 }
-h1 {
-    color: #2e7d32;
-}
+
 a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
+  color: var(--accent);
+  text-decoration: none;
 }
+
+header.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--surface);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--gold);
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.navbar li a {
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.navbar li a:hover {
+  color: var(--accent);
+}
+
+.hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: linear-gradient(to bottom, var(--surface), var(--background));
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--gold);
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background-color: var(--primary);
+  color: var(--text);
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--secondary);
+  color: var(--background);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background-color: var(--background);
+}
+
+.feature {
+  background-color: var(--surface);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.feature h2 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.community, .download {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--surface);
+}
+
+.community h2,
+.download h2 {
+  color: var(--gold);
+  font-size: 2rem;
+}
+
+.community p,
+.download p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.store-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.store {
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.store:hover {
+  background-color: var(--secondary);
+  color: var(--background);
+}
+
+footer.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: var(--background);
+}
+
