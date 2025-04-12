@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LeafyLens — Instantly Identify & Care for Plants</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --background: #121A16;
-      --surface: rgba(26, 61, 42, 0.9);
+      --background: #f8fbf9;
+      --surface: #ffffff;
       --primary: #2D6A4F;
       --secondary: #95D5B2;
       --accent: #D8B365;
       --gold: #D4AF37;
-      --text: #FFFFFF;
-      --text-secondary: rgba(149, 213, 178, 0.7);
+      --text: #1A3D2A;
+      --text-secondary: #5c7d72;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --radius: 12px;
     }
 
     * {
@@ -23,7 +26,7 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', sans-serif;
       background-color: var(--background);
       color: var(--text);
       line-height: 1.6;
@@ -31,8 +34,8 @@
 
     header {
       background-color: var(--surface);
-      padding: 1.5rem 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      padding: 1.2rem 0;
+      box-shadow: var(--shadow);
     }
 
     nav {
@@ -41,105 +44,138 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
 
     .logo {
       font-size: 1.8rem;
-      font-weight: bold;
-      color: var(--gold);
+      font-weight: 700;
+      color: var(--primary);
     }
 
     .nav-links {
       list-style: none;
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .nav-links li a {
       text-decoration: none;
-      color: var(--secondary);
+      color: var(--text-secondary);
       font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links li a:hover {
+      color: var(--primary);
     }
 
     .hero {
-      padding: 5rem 1rem;
       text-align: center;
-      background: linear-gradient(to bottom right, var(--primary), var(--background));
+      padding: 6rem 1rem 4rem;
+      background: linear-gradient(to bottom, #ffffff, #f0f5f1);
     }
 
     .hero h1 {
       font-size: 3rem;
-      color: var(--gold);
+      color: var(--primary);
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       color: var(--text-secondary);
-      max-width: 700px;
-      margin: 1rem auto;
+      max-width: 720px;
+      margin: 1.2rem auto;
     }
 
     .cta-btn {
-      margin-top: 2rem;
-      background-color: var(--accent);
-      color: var(--background);
-      border: none;
+      background-color: var(--primary);
+      color: #fff;
       padding: 0.9rem 2rem;
+      border: none;
       font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
+      font-weight: 600;
+      border-radius: var(--radius);
       cursor: pointer;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
       transition: background-color 0.3s ease;
     }
 
     .cta-btn:hover {
-      background-color: var(--gold);
+      background-color: #40916c;
+    }
+
+    .badges {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background-color: var(--surface);
+      border: 1px solid #e0e6e3;
+      border-radius: var(--radius);
+      padding: 0.7rem 1.2rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      box-shadow: var(--shadow);
     }
 
     .features {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      background-color: var(--background);
       padding: 4rem 1rem;
       gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .feature {
       background-color: var(--surface);
       padding: 2rem;
-      border-radius: 12px;
-      max-width: 320px;
+      border-radius: var(--radius);
+      max-width: 300px;
       text-align: center;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      box-shadow: var(--shadow);
     }
 
     .feature h2 {
-      color: var(--secondary);
-      margin-bottom: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
     }
 
     .feature p {
       color: var(--text-secondary);
+      font-size: 0.95rem;
     }
 
     .social-proof {
-      background-color: var(--primary);
+      background-color: #f9fcfa;
       padding: 4rem 1rem;
-      color: var(--text);
       text-align: center;
     }
 
     .social-proof h2 {
-      color: var(--gold);
       font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
     }
 
-    .social-proof p {
-      color: var(--text-secondary);
-      margin-top: 1rem;
+    .review {
+      max-width: 700px;
+      margin: 0 auto 1rem;
       font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .stars {
+      font-size: 1.5rem;
+      color: gold;
     }
 
     footer {
@@ -160,46 +196,51 @@
         <li><a href="#">Identify</a></li>
         <li><a href="#">Care Hub</a></li>
         <li><a href="#">Community</a></li>
-        <li><a href="#">Quiz</a></li>
         <li><a href="#">Journal</a></li>
       </ul>
     </nav>
   </header>
 
   <section class="hero">
-    <h1>Know Your Plant. Help It Thrive.</h1>
-    <p>Instantly identify any plant, learn how to care for it, and join a vibrant community of growers — all powered by a single photo and a love for greenery.</p>
-    <button class="cta-btn">Start Your Plant Journey</button>
+    <h1>Your Plant’s Best Friend</h1>
+    <p>Instantly identify plants, diagnose problems, and receive tailored care advice. LeafyLens makes plant parenting joyful, easy, and beautiful.</p>
+    <button class="cta-btn">Download the App</button>
+    <div class="badges">
+      <div class="badge">⭐ 4.9 Stars on the App Store</div>
+      <div class="badge">Trusted by 500,000+ Plant Lovers</div>
+      <div class="badge">#1 Plant ID App in 15+ Countries</div>
+    </div>
   </section>
 
   <section class="features">
     <div class="feature">
-      <h2>🌿 Instant ID</h2>
-      <p>Snap a photo and let our subtle intelligence identify any plant within seconds — it's like magic, but botanically trained.</p>
+      <h2>📸 Instant Plant ID</h2>
+      <p>Take a photo. Get a name. It’s that simple. Powered by cutting-edge recognition tech with botanical intelligence.</p>
     </div>
     <div class="feature">
-      <h2>💧 Care Guidance</h2>
-      <p>Personalized watering, light, and seasonal checklists that keep every plant happy, healthy, and growing strong.</p>
+      <h2>🌤️ Care Tips that Work</h2>
+      <p>Get reminders, watering guides, and lighting suggestions made for your home’s real conditions.</p>
     </div>
     <div class="feature">
-      <h2>📔 Journal Growth</h2>
-      <p>Document progress, add milestones, and reflect on your leafy journey through photo logs and notes.</p>
+      <h2>🧠 Ask Stemley Jim</h2>
+      <p>AI meets empathy. Ask your friendly in-app expert for help any time, no matter how small the question.</p>
     </div>
     <div class="feature">
-      <h2>🌱 AI Plant Chat</h2>
-      <p>Ask Stemley Jim anything — your personal plant expert who never sleeps (or overwaters).</p>
+      <h2>🏆 Gamify Your Greenery</h2>
+      <p>Earn badges, track streaks, and level up as your plant care improves. Growth you can see and feel.</p>
     </div>
   </section>
 
   <section class="social-proof">
-    <h2>Loved by Over 500,000 Growers Worldwide</h2>
-    <p>"I thought I was killing my Monstera, but LeafyLens saved it. Now it's thriving again!" — @plantdad_tx</p>
-    <p>"Finally an app that feels smart, looks gorgeous, and actually helps my plants grow." — Grace W., Verified User</p>
+    <h2>Don’t Just Take Our Word for It</h2>
+    <p class="stars">★★★★★</p>
+    <p class="review">"I started with two plants. Now I have twenty. LeafyLens is like a plant whisperer in my pocket!" — Emily S.</p>
+    <p class="review">"The app is so calming and fun to use. It actually made me fall in love with plant care." — Jordan A.</p>
+    <p class="review">"Every detail feels premium. This is THE plant app." — App Store Review</p>
   </section>
 
   <footer>
-    <p>&copy; 2025 LeafyLens. Made with 🍃 for people who love plants.</p>
+    <p>&copy; 2025 LeafyLens. Rooted in nature, built for you.</p>
   </footer>
 </body>
 </html>
-
