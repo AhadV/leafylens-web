@@ -11,16 +11,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #F8FFF6;
-            --primary-color: #2A5F45;
-            --secondary-color: #95D5B2;
-            --accent-color: #D8B365;
-            --text-color: #333333;
-            --text-secondary: #4A4A4A;
-            --light-green: #E0F5E9;
-            --bright-green: #52B788;
-            --gold-gradient: linear-gradient(135deg, #D8B365, #E8C585);
-        }
+    --bg-color: #F0F9E8;
+    --primary-color: #1B4332;
+    --secondary-color: #52B788;
+    --accent-color: #E9C46A;
+    --text-color: #333333;
+    --text-secondary: #4A4A4A;
+    --light-green: #D8F3DC;
+    --bright-green: #2D6A4F;
+    --gold-gradient: linear-gradient(135deg, #E9C46A, #F4A261);
+}
         
         * {
             margin: 0;
@@ -29,14 +29,16 @@
         }
         
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z" fill="none" stroke="%2395D5B2" stroke-width="0.5" opacity="0.3"/><path d="M20,20 C20,10 30,0 40,0 C50,0 60,10 60,20 C60,30 50,40 40,40 C30,40 20,30 20,20 Z" fill="none" stroke="%2395D5B2" stroke-width="0.3" opacity="0.2"/><path d="M70,80 C70,70 80,60 90,60 C100,60 110,70 110,80 C110,90 100,100 90,100 C80,100 70,90 70,80 Z" fill="none" stroke="%2395D5B2" stroke-width="0.3" opacity="0.2"/></svg>');
-            background-attachment: fixed;
-        }
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image: linear-gradient(to right, rgba(216, 243, 220, 0.5) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(216, 243, 220, 0.5) 1px, transparent 1px);
+    background-size: 30px 30px;
+    background-attachment: fixed;
+}
         
         h1, h2, h3, h4, h5 {
             font-family: 'Nunito', sans-serif;
@@ -2071,29 +2073,29 @@
                 height: 200px;
             }
         }
+.social-link {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-5px);
+    color: var(--primary-color);
+    animation: bounce 0.3s ease;
+}
     </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
-    <div class="plant-img plant-1" aria-hidden="true">
-        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
-    </div>
-    <div class="plant-img plant-2" aria-hidden="true">
-        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
-    </div>
-    <div class="plant-img plant-3" aria-hidden="true">
-        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
-    </div>
-    <div class="plant-img plant-4" aria-hidden="true">
-        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
-    </div>
-    
-    <div class="leaf-accent leaf-1" aria-hidden="true"></div>
-    <div class="leaf-accent leaf-2" aria-hidden="true"></div>
-    <div class="leaf-accent leaf-3" aria-hidden="true"></div>
-    <div class="leaf-accent leaf-4" aria-hidden="true"></div>
-    
     <header>
         <div class="container nav-container">
             <a href="#" class="logo" aria-label="LeafyLens Home">
@@ -2149,7 +2151,7 @@
                             <div class="stat">
                                 <span class="stat-icon"><i class="fas fa-leaf"></i></span>
                                 <span class="stat-number">380,000+</span>
-                                <span class="stat-label">Plant Species Identified</span>
+                                <span class="stat-label">Plant Species Database</span>
                             </div>
                             <div class="stat">
                                 <div class="rating-stars">
@@ -2164,7 +2166,7 @@
                             </div>
                             <div class="stat">
                                 <span class="stat-icon"><i class="fas fa-heart"></i></span>
-                                <span class="stat-number">100,000+</span>
+                                <span class="stat-number">10,000+</span>
                                 <span class="stat-label">Happy Plant Parents</span>
                             </div>
                         </div>
@@ -2817,32 +2819,32 @@
                 </a>
             </div>
             <div class="footer-column">
-                <h3 class="footer-title">Features</h3>
-                <ul class="footer-links">
-                    <li class="footer-link"><a href="#"><i class="fas fa-leaf" aria-hidden="true"></i> Identify</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-book" aria-hidden="true"></i> Journal</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-users" aria-hidden="true"></i> Community</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3 class="footer-title">Resources</h3>
-                <ul class="footer-links">
-                    <li class="footer-link"><a href="#"><i class="fas fa-rss" aria-hidden="true"></i> Blog</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Support</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3 class="footer-title">Connect</h3>
-                <div class="social-links">
-                    <a href="#" class="https://www.instagram.com/leafylensapp" aria-label="Instagram">
-                        <i class="fab fa-instagram" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="https://www.tiktok.com/@leafylensapp" aria-label="TikTok">
-                        <i class="fab fa-tiktok" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
+    <h3 class="footer-title">Features</h3>
+    <ul class="footer-links">
+        <li class="footer-link"><a href="#features"><i class="fas fa-leaf" aria-hidden="true"></i> Identify</a></li>
+        <li class="footer-link"><a href="#features"><i class="fas fa-book" aria-hidden="true"></i> Journal</a></li>
+        <li class="footer-link"><a href="#testimonials"><i class="fas fa-users" aria-hidden="true"></i> Community</a></li>
+    </ul>
+</div>
+<div class="footer-column">
+    <h3 class="footer-title">Resources</h3>
+    <ul class="footer-links">
+        <li class="footer-link"><a href="#blog"><i class="fas fa-rss" aria-hidden="true"></i> Blog</a></li>
+        <li class="footer-link"><a href="#faq"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a></li>
+        <li class="footer-link"><a href="#contact"><i class="fas fa-headset" aria-hidden="true"></i> Support</a></li>
+    </ul>
+</div>
+           <div class="footer-column">
+    <h3 class="footer-title">Connect</h3>
+    <div class="social-links">
+        <a href="https://www.instagram.com/leafylensapp" class="social-link" aria-label="Instagram">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a href="https://www.tiktok.com/@leafylensapp" class="social-link" aria-label="TikTok">
+            <i class="fab fa-tiktok" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
         </div>
         
         <div class="copyright">
@@ -3157,5 +3159,6 @@
     </script>
 </body>
 </html>
+
 
 
