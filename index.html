@@ -7,21 +7,19 @@
     <title>LeafyLens - Your Ultimate Plant Companion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --bg-color: #F8FFF6;
-            --primary-color: #2D6A4F;
+            --primary-color: #2A5F45;
             --secondary-color: #95D5B2;
             --accent-color: #D8B365;
             --text-color: #333333;
-            --text-secondary: #666666;
+            --text-secondary: #4A4A4A;
             --light-green: #E0F5E9;
             --bright-green: #52B788;
-            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --gold-gradient: linear-gradient(135deg, #D8B365, #E8C585);
         }
         
         * {
@@ -42,7 +40,7 @@
         
         h1, h2, h3, h4, h5 {
             font-family: 'Nunito', sans-serif;
-            font-weight: 800;
+            font-weight: 900;
         }
         
         .text-shadow {
@@ -238,8 +236,8 @@
         }
         
         .cta-button {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--gold-gradient);
+            color: var(--primary-color);
             padding: 0.75rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
@@ -248,13 +246,29 @@
             display: inline-block;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(45, 106, 79, 0.2);
+            box-shadow: 0 4px 15px rgba(216, 179, 101, 0.3);
         }
         
         .cta-button:hover {
-            background-color: var(--accent-color);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(216, 179, 101, 0.3);
+            background: var(--primary-color);
+            color: #FFFFFF;
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        .cta-button.loading::after {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #FFF;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         .pulse {
@@ -356,88 +370,51 @@
             flex: 1.2;
             position: relative;
             height: 540px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            perspective: 1000px;
         }
         
-        .screenshot-wrapper {
+        .screenshot-container {
             position: relative;
             width: 280px;
-            height: 560px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            animation: rotateScreenshots 30s infinite ease-in-out;
+        }
+        
+        @keyframes rotateScreenshots {
+            0%, 20% {
+                transform: rotateY(0deg);
+            }
+            25%, 45% {
+                transform: rotateY(180deg);
+            }
+            50%, 70% {
+                transform: rotateY(360deg);
+            }
+            75%, 95% {
+                transform: rotateY(540deg);
+            }
+            100% {
+                transform: rotateY(720deg);
+            }
         }
         
         .hero-screenshot {
             width: 100%;
-            height: auto;
-            max-height: 100%;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+            backface-visibility: hidden;
             position: absolute;
             top: 0;
             left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
-        .hero-screenshot.active {
-            opacity: 1;
-            z-index: 2;
+        .hero-screenshot:nth-child(1) {
+            transform: rotateY(0deg);
         }
         
-        .screenshot-controls {
-            position: absolute;
-            bottom: -20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            z-index: 3;
-        }
-        
-        .screenshot-indicator {
-            width: 40px;
-            height: 6px;
-            background-color: rgba(149, 213, 178, 0.3);
-            border-radius: 3px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .screenshot-indicator.active {
-            background-color: var(--primary-color);
-            width: 60px;
-        }
-        
-        .screenshot-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 3;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .screenshot-arrow:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .screenshot-prev {
-            left: -20px;
-        }
-        
-        .screenshot-next {
-            right: -20px;
+        .hero-screenshot:nth-child(2) {
+            transform: rotateY(180deg);
         }
         
         .app-store-badge {
@@ -465,18 +442,22 @@
         
         .stats {
             display: flex;
-            margin-top: 3rem;
-            gap: 2.5rem;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: nowrap;
         }
         
         .stat {
             background-color: white;
-            padding: 1.2rem 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             text-align: center;
+            width: 220px;
+            border: 1px solid var(--light-green);
             transition: all 0.3s ease;
-            border: 2px solid rgba(149, 213, 178, 0.2);
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -501,16 +482,14 @@
         
         .stat:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary-color);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
         }
         
         .stat-number {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
             color: var(--primary-color);
-            display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
         
         .rating-stars {
@@ -527,12 +506,11 @@
         
         .stat-label {
             font-size: 1rem;
-            font-weight: 600;
             color: var(--text-secondary);
         }
         
         .section {
-            padding: 6rem 0;
+            padding: 7rem 0;
             position: relative;
         }
         
@@ -553,22 +531,13 @@
             transform: rotate(45deg);
         }
         
-        .leaf-bottom-left {
-            bottom: -100px;
-            left: -100px;
-            width: 400px;
-            height: 400px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,80 C40,95 80,90 90,60 C95,40 90,20 70,10 C50,0 20,10 10,30 C0,60 10,70 20,80 Z" fill="%2352B788" opacity="0.5"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            transform: rotate(180deg);
-        }
-        
         .section-title-container {
             text-align: center;
             position: relative;
             margin-bottom: 3rem;
             padding-bottom: 1.5rem;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><path d="M0,5 Q25,0 50,5 Q75,10 100,5" stroke="%2352B788" stroke-width="2" fill="none"/></svg>') 1;
+            border-bottom: 2px solid;
         }
         
         .section-icon {
@@ -585,11 +554,12 @@
         }
         
         .section-title {
-            font-size: 2.8rem;
+            font-size: 3rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
+            letter-spacing: 0.5px;
         }
         
         .section-title::after {
@@ -615,7 +585,7 @@
         .features-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            gap: 3rem;
             margin-top: 4rem;
         }
         
@@ -637,9 +607,13 @@
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: perspective(1000px) rotateY(3deg);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border-color: var(--secondary-color);
+            border-image: linear-gradient(to bottom, var(--secondary-color), var(--accent-color)) 1;
+        }
+        
+        .feature-card:first-child {
+            background: linear-gradient(135deg, #F8FFF6, #E0F5E9);
         }
         
         .feature-icon {
@@ -670,7 +644,7 @@
         }
         
         .feature-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
@@ -702,7 +676,7 @@
         }
         
         .screenshots-section {
-            padding: 8rem 0;
+            padding: 7rem 0;
             background-color: var(--light-green);
             position: relative;
             overflow: hidden;
@@ -721,22 +695,25 @@
         }
         
         .screenshots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            display: flex;
+            overflow-x: auto;
+            gap: 1.5rem;
             margin-top: 4rem;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
             position: relative;
             z-index: 1;
         }
         
         .screenshot-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            flex: 0 0 auto;
+            width: 300px;
+            scroll-snap-align: center;
+            background: transparent;
+            transform: translateY(0);
             transition: all 0.5s ease;
             opacity: 0;
-            transform: translateY(30px);
         }
         
         .screenshot-card.animate {
@@ -745,26 +722,42 @@
         }
         
         .screenshot-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: perspective(1000px) rotateY(3deg);
+        }
+        
+        .device-frame {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: url('https://developer.apple.com/assets/elements/devices/iphone-16-pro-black-titanium-front.png') no-repeat center;
+            background-size: contain;
+            transform: rotate(-5deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .device-frame:hover {
+            transform: rotate(0) scale(1.05);
         }
         
         .screenshot-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 20px;
+            position: absolute;
+            top: 10%;
+            left: 6%;
+            width: 88%;
+            height: 80%;
+            object-fit: cover;
+            border-radius: 10px;
         }
         
         .screenshot-title {
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
+            font-size: 1.2rem;
             color: var(--primary-color);
+            text-align: center;
+            margin-top: 1rem;
         }
         
         .testimonials {
-            padding: 8rem 0;
+            padding: 7rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -783,22 +776,22 @@
         .testimonial-carousel {
             margin-top: 4rem;
             position: relative;
-            max-width: 800px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
         }
         
-        .testimonial-slide {
-            display: none;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .testimonial-track {
+            display: flex;
+            overflow: hidden;
+            transition: transform 0.5s ease;
         }
         
-        .testimonial-slide.active {
-            display: block;
-            opacity: 1;
-            transform: translateX(0);
+        .testimonial-slide {
+            min-width: 33.333%;
+            padding: 0 15px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
         }
         
         .testimonial-card {
@@ -811,10 +804,17 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .testimonial-card.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .testimonial-card:hover {
-            transform: translateY(-10px);
+            transform: perspective(1000px) rotateY(3deg);
             border-color: var(--secondary-color);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
         }
@@ -825,45 +825,39 @@
             margin-bottom: 1.5rem;
             flex-grow: 1;
             position: relative;
-            padding-top: 1.5rem;
-            line-height: 1.8;
+            padding-top: 2rem;
         }
         
         .testimonial-content::before {
-            content: """;
+            content: "\f10d";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
             position: absolute;
-            top: -15px;
+            top: -10px;
             left: -5px;
-            font-size: 5rem;
+            font-size: 3rem;
             color: var(--secondary-color);
-            opacity: 0.2;
-            font-family: "Georgia", serif;
+            opacity: 0.3;
         }
         
         .testimonial-author {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 1rem;
         }
         
         .author-photo {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid var(--secondary-color);
+            border: 2px solid var(--secondary-color);
         }
         
         .author-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-        
-        .author-emoji {
-            font-size: 2rem;
-            line-height: 1;
         }
         
         .author-info {
@@ -873,20 +867,20 @@
         .author-name {
             font-weight: 700;
             color: var(--primary-color);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 0.2rem;
         }
         
         .author-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-secondary);
         }
         
         .testimonial-controls {
             display: flex;
             justify-content: center;
-            margin-top: 2.5rem;
-            gap: 1.5rem;
+            margin-top: 3rem;
+            gap: 1rem;
         }
         
         .testimonial-control {
@@ -898,7 +892,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             color: var(--primary-color);
             font-size: 1.2rem;
@@ -914,47 +908,35 @@
         .testimonial-indicators {
             display: flex;
             justify-content: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             gap: 0.5rem;
         }
         
         .testimonial-indicator {
-            width: 40px;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(149, 213, 178, 0.3);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .testimonial-indicator.active {
             background: var(--primary-color);
-            width: 60px;
+            transform: scale(1.3);
         }
         
         .blog-section {
-            padding: 8rem 0;
+            padding: 7rem 0;
             background-color: var(--bg-color);
             position: relative;
         }
         
-        .blog-carousel {
-            position: relative;
-            max-width: 900px;
-            margin: 4rem auto 0;
-        }
-        
-        .blog-slide {
-            display: none;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        
-        .blog-slide.active {
-            display: block;
-            opacity: 1;
-            transform: translateX(0);
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
         }
         
         .blog-card {
@@ -963,21 +945,28 @@
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
             transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .blog-card.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .blog-card:hover {
-            transform: translateY(-10px);
+            transform: perspective(1000px) rotateY(3deg);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
         }
         
         .blog-image {
             width: 100%;
-            height: 300px;
+            height: 200px;
             object-fit: cover;
         }
         
         .blog-content {
-            padding: 2rem;
+            padding: 1.5rem;
         }
         
         .blog-date {
@@ -988,7 +977,7 @@
         }
         
         .blog-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
             color: var(--text-color);
         }
@@ -996,7 +985,6 @@
         .blog-excerpt {
             color: var(--text-secondary);
             margin-bottom: 1.5rem;
-            line-height: 1.8;
         }
         
         .blog-link {
@@ -1021,104 +1009,15 @@
             transform: translateX(5px);
         }
         
-        .blog-controls {
-            display: flex;
-            justify-content: center;
-            margin-top: 2.5rem;
-            gap: 1.5rem;
-        }
-        
-        .blog-control {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-        
-        .blog-control:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(45, 106, 79, 0.2);
-        }
-        
-        .blog-indicators {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-            gap: 0.5rem;
-        }
-        
-        .blog-indicator {
-            width: 40px;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(149, 213, 178, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .blog-indicator.active {
-            background: var(--primary-color);
-            width: 60px;
-        }
-        
         .faq-section {
-            padding: 8rem 0;
+            padding: 7rem 0;
             background-color: var(--light-green);
             position: relative;
         }
         
-        .faq-categories {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 3rem;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .faq-category {
-            padding: 0.8rem 1.5rem;
-            background-color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            color: var(--text-secondary);
-            border: 2px solid transparent;
-        }
-        
-        .faq-category:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .faq-category.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 20px rgba(45, 106, 79, 0.2);
-        }
-        
         .faq-grid {
             max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-group {
-            display: none;
-        }
-        
-        .faq-group.active {
-            display: block;
+            margin: 4rem auto 0;
         }
         
         .faq-item {
@@ -1127,13 +1026,6 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             overflow: hidden;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .faq-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
         .faq-question {
@@ -1147,29 +1039,19 @@
             transition: all 0.3s ease;
         }
         
-        .faq-question-icon {
-            margin-right: 15px;
-            color: var(--accent-color);
-            font-size: 1.2rem;
-        }
-        
-        .faq-question-text {
-            flex: 1;
-        }
-        
-        .faq-question-arrow {
-            transition: all 0.3s ease;
-        }
-        
         .faq-question:hover {
             background-color: var(--light-green);
+        }
+        
+        .faq-question i {
+            transition: all 0.3s ease;
         }
         
         .faq-question.active {
             background-color: var(--light-green);
         }
         
-        .faq-question.active .faq-question-arrow {
+        .faq-question.active i {
             transform: rotate(180deg);
         }
         
@@ -1177,21 +1059,16 @@
             padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
-            transition: all 0.5s ease;
-        }
-        
-        .faq-answer-content {
-            padding-bottom: 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
+            transition: all 0.3s ease;
         }
         
         .faq-answer.active {
-            max-height: 1000px;
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
         }
         
         .contact-section {
-            padding: 8rem 0;
+            padding: 7rem 0;
             position: relative;
             overflow: hidden;
         }
@@ -1228,9 +1105,9 @@
         
         .contact-form-container {
             flex: 1;
-            background: white;
+            background: linear-gradient(135deg, #FFFFFF, #F8FFF6);
             border-radius: 20px;
-            padding: 2.5rem;
+            padding: 3rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
         
@@ -1255,7 +1132,6 @@
         
         .form-row {
             margin-bottom: 1.5rem;
-            position: relative;
         }
         
         .form-label {
@@ -1268,20 +1144,20 @@
         .form-input,
         .form-textarea {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid #eee;
-            border-radius: 10px;
+            padding: 1.2rem;
+            border: 2px solid #E0F5E9;
+            border-radius: 12px;
             font-family: 'Quicksand', sans-serif;
             font-size: 1rem;
             transition: all 0.3s ease;
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, #F9F9F9, #E0F5E9);
         }
         
         .form-input:focus,
         .form-textarea:focus {
             border-color: var(--secondary-color);
             outline: none;
-            box-shadow: 0 0 0 5px rgba(149, 213, 178, 0.1);
+            box-shadow: 0 0 10px rgba(149, 213, 178, 0.2);
         }
         
         .form-textarea {
@@ -1306,11 +1182,14 @@
             z-index: 1;
             font-weight: 600;
             transition: all 0.3s ease;
-            position: relative;
         }
         
         .toggle-option.active {
             color: white;
+        }
+        
+        .toggle-option:hover {
+            transform: scale(1.05);
         }
         
         .toggle-slider {
@@ -1319,8 +1198,7 @@
             height: 100%;
             background-color: var(--primary-color);
             border-radius: 10px;
-            transition: all 0.3s ease;
-            z-index: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
         
         .toggle-slider.right {
@@ -1332,16 +1210,6 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
             font-style: italic;
-            transition: all 0.3s ease;
-            height: 20px;
-        }
-        
-        .form-message.error {
-            color: #e53935;
-        }
-        
-        .form-message.success {
-            color: var(--primary-color);
         }
         
         .form-response {
@@ -1350,27 +1218,24 @@
             border-radius: 10px;
             text-align: center;
             font-weight: 600;
-            transition: all 0.3s ease;
-            transform: translateY(20px);
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-        }
-        
-        .form-response.show {
-            transform: translateY(0);
-            opacity: 1;
-            height: auto;
+            display: none;
         }
         
         .form-response.success {
             background-color: var(--light-green);
             color: var(--primary-color);
+            display: block;
         }
         
         .form-response.error {
             background-color: #ffedeb;
             color: #e53935;
+            display: block;
+        }
+        
+        .form-input.error,
+        .form-textarea.error {
+            border-color: #e53935;
         }
         
         .promise {
@@ -1385,7 +1250,7 @@
         }
         
         .coming-soon {
-            padding: 8rem 0;
+            padding: 7rem 0;
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--bright-green) 100%);
             color: white;
             position: relative;
@@ -1461,7 +1326,7 @@
         }
         
         .cta-section {
-            padding: 6rem 0;
+            padding: 7rem 0;
             text-align: center;
             background-color: var(--light-green);
             position: relative;
@@ -1575,6 +1440,14 @@
             display: inline-block;
         }
         
+        .footer-title::before {
+            content: "\f4d8";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+        
         .footer-title::after {
             content: "";
             position: absolute;
@@ -1591,7 +1464,7 @@
         }
         
         .footer-link {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
         
         .footer-link a {
@@ -1620,8 +1493,8 @@
         }
         
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
@@ -1636,6 +1509,12 @@
             background-color: var(--accent-color);
             transform: translateY(-5px);
             color: var(--primary-color);
+            animation: bounce 0.3s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
         
         .copyright {
@@ -1649,7 +1528,6 @@
             z-index: 1;
         }
         
-        /* Mobile navigation */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -1732,8 +1610,7 @@
             color: var(--accent-color);
             transform: translateX(5px);
         }
-
-        /* Image lazy loading */
+        
         .lazy-image {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -1743,7 +1620,6 @@
             opacity: 1;
         }
         
-        /* Accessibility improvements */
         .skip-link {
             position: absolute;
             top: -40px;
@@ -1758,185 +1634,7 @@
         .skip-link:focus {
             top: 0;
         }
-
-        /* Error states for form inputs */
-        .form-input.error,
-        .form-textarea.error {
-            border-color: #e53935;
-        }
         
-        /* Animations */
-        @keyframes float {
-            0% {
-                transform: translateY(0px) rotate(-5deg);
-            }
-            50% {
-                transform: translateY(-15px) rotate(-5deg);
-            }
-            100% {
-                transform: translateY(0px) rotate(-5deg);
-            }
-        }
-        
-        @keyframes floatRight {
-            0% {
-                transform: translateY(0px) rotate(7deg);
-            }
-            50% {
-                transform: translateY(-10px) rotate(7deg);
-            }
-            100% {
-                transform: translateY(0px) rotate(7deg);
-            }
-        }
-        
-        /* Notification Popup */
-        .notify-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1002;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .notify-popup.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .notify-content {
-            width: 90%;
-            max-width: 500px;
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            position: relative;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.5s ease;
-        }
-        
-        .notify-popup.show .notify-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .notify-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .notify-close:hover {
-            background-color: #f5f5f5;
-            color: var(--text-color);
-        }
-        
-        .notify-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .notify-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-        
-        .notify-header h3 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-        }
-        
-        .notify-popup p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-        
-        .notify-form-row {
-            display: flex;
-            margin-bottom: 1rem;
-        }
-        
-        .notify-form-row input {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid #eee;
-            border-radius: 10px 0 0 10px;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 1rem;
-        }
-        
-        .notify-form-row input:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-        }
-        
-        .notify-submit {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 0 10px 10px 0;
-            padding: 0 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .notify-submit:hover {
-            background-color: var(--accent-color);
-        }
-        
-        .notify-message {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            min-height: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .notify-message.error {
-            color: #e53935;
-        }
-        
-        .notify-message.success {
-            color: var(--primary-color);
-        }
-        
-        .notify-image {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .notify-image img {
-            max-width: 200px;
-            border-radius: 10px;
-        }
-        
-        /* Responsive Design */
         @media (max-width: 1100px) {
             .hero-title {
                 font-size: 3.2rem;
@@ -1972,6 +1670,10 @@
             
             .stats {
                 justify-content: center;
+            }
+            
+            .testimonial-slide {
+                min-width: 50%;
             }
             
             .coming-soon-inner {
@@ -2036,6 +1738,10 @@
                 margin-right: auto;
             }
             
+            .testimonial-slide {
+                min-width: 100%;
+            }
+            
             .coming-soon-title {
                 font-size: 2.2rem;
             }
@@ -2044,41 +1750,33 @@
                 font-size: 2.2rem;
             }
             
-            .notify-form-row {
+            .screenshots-grid {
                 flex-direction: column;
+                overflow-x: visible;
             }
             
-            .notify-form-row input {
-                border-radius: 10px;
-                margin-bottom: 1rem;
-            }
-            
-            .notify-submit {
-                border-radius: 10px;
-                padding: 1rem;
+            .screenshot-card {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Skip link for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <!-- Plant Images as Background Elements -->
     <div class="plant-img plant-1" aria-hidden="true">
-        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Decorative Plant">
+        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Decorative Plant" loading="lazy">
     </div>
     <div class="plant-img plant-2" aria-hidden="true">
-        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Decorative Plant">
+        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Decorative Plant" loading="lazy">
     </div>
     <div class="plant-img plant-3" aria-hidden="true">
-        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Decorative Plant">
+        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Decorative Plant" loading="lazy">
     </div>
     <div class="plant-img plant-4" aria-hidden="true">
-        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Decorative Plant">
+        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Decorative Plant" loading="lazy">
     </div>
     
-    <!-- Leaf Accents -->
     <div class="leaf-accent leaf-1" aria-hidden="true"></div>
     <div class="leaf-accent leaf-2" aria-hidden="true"></div>
     <div class="leaf-accent leaf-3" aria-hidden="true"></div>
@@ -2102,7 +1800,6 @@
         </div>
     </header>
     
-    <!-- Mobile Menu -->
     <div class="mobile-menu">
         <div class="mobile-menu-header">
             <div class="mobile-menu-logo">
@@ -2157,25 +1854,9 @@
                     </div>
                     
                     <div class="hero-devices">
-                        <div class="screenshot-wrapper">
-                            <img src="https://i.imgur.com/2knj83a.png" alt="Plant Identification" class="hero-screenshot active lazy-image">
-                            <img src="https://i.imgur.com/iMCTbDG.png" alt="Plant Care Hub" class="hero-screenshot lazy-image">
-                            <img src="https://i.imgur.com/G3CEerH.png" alt="Plant Personality Quiz" class="hero-screenshot lazy-image">
-                            <img src="https://i.imgur.com/k4CNeeL.png" alt="My Garden Collection" class="hero-screenshot lazy-image">
-                            
-                            <div class="screenshot-controls">
-                                <span class="screenshot-indicator active" data-index="0"></span>
-                                <span class="screenshot-indicator" data-index="1"></span>
-                                <span class="screenshot-indicator" data-index="2"></span>
-                                <span class="screenshot-indicator" data-index="3"></span>
-                            </div>
-                            
-                            <button class="screenshot-arrow screenshot-prev" aria-label="Previous screenshot">
-                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                            </button>
-                            <button class="screenshot-arrow screenshot-next" aria-label="Next screenshot">
-                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                            </button>
+                        <div class="screenshot-container">
+                            <img src="https://i.imgur.com/2knj83a.png" alt="Plant Identification" class="hero-screenshot lazy-image">
+                            <img src="https://i.imgur.com/iMCTbDG.png" alt="Plant Identification in Use" class="hero-screenshot lazy-image">
                         </div>
                     </div>
                 </div>
@@ -2305,23 +1986,31 @@
                 
                 <div class="screenshots-grid">
                     <div class="screenshot-card">
-                        <img src="https://i.imgur.com/QdowMaN.png" alt="Garden View" class="screenshot-img lazy-image">
-                        <div class="screenshot-title">Garden View</div>
+                        <div class="device-frame">
+                            <img src="https://i.imgur.com/QdowMaN.png" alt="Garden View" class="screenshot-img lazy-image">
+                        </div>
+                        <div class="screenshot-title">Explore Your Garden</div>
                     </div>
                     
                     <div class="screenshot-card">
-                        <img src="https://i.imgur.com/k4CNeeL.png" alt="Full Garden View" class="screenshot-img lazy-image">
-                        <div class="screenshot-title">My Garden Collection</div>
+                        <div class="device-frame">
+                            <img src="https://i.imgur.com/k4CNeeL.png" alt="Full Garden View" class="screenshot-img lazy-image">
+                        </div>
+                        <div class="screenshot-title">Curate Your Collection</div>
                     </div>
                     
                     <div class="screenshot-card">
-                        <img src="https://i.imgur.com/lp0Klmx.png" alt="Care Hub" class="screenshot-img lazy-image">
-                        <div class="screenshot-title">Care Hub</div>
+                        <div class="device-frame">
+                            <img src="https://i.imgur.com/lp0Klmx.png" alt="Care Hub" class="screenshot-img lazy-image">
+                        </div>
+                        <div class="screenshot-title">Master Plant Care</div>
                     </div>
                     
                     <div class="screenshot-card">
-                        <img src="https://i.imgur.com/G3CEerH.png" alt="Plant Personality Quiz" class="screenshot-img lazy-image">
-                        <div class="screenshot-title">Plant Personality Quiz</div>
+                        <div class="device-frame">
+                            <img src="https://i.imgur.com/G3CEerH.png" alt="Plant Personality Quiz" class="screenshot-img lazy-image">
+                        </div>
+                        <div class="screenshot-title">Find Your Plant Match</div>
                     </div>
                 </div>
             </div>
@@ -2339,107 +2028,32 @@
                 </div>
                 
                 <div class="testimonial-carousel">
-                    <div class="testimonial-slide active">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                Best plant care app ever! It helped me save my Monstera from certain death. The identification feature is incredibly accurate and the care instructions are easy to follow. I've gone from a plant killer to a confident plant parent in just a few months!
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-photo">
-                                    <img src="https://i.imgur.com/dVhWZ3A.jpeg" alt="Emily's profile" class="lazy-image">
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">Emily</div>
-                                    <div class="author-title">Plant Enthusiast</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-slide">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                The identification feature is a game-changer for my garden! I've identified over 30 plants in my new home that the previous owner left behind. Now I know exactly how to care for each one, and they're all thriving. The seasonal care reminders are so helpful!
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-photo">
-                                    <img src="https://i.imgur.com/LY8MnCZ.jpeg" alt="Liam's profile" class="lazy-image">
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">Liam</div>
-                                    <div class="author-title">Beginner Gardener</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-slide">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                Plant ER feature diagnosed leaf spot on my fiddle leaf fig and the suggested treatment worked perfectly! This app has saved me so much money on replacing plants. The journal feature makes it easy to track progress and see how far they've come.
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-photo">
-                                    <img src="https://i.imgur.com/kSF3Qr1.jpeg" alt="Sophie's profile" class="lazy-image">
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">Sophie</div>
-                                    <div class="author-title">Indoor Plant Lover</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-slide">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                Water reminders keep my plants thriving. I've never had my orchids bloom so consistently as they do now that I'm following LeafyLens recommendations. The custom care schedules based on each plant's needs and my home's conditions are spot on!
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-photo">
-                                    <img src="https://i.imgur.com/r3sIq0f.jpeg" alt="Noah's profile" class="lazy-image">
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">Noah</div>
-                                    <div class="author-title">Orchid Collector</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-slide">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                Perfect for sending my plant sitter a schedule! All my babies survived my 3-week vacation thanks to the detailed care instructions I was able to share. The app even let me check in on their progress while I was away through the sitter's photo updates.
-                            </div>
-                            <div class="testimonial-author">
-                                <div class="author-photo">
-                                    <img src="https://i.imgur.com/9iplcop.jpeg" alt="Ava's profile" class="lazy-image">
-                                </div>
-                                <div class="author-info">
-                                    <div class="author-name">Ava</div>
-                                    <div class="author-title">Frequent Traveler</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="testimonial-track" aria-live="polite"></div>
                     
                     <div class="testimonial-controls">
-                        <button class="testimonial-control prev-testimonial" aria-label="Previous testimonial">
+                        <button class="testimonial-control prev-control" aria-label="Previous testimonial slide">
                             <i class="fas fa-chevron-left" aria-hidden="true"></i>
                         </button>
-                        <button class="testimonial-control next-testimonial" aria-label="Next testimonial">
+                        <button class="testimonial-control next-control" aria-label="Next testimonial slide">
                             <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </button>
                     </div>
                     
-                    <div class="testimonial-indicators" aria-hidden="true">
-                        <span class="testimonial-indicator active" data-index="0"></span>
-                        <span class="testimonial-indicator" data-index="1"></span>
-                        <span class="testimonial-indicator" data-index="2"></span>
-                        <span class="testimonial-indicator" data-index="3"></span>
-                        <span class="testimonial-indicator" data-index="4"></span>
-                    </div>
+                    <div class="testimonial-indicators" aria-hidden="true"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="coming-soon">
+            <div class="container coming-soon-inner">
+                <div class="coming-soon-content">
+                    <h2 class="coming-soon-title">Coming Soon: HarvestHome</h2>
+                    <p class="coming-soon-description">Take your garden from soil to table with fresh, homegrown goodness! Our newest feature will guide you through growing your own fruits and vegetables, with personalized care schedules, harvest timing, and delicious recipes.</p>
+                    <a href="#notify" class="cta-button">Get Notified First</a>
+                </div>
+                
+                <div class="coming-soon-mockup">
+                    <img src="https://i.imgur.com/h1wlHtP.png" alt="HarvestHome Feature Preview" class="lazy-image">
                 </div>
             </div>
         </section>
@@ -2454,96 +2068,36 @@
                     <p class="section-subtitle">Grow your knowledge with our latest plant care articles</p>
                 </div>
                 
-                <div class="blog-carousel">
-                    <div class="blog-slide active">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/orO2fRy.png" alt="Winter Plant Care" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">April 10, 2025</div>
-                                <h3 class="blog-title">Winter Care for Tropical Houseplants</h3>
-                                <p class="blog-excerpt">Keep your tropical plants thriving during winter months with these essential care tips and tricks. From adjusting watering schedules to managing humidity levels, learn how to help your green friends survive the cold season.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/orO2fRy.png" alt="Winter Plant Care" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date">April 10, 2025</div>
+                            <h3 class="blog-title">Winter Care for Tropical Houseplants</h3>
+                            <p class="blog-excerpt">Keep your tropical plants thriving during winter months with these essential care tips and tricks.</p>
+                            <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     
-                    <div class="blog-slide">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/OAnAfmG.png" alt="Propagation Tips" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">April 6, 2025</div>
-                                <h3 class="blog-title">5 Foolproof Plant Propagation Methods</h3>
-                                <p class="blog-excerpt">Expand your plant family without spending a dime with these simple propagation techniques anyone can master. From water propagation to stem cuttings, discover the best methods for different plant varieties.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/OAnAfmG.png" alt="Propagation Tips" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date">April 6, 2025</div>
+                            <h3 class="blog-title">5 Foolproof Plant Propagation Methods</h3>
+                            <p class="blog-excerpt">Expand your plant family without spending a dime with these simple propagation techniques anyone can master.</p>
+                            <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     
-                    <div class="blog-slide">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/imzRfPu.png" alt="Plant Pests" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">April 2, 2025</div>
-                                <h3 class="blog-title">Natural Remedies for Common Plant Pests</h3>
-                                <p class="blog-excerpt">Keep your plants pest-free with these eco-friendly solutions that are safe for your plants and home. Learn how to identify different pests and which natural remedies work best for each type.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/imzRfPu.png" alt="Plant Pests" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date">April 2, 2025</div>
+                            <h3 class="blog-title">Natural Remedies for Common Plant Pests</h3>
+                            <p class="blog-excerpt">Keep your plants pest-free with these eco-friendly solutions that are safe for your plants and home.</p>
+                            <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
-                    
-                    <div class="blog-slide">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/Gizp315.jpeg" alt="Plant Lighting Guide" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">March 28, 2025</div>
-                                <h3 class="blog-title">Understanding Light Requirements for Houseplants</h3>
-                                <p class="blog-excerpt">Demystify terms like "bright indirect light" and "partial shade" with our comprehensive guide to plant lighting. Discover how to assess your home's natural light and choose plants that will thrive in your specific conditions.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-slide">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/opnm4x0.jpeg" alt="Soil Mixtures" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">March 20, 2025</div>
-                                <h3 class="blog-title">DIY Potting Soil: Custom Mixes for Every Plant</h3>
-                                <p class="blog-excerpt">Create the perfect growing medium for your plants with these DIY soil recipes. Learn which ingredients benefit different plant types and how to customize soil mixes for succulents, tropicals, orchids, and more.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-slide">
-                        <div class="blog-card">
-                            <img src="https://i.imgur.com/nBnf6w5.jpeg" alt="Plant Parenthood 101" class="blog-image lazy-image">
-                            <div class="blog-content">
-                                <div class="blog-date">March 15, 2025</div>
-                                <h3 class="blog-title">Plant Parenthood 101: Beginner-Friendly Plants</h3>
-                                <p class="blog-excerpt">Start your plant journey with confidence! Discover 10 nearly indestructible houseplants perfect for beginners, along with simple care tips to help them thrive. Even those with the brownest thumbs can succeed with these resilient varieties.</p>
-                                <a href="#" class="blog-link">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="blog-controls">
-                        <button class="blog-control prev-blog" aria-label="Previous blog post">
-                            <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                        </button>
-                        <button class="blog-control next-blog" aria-label="Next blog post">
-                            <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="blog-indicators" aria-hidden="true">
-                        <span class="blog-indicator active" data-index="0"></span>
-                        <span class="blog-indicator" data-index="1"></span>
-                        <span class="blog-indicator" data-index="2"></span>
-                        <span class="blog-indicator" data-index="3"></span>
-                        <span class="blog-indicator" data-index="4"></span>
-                        <span class="blog-indicator" data-index="5"></span>
-                   </div>
                 </div>
             </div>
         </section>
@@ -2558,172 +2112,64 @@
                     <p class="section-subtitle">Everything you need to know about LeafyLens</p>
                 </div>
                 
-                <div class="faq-categories">
-                    <div class="faq-category active" data-category="app-features">App Features</div>
-                    <div class="faq-category" data-category="technical">Technical</div>
-                    <div class="faq-category" data-category="account">Account & Setup</div>
-                </div>
-                
                 <div class="faq-grid">
-                    <div class="faq-group active" data-category="app-features">
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
-                                <i class="faq-question-icon fas fa-camera"></i>
-                                <span class="faq-question-text">How accurate is the plant identification?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-1">
-                                <div class="faq-answer-content">
-                                    LeafyLens identifies plants with over 95% accuracy for our database of 380,000+ plant species. Our AI has been trained on millions of plant images in various conditions (different lighting, angles, growth stages) to ensure reliable results even with partial plant photos. The more of the plant you can capture in your photo, the more accurate the identification will be.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
-                                <i class="faq-question-icon fas fa-heartbeat"></i>
-                                <span class="faq-question-text">How do the water reminders work?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-2">
-                                <div class="faq-answer-content">
-                                    After adding a plant to your collection, LeafyLens automatically suggests a watering schedule based on the plant species, season, and your local climate. You can customize this schedule if needed, and the app will send you timely notifications when it's time to water each plant. The system adapts over time based on your feedback about how your plants are doing!
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
-                                <i class="faq-question-icon fas fa-stethoscope"></i>
-                                <span class="faq-question-text">Can LeafyLens diagnose plant diseases?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-3">
-                                <div class="faq-answer-content">
-                                    Yes! Our Plant ER feature can identify over 50 common plant diseases and nutrient deficiencies. Simply take a photo of the affected area, and LeafyLens will provide a diagnosis along with a treatment plan to nurse your plant back to health. For complex cases, you can also connect with plant experts through our community for personalized advice.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
-                                <i class="faq-question-icon fas fa-share-alt"></i>
-                                <span class="faq-question-text">How does the plant sitter feature work?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-4">
-                                <div class="faq-answer-content">
-                                    The Plant Sitter feature generates a comprehensive care guide for all your plants that you can share with anyone watching your plants while you're away. It includes detailed watering schedules, light requirements, and special care instructions customized to each plant. You can share this via email, text, or a shareable link, and your sitter can even document care with photos that sync to your account.
-                                </div>
-                            </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+                            How accurate is the plant identification?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-1">
+                            LeafyLens identifies plants with over 95% accuracy for our database of 380,000+ plant species. Our AI has been trained on millions of plant images in various conditions to ensure reliable results.
                         </div>
                     </div>
                     
-                    <div class="faq-group" data-category="technical">
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
-                                <i class="faq-question-icon fas fa-mobile-alt"></i>
-                                <span class="faq-question-text">Is LeafyLens available for Android devices?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-5">
-                                <div class="faq-answer-content">
-                                    Currently, LeafyLens is only available for iOS devices. We're working hard on an Android version that we plan to release later this year. Sign up for our newsletter to be notified when it launches! If you'd like to be considered for our Android beta testing program, you can register your interest through our website.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
-                                <i class="faq-question-icon fas fa-wifi"></i>
-                                <span class="faq-question-text">Does LeafyLens work offline?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-6">
-                                <div class="faq-answer-content">
-                                    Most basic features of LeafyLens require an internet connection, especially the plant identification feature which uses our cloud-based AI system. However, you can access your plant collection, view care instructions, and check watering schedules in offline mode. Any changes or new photos you take while offline will sync once you're connected again.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-7">
-                                <i class="faq-question-icon fas fa-sync"></i>
-                                <span class="faq-question-text">How often is the plant database updated?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-7">
-                                <div class="faq-answer-content">
-                                    Our plant database is continuously expanding and is updated monthly with new species, care information, and identification improvements. Our team of botanists and plant specialists works with global partners to ensure our information is accurate and comprehensive. We also incorporate user feedback to improve care recommendations based on real-world results.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-8">
-                                <i class="faq-question-icon fas fa-lock"></i>
-                                <span class="faq-question-text">Is my plant data private and secure?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-8">
-                                <div class="faq-answer-content">
-                                    Yes, your plant data is private and secure. We use industry-standard encryption and security practices to protect your information. Photos you share in the community are visible to other users, but your personal collection remains private unless you specifically choose to share it. You can manage privacy settings for individual plants and control what information is shared.
-                                </div>
-                            </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+                            Is LeafyLens available for Android devices?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-2">
+                            Currently, LeafyLens is only available for iOS devices. We're working on an Android version for release later this year.
                         </div>
                     </div>
                     
-                    <div class="faq-group" data-category="account">
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-9">
-                                <i class="faq-question-icon fas fa-user"></i>
-                                <span class="faq-question-text">Do I need to create an account to use LeafyLens?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-9">
-                                <div class="faq-answer-content">
-                                    While you can use the basic plant identification feature without an account, creating a free account unlocks all features including plant tracking, care reminders, community access, and the ability to save your identified plants to your collection. Creating an account also ensures your plant data is backed up and accessible across multiple devices.
-                                </div>
-                            </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+                            Do I need to create an account to use LeafyLens?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-3">
+                            Basic plant identification works without an account, but a free account unlocks features like plant tracking, care reminders, and community access.
                         </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-10">
-                                <i class="faq-question-icon fas fa-home"></i>
-                                <span class="faq-question-text">Can I set up multiple plant locations or homes?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-10">
-                                <div class="faq-answer-content">
-                                    Yes, LeafyLens allows you to organize your plants by location. You can create multiple locations such as "Home," "Office," "Patio," etc., making it easy to manage plants in different environments. Each location can have its own light conditions and climate settings, which helps LeafyLens provide more accurate care recommendations for plants in those specific environments.
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+                            How do the water reminders work?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-4">
+                            LeafyLens suggests watering schedules based on plant species, season, and climate, with customizable notifications.
                         </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-11">
-                                <i class="faq-question-icon fas fa-share-square"></i>
-                                <span class="faq-question-text">Can I transfer my plants to a new phone?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-11">
-                                <div class="faq-answer-content">
-                                    Yes, when you set up LeafyLens on a new device, simply log in with your account credentials and all your plant data will automatically sync to your new device. This includes your plant collection, care history, photos, notes, and settings. Your data is securely stored in the cloud, making switching devices seamless.
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-5">
+                            Can LeafyLens diagnose plant diseases?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-5">
+                            Yes, our Plant ER feature identifies over 50 common plant diseases and provides treatment plans based on photos.
                         </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question" aria-expanded="false" aria-controls="faq-answer-12">
-                                <i class="faq-question-icon fas fa-users"></i>
-                                <span class="faq-question-text">Can multiple people manage the same plant collection?</span>
-                                <i class="faq-question-arrow fas fa-chevron-down"></i>
-                            </div>
-                            <div class="faq-answer" id="faq-answer-12">
-                                <div class="faq-answer-content">
-                                    Yes, with our Family Share feature, you can invite up to 5 household members to manage the same plant collection. Each person can access the shared plants, receive care reminders, and record care activities. This is perfect for households where plant care responsibilities are shared among family members or roommates.
-                                </div>
-                            </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-6">
+                            Is there a subscription fee for LeafyLens?
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-6">
+                            LeafyLens offers a free version and a premium subscription ($4..99/month or $39.99/year) for full access, including a 7-day free trial.
                         </div>
                     </div>
                 </div>
@@ -2743,7 +2189,7 @@
                 
                 <div class="contact-container">
                     <div class="contact-image">
-                        <img src="https://i.imgur.com/G3CEerH.png" alt="Contact Us" class="lazy-image">
+                        <img src="https://i.imgur.com/G3CEerH.png" alt="Contact Us" class="lazy-image" loading="lazy">
                     </div>
                     
                     <div class="contact-form-container">
@@ -2757,7 +2203,6 @@
                         
                         <form id="contact-form" novalidate>
                             <input type="hidden" name="form-type" value="feedback">
-                            <input type="hidden" name="recipient" value="stem@leafylens.app">
                             
                             <div class="form-row">
                                 <label for="name" class="form-label">Your Name</label>
@@ -2778,8 +2223,8 @@
                             </div>
                             
                             <div class="form-row feature-field" style="display: none;">
-                                <label for="feature-request" class="form-label">Describe Your Feature Request</label>
-                                <textarea id="feature-request" name="feature-request" class="form-textarea" aria-required="true"></textarea>
+                                <label for="message" class="form-label">Describe Your Feature Request</label>
+                                <textarea id="message" name="message" class="form-textarea" aria-required="true"></textarea>
                                 <div class="form-message" aria-live="polite"></div>
                             </div>
                             
@@ -2802,27 +2247,13 @@
             </div>
         </section>
         
-        <section class="coming-soon">
-            <div class="container coming-soon-inner">
-                <div class="coming-soon-content">
-                    <h2 class="coming-soon-title">Coming Soon: HomeHarvest</h2>
-                    <p class="coming-soon-description">Take your garden from soil to table with fresh, homegrown goodness! Our newest feature will guide you through growing your own fruits and vegetables, with personalized care schedules, harvest timing, and delicious recipes.</p>
-                    <a href="#notify" class="cta-button" id="notify-button">Get Notified First</a>
-                </div>
-                
-                <div class="coming-soon-mockup">
-                    <img src="https://i.imgur.com/h1wlHtP.png" alt="HomeHarvest Feature Preview" class="lazy-image">
-                </div>
-            </div>
-        </section>
-        
         <section class="cta-section" id="download">
             <div class="container cta-content">
                 <h2 class="cta-title">Ready to Turn Over a New Leaf?</h2>
                 <p class="cta-description">Join the plant revolution with LeafyLens and never let another fern fade away. Your plants deserve the best care possible!</p>
                 
                 <a href="#app-store" class="cta-app-store">
-                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store">
+                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" loading="lazy">
                 </a>
             </div>
         </section>
@@ -2834,8 +2265,29 @@
                 <div class="footer-logo">
                     <i class="fas fa-leaf" aria-hidden="true"></i> LeafyLens
                 </div>
-                <p class="footer-description">Turning plant dreams into leafy realities since 2023. Your plants deserve the best—give them LeafyLens.</p>
-                
+                <p class="footer-description">Turning plant dreams into leafy realities since 2023.</p>
+                <a href="#download" class="cta-app-store">
+                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" height="60" loading="lazy">
+                </a>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Features</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#"><i class="fas fa-leaf" aria-hidden="true"></i> Identify</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-book" aria-hidden="true"></i> Journal</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-users" aria-hidden="true"></i> Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Resources</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="#"><i class="fas fa-rss" aria-hidden="true"></i> Blog</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a></li>
+                    <li class="footer-link"><a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Connect</h3>
                 <div class="social-links">
                     <a href="#" class="social-link" aria-label="Instagram">
                         <i class="fab fa-instagram" aria-hidden="true"></i>
@@ -2845,368 +2297,217 @@
                     </a>
                 </div>
             </div>
-            
-            <div class="footer-column">
-                <h3 class="footer-title">Features</h3>
-                <ul class="footer-links">
-                    <li class="footer-link"><a href="#"><i class="fas fa-leaf" aria-hidden="true"></i> Plant Identification</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-heartbeat" aria-hidden="true"></i> Plant ER</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-tint" aria-hidden="true"></i> Water Tracker</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-magic" aria-hidden="true"></i> Smart Plant Pairing</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-users" aria-hidden="true"></i> Community</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 class="footer-title">Resources</h3>
-                <ul class="footer-links">
-                    <li class="footer-link"><a href="#"><i class="fas fa-book" aria-hidden="true"></i> Plant Care Guide</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-rss" aria-hidden="true"></i> Blog</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-headset" aria-hidden="true"></i> Support</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3 class="footer-title">Company</h3>
-                <ul class="footer-links">
-                    <li class="footer-link"><a href="#"><i class="fas fa-info-circle" aria-hidden="true"></i> About Us</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-briefcase" aria-hidden="true"></i> Careers</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-shield-alt" aria-hidden="true"></i> Privacy Policy</a></li>
-                    <li class="footer-link"><a href="#"><i class="fas fa-file-contract" aria-hidden="true"></i> Terms of Service</a></li>
-                </ul>
-            </div>
         </div>
         
         <div class="copyright">
-            <p>&copy; 2025 LeafyLens. All rights reserved. Plant puns intended.</p>
+            <p>© 2025 LeafyLens. All rights reserved.</p>
         </div>
     </footer>
     
-    <!-- Notification Popup -->
-    <div id="notify-popup" class="notify-popup">
-        <div class="notify-content">
-            <button class="notify-close" aria-label="Close notification popup">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="notify-header">
-                <i class="fas fa-seedling notify-icon"></i>
-                <h3>Be First to Experience HomeHarvest</h3>
-            </div>
-            <p>Join our exclusive early access list and be the first to grow your own fruits and vegetables with HomeHarvest!</p>
-            
-            <form id="notify-form" novalidate>
-                <input type="hidden" name="recipient" value="stem@leafylens.app">
-                <div class="notify-form-row">
-                    <label for="notify-email" class="sr-only">Email Address</label>
-                    <input type="email" id="notify-email" name="email" placeholder="Your email address" required>
-                    <button type="submit" class="notify-submit">Notify Me</button>
-                </div>
-                <div class="notify-message" aria-live="polite"></div>
-            </form>
-            
-            <div class="notify-image">
-                <img src="https://i.imgur.com/B47AFS1.jpeg" alt="HomeHarvest Preview" class="lazy-image">
-            </div>
-        </div>
-    </div>
-    
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Testimonial Data array
+            // Testimonial Data with profile images
             const testimonials = [
-                { 
-                    text: "Best plant care app ever! It helped me save my Monstera from certain death. The identification feature is incredibly accurate and the care instructions are easy to follow. I've gone from a plant killer to a confident plant parent in just a few months!", 
-                    author: "Emily", 
+                {
+                    text: "Best plant care app ever! It helped me save my Monstera from certain death. The identification feature is incredibly accurate.",
+                    author: "Emily",
                     title: "Plant Enthusiast",
-                    photo: "https://i.imgur.com/dVhWZ3A.jpeg" 
+                    photo: "https://i.imgur.com/QdowMaN.png"
                 },
-                { 
-                    text: "The identification feature is a game-changer for my garden! I've identified over 30 plants in my new home that the previous owner left behind. Now I know exactly how to care for each one, and they're all thriving. The seasonal care reminders are so helpful!", 
-                    author: "Liam", 
+                {
+                    text: "The identification feature is a game-changer for my garden! I've identified over 30 plants in my new home.",
+                    author: "Liam",
                     title: "Beginner Gardener",
-                    photo: "https://i.imgur.com/LY8MnCZ.jpeg" 
+                    photo: "https://i.imgur.com/k4CNeeL.png"
                 },
-                { 
-                    text: "Plant ER feature diagnosed leaf spot on my fiddle leaf fig and the suggested treatment worked perfectly! This app has saved me so much money on replacing plants. The journal feature makes it easy to track progress and see how far they've come.", 
-                    author: "Sophie", 
+                {
+                    text: "Plant ER feature diagnosed leaf spot on my fiddle leaf fig and the suggested treatment worked perfectly!",
+                    author: "Sophie",
                     title: "Indoor Plant Lover",
-                    photo: "https://i.imgur.com/kSF3Qr1.jpeg" 
+                    photo: "https://i.imgur.com/imzRfPu.png"
                 },
-                { 
-                    text: "Water reminders keep my plants thriving. I've never had my orchids bloom so consistently as they do now that I'm following LeafyLens recommendations. The custom care schedules based on each plant's needs and my home's conditions are spot on!", 
-                    author: "Noah", 
+                {
+                    text: "Water reminders keep my plants thriving. I've never had my orchids bloom so consistently.",
+                    author: "Noah",
                     title: "Orchid Collector",
-                    photo: "https://i.imgur.com/r3sIq0f.jpeg" 
+                    photo: "https://i.imgur.com/pLwrX2N.png"
                 },
-                { 
-                    text: "Perfect for sending my plant sitter a schedule! All my babies survived my 3-week vacation thanks to the detailed care instructions I was able to share. The app even let me check in on their progress while I was away through the sitter's photo updates.", 
-                    author: "Ava", 
+                {
+                    text: "Perfect for sending my plant sitter a schedule! All my babies survived my 3-week vacation.",
+                    author: "Ava",
                     title: "Frequent Traveler",
-                    photo: "https://i.imgur.com/9iplcop.jpeg" 
+                    photo: "https://i.imgur.com/5glXyxn.png"
+                },
+                {
+                    text: "The plant pairing feature helped me create the perfect arrangement for my living room. Everyone asks about it!",
+                    author: "Charlotte",
+                    title: "Home Decorator",
+                    photo: "https://i.imgur.com/6nQ0Tuh.png"
+                },
+                {
+                    text: "I've learned so much about my plants through this app! From novice to confident plant parent in months.",
+                    author: "Benjamin",
+                    title: "Self-taught Botanist",
+                    photo: "https://i.imgur.com/lp0Klmx.png"
+                },
+                {
+                    text: "The seasonal checklist saved my garden during summer heat! Reminder to move plants away from windows was crucial.",
+                    author: "Amelia",
+                    title: "Seasonal Gardener",
+                    photo: "https://i.imgur.com/MjIYnE4.png"
+                },
+                {
+                    text: "From a chronic plant killer to successful plant parent. This app has been life-changing for my green friends.",
+                    author: "William",
+                    title: "Former Plant Killer",
+                    photo: "https://i.imgur.com/OAnAfmG.png"
+                },
+                {
+                    text: "The community feature connected me with local plant lovers for cuttings swaps. Found rare plants I'd been searching for!",
+                    author: "Abigail",
+                    title: "Rare Plant Collector",
+                    photo: "https://i.imgur.com/89QI49Y.png"
                 }
             ];
             
-            // Blog data array
-            const blogPosts = [
-                {
-                    title: "Winter Care for Tropical Houseplants",
-                    date: "April 10, 2025",
-                    excerpt: "Keep your tropical plants thriving during winter months with these essential care tips and tricks. From adjusting watering schedules to managing humidity levels, learn how to help your green friends survive the cold season.",
-                    image: "https://i.imgur.com/orO2fRy.png"
-                },
-                {
-                    title: "5 Foolproof Plant Propagation Methods",
-                    date: "April 6, 2025",
-                    excerpt: "Expand your plant family without spending a dime with these simple propagation techniques anyone can master. From water propagation to stem cuttings, discover the best methods for different plant varieties.",
-                    image: "https://i.imgur.com/OAnAfmG.png"
-                },
-                {
-                    title: "Natural Remedies for Common Plant Pests",
-                    date: "April 2, 2025",
-                    excerpt: "Keep your plants pest-free with these eco-friendly solutions that are safe for your plants and home. Learn how to identify different pests and which natural remedies work best for each type.",
-                    image: "https://i.imgur.com/imzRfPu.png"
-                },
-                {
-                    title: "Understanding Light Requirements for Houseplants",
-                    date: "March 28, 2025",
-                    excerpt: "Demystify terms like "bright indirect light" and "partial shade" with our comprehensive guide to plant lighting. Discover how to assess your home's natural light and choose plants that will thrive in your specific conditions.",
-                    image: "https://i.imgur.com/Gizp315.jpeg"
-                },
-                {
-                    title: "DIY Potting Soil: Custom Mixes for Every Plant",
-                    date: "March 20, 2025",
-                    excerpt: "Create the perfect growing medium for your plants with these DIY soil recipes. Learn which ingredients benefit different plant types and how to customize soil mixes for succulents, tropicals, orchids, and more.",
-                    image: "https://i.imgur.com/opnm4x0.jpeg"
-                },
-                {
-                    title: "Plant Parenthood 101: Beginner-Friendly Plants",
-                    date: "March 15, 2025",
-                    excerpt: "Start your plant journey with confidence! Discover 10 nearly indestructible houseplants perfect for beginners, along with simple care tips to help them thrive. Even those with the brownest thumbs can succeed with these resilient varieties.",
-                    image: "https://i.imgur.com/nBnf6w5.jpeg"
+            // Render testimonials
+            const track = document.querySelector('.testimonial-track');
+            const indicators = document.querySelector('.testimonial-indicators');
+            let currentSlide = 0;
+            
+            function createTestimonialSlides() {
+                track.innerHTML = '';
+                indicators.innerHTML = '';
+                
+                let slidesPerView = 3;
+                if (window.innerWidth < 900 && window.innerWidth >= 600) {
+                    slidesPerView = 2;
+                } else if (window.innerWidth < 600) {
+                    slidesPerView = 1;
                 }
-            ];
-            
-            // Hero Section Screenshots
-            let currentScreenshot = 0;
-            const heroScreenshots = document.querySelectorAll('.hero-screenshot');
-            const screenshotIndicators = document.querySelectorAll('.screenshot-indicator');
-            
-            function showScreenshot(index) {
-                // Hide all screenshots
-                heroScreenshots.forEach(shot => {
-                    shot.classList.remove('active');
-                });
                 
-                // Show the selected screenshot
-                heroScreenshots[index].classList.add('active');
+                let slideCount = Math.ceil(testimonials.length / slidesPerView);
                 
-                // Update indicators
-                screenshotIndicators.forEach(indicator => {
-                    indicator.classList.remove('active');
-                });
-                screenshotIndicators[index].classList.add('active');
+                for (let i = 0; i < testimonials.length; i += slidesPerView) {
+                    const slide = document.createElement('div');
+                    slide.className = 'testimonial-slide';
+                    slide.setAttribute('aria-hidden', i !== 0 ? 'true' : 'false');
+                    
+                    for (let j = i; j < i + slidesPerView && j < testimonials.length; j++) {
+                        const testimonial = testimonials[j];
+                        
+                        const card = document.createElement('div');
+                        card.className = 'testimonial-card';
+                        card.innerHTML = `
+                            <div class="testimonial-content">
+                                ${testimonial.text}
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-photo">
+                                    <img src="${testimonial.photo}" alt="${testimonial.author}'s profile picture" loading="lazy"/>
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">${testimonial.author}</div>
+                                    <div class="author-title">${testimonial.title}</div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        slide.appendChild(card);
+                    }
+                    
+                    track.appendChild(slide);
+                    
+                    const indicator = document.createElement('div');
+                    indicator.className = 'testimonial-indicator';
+                    if (i === 0) indicator.className += ' active';
+                    indicator.dataset.slide = i / slidesPerView;
+                    indicators.appendChild(indicator);
+                }
                 
-                currentScreenshot = index;
+                currentSlide = 0;
+                updateSlidePosition();
             }
             
-            // Next screenshot
-            document.querySelector('.screenshot-next').addEventListener('click', function() {
-                const nextIndex = (currentScreenshot + 1) % heroScreenshots.length;
-                showScreenshot(nextIndex);
+            createTestimonialSlides();
+            
+            window.addEventListener('resize', function() {
+                createTestimonialSlides();
             });
             
-            // Previous screenshot
-            document.querySelector('.screenshot-prev').addEventListener('click', function() {
-                const prevIndex = (currentScreenshot - 1 + heroScreenshots.length) % heroScreenshots.length;
-                showScreenshot(prevIndex);
+            function updateSlidePosition() {
+                const slideWidth = document.querySelector('.testimonial-slide').offsetWidth;
+                track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+                
+                document.querySelectorAll('.testimonial-indicator').forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentSlide);
+                });
+                
+                document.querySelectorAll('.testimonial-slide').forEach((slide, index) => {
+                    slide.setAttribute('aria-hidden', index !== currentSlide ? 'true' : 'false');
+                });
+            }
+            
+            document.querySelector('.next-control').addEventListener('click', function() {
+                const slideCount = document.querySelectorAll('.testimonial-slide').length;
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlidePosition();
             });
             
-            // Click on screenshot indicator
-            screenshotIndicators.forEach(indicator => {
+            document.querySelector('.prev-control').addEventListener('click', function() {
+                const slideCount = document.querySelectorAll('.testimonial-slide').length;
+                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                updateSlidePosition();
+            });
+            
+            document.querySelectorAll('.testimonial-indicator').forEach(indicator => {
                 indicator.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    showScreenshot(index);
+                    currentSlide = parseInt(this.dataset.slide);
+                    updateSlidePosition();
                 });
             });
             
-            // Auto rotate screenshots every 5 seconds
             setInterval(function() {
-                const nextIndex = (currentScreenshot + 1) % heroScreenshots.length;
-                showScreenshot(nextIndex);
+                const slideCount = document.querySelectorAll('.testimonial-slide').length;
+                currentSlide = (currentSlide + 1) % slideCount;
+                updateSlidePosition();
             }, 5000);
             
-            // Testimonial Carousel
-            let currentTestimonial = 0;
-            const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-            const testimonialIndicators = document.querySelectorAll('.testimonial-indicator');
-            
-            function showTestimonial(index) {
-                // Hide all testimonials
-                testimonialSlides.forEach(slide => {
-                    slide.classList.remove('active');
-                });
-                
-                // Show the selected testimonial
-                testimonialSlides[index].classList.add('active');
-                
-                // Update indicators
-                testimonialIndicators.forEach(indicator => {
-                    indicator.classList.remove('active');
-                });
-                testimonialIndicators[index].classList.add('active');
-                
-                currentTestimonial = index;
-            }
-            
-            // Next testimonial
-            document.querySelector('.next-testimonial').addEventListener('click', function() {
-                const nextIndex = (currentTestimonial + 1) % testimonialSlides.length;
-                showTestimonial(nextIndex);
-            });
-            
-            // Previous testimonial
-            document.querySelector('.prev-testimonial').addEventListener('click', function() {
-                const prevIndex = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-                showTestimonial(prevIndex);
-            });
-            
-            // Click on testimonial indicator
-            testimonialIndicators.forEach(indicator => {
-                indicator.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    showTestimonial(index);
-                });
-            });
-            
-            // Auto rotate testimonials every 7 seconds
-            setInterval(function() {
-                const nextIndex = (currentTestimonial + 1) % testimonialSlides.length;
-                showTestimonial(nextIndex);
-            }, 7000);
-            
-            // Blog Carousel
-            let currentBlog = 0;
-            const blogSlides = document.querySelectorAll('.blog-slide');
-            const blogIndicators = document.querySelectorAll('.blog-indicator');
-            
-            function showBlog(index) {
-                // Hide all blog posts
-                blogSlides.forEach(slide => {
-                    slide.classList.remove('active');
-                });
-                
-                // Show the selected blog post
-                blogSlides[index].classList.add('active');
-                
-                // Update indicators
-                blogIndicators.forEach(indicator => {
-                    indicator.classList.remove('active');
-                });
-                blogIndicators[index].classList.add('active');
-                
-                currentBlog = index;
-            }
-            
-            // Next blog post
-            document.querySelector('.next-blog').addEventListener('click', function() {
-                const nextIndex = (currentBlog + 1) % blogSlides.length;
-                showBlog(nextIndex);
-            });
-            
-            // Previous blog post
-            document.querySelector('.prev-blog').addEventListener('click', function() {
-                const prevIndex = (currentBlog - 1 + blogSlides.length) % blogSlides.length;
-                showBlog(prevIndex);
-            });
-            
-            // Click on blog indicator
-            blogIndicators.forEach(indicator => {
-                indicator.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    showBlog(index);
-                });
-            });
-            
-            // Auto rotate blog posts every 8 seconds
-            setInterval(function() {
-                const nextIndex = (currentBlog + 1) % blogSlides.length;
-                showBlog(nextIndex);
-            }, 8000);
-            
-            // FAQ accordion and categories
-            const faqQuestions = document.querySelectorAll('.faq-question');
-            const faqCategories = document.querySelectorAll('.faq-category');
-            
-            // FAQ Question click
-            faqQuestions.forEach(question => {
+            // FAQ accordion
+            document.querySelectorAll('.faq-question').forEach(question => {
                 question.addEventListener('click', function() {
                     const expanded = this.getAttribute('aria-expanded') === 'true';
                     this.setAttribute('aria-expanded', !expanded);
                     this.classList.toggle('active');
                     const answer = this.nextElementSibling;
                     answer.classList.toggle('active');
-                    
-                    // Close other questions if this one is being opened
-                    if (!expanded) {
-                        faqQuestions.forEach(otherQuestion => {
-                            if (otherQuestion !== this && otherQuestion.getAttribute('aria-expanded') === 'true') {
-                                otherQuestion.setAttribute('aria-expanded', 'false');
-                                otherQuestion.classList.remove('active');
-                                otherQuestion.nextElementSibling.classList.remove('active');
-                            }
-                        });
-                    }
-                });
-            });
-            
-            // FAQ Category click
-            faqCategories.forEach(category => {
-                category.addEventListener('click', function() {
-                    const categoryId = this.getAttribute('data-category');
-                    
-                    // Update active category
-                    faqCategories.forEach(cat => {
-                        cat.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // Show corresponding FAQ group
-                    document.querySelectorAll('.faq-group').forEach(group => {
-                        group.classList.remove('active');
-                    });
-                    document.querySelector(`.faq-group[data-category="${categoryId}"]`).classList.add('active');
-                    
-                    // Close any open questions
-                    faqQuestions.forEach(question => {
-                        question.setAttribute('aria-expanded', 'false');
-                        question.classList.remove('active');
-                        question.nextElementSibling.classList.remove('active');
-                    });
                 });
             });
             
             // Contact form toggle
             document.querySelectorAll('.toggle-option').forEach(option => {
                 option.addEventListener('click', function() {
-                    const formType = this.getAttribute('data-form');
+                    const formType = this.dataset.form;
                     
-                    // Update toggle slider position
                     document.querySelector('.toggle-slider').classList.toggle('right', formType === 'feature');
                     
-                    // Update active toggle option
                     document.querySelectorAll('.toggle-option').forEach(opt => {
                         opt.classList.toggle('active', opt === this);
                         opt.setAttribute('aria-selected', opt === this);
                         opt.setAttribute('tabindex', opt === this ? '0' : '-1');
                     });
                     
-                    // Toggle form fields
                     document.querySelector('.feedback-field').style.display = formType === 'feedback' ? 'block' : 'none';
                     document.querySelector('.feature-field').style.display = formType === 'feature' ? 'block' : 'none';
                     
-                    // Update form type
                     document.querySelector('input[name="form-type"]').value = formType;
+                    
+                    // Clear form messages
+                    document.querySelectorAll('.form-message').forEach(msg => msg.innerText = '');
+                    document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                        input.classList.remove('error');
+                        input.setAttribute('aria-invalid', 'false');
+                    });
                 });
                 
                 option.addEventListener('keydown', function(e) {
@@ -3217,45 +2518,13 @@
                 });
             });
             
-            // Form validation and submission
-            function validateEmail(email) {
-                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return regex.test(email);
-            }
-            
-            function showError(input, message) {
-                const formRow = input.parentElement;
-                const errorElement = formRow.querySelector('.form-message');
-                errorElement.textContent = message;
-                errorElement.classList.add('error');
-                input.classList.add('error');
-                input.setAttribute('aria-invalid', 'true');
-            }
-            
-            function clearError(input) {
-                const formRow = input.parentElement;
-                const errorElement = formRow.querySelector('.form-message');
-                errorElement.textContent = '';
-                errorElement.classList.remove('error');
-                input.classList.remove('error');
-                input.setAttribute('aria-invalid', 'false');
-            }
-            
-            function showSuccess(input, message) {
-                const formRow = input.parentElement;
-                const errorElement = formRow.querySelector('.form-message');
-                errorElement.textContent = message;
-                errorElement.classList.add('success');
-                input.classList.remove('error');
-                input.setAttribute('aria-invalid', 'false');
-            }
-            
-            // Contact form validation and submission
+            // Contact form submission
             const contactForm = document.getElementById('contact-form');
             
-            contactForm.addEventListener('submit', function(e) {
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 let isValid = true;
+                const submitButton = this.querySelector('.cta-button');
                 
                 // Name validation
                 const nameInput = document.getElementById('name');
@@ -3268,163 +2537,89 @@
                 
                 // Email validation
                 const emailInput = document.getElementById('email');
-                if (!emailInput.value.trim()) {
-                    showError(emailInput, 'Please enter your email address');
-                    isValid = false;
-                } else if (!validateEmail(emailInput.value)) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailInput.value.trim() || !emailPattern.test(emailInput.value)) {
                     showError(emailInput, 'Please enter a valid email address');
                     isValid = false;
                 } else {
                     clearError(emailInput);
                 }
                 
-                // Message validation based on form type
-                const formType = document.querySelector('input[name="form-type"]').value;
-                if (formType === 'feedback') {
-                    const messageInput = document.getElementById('message');
-                    if (!messageInput.value.trim()) {
-                        showError(messageInput, 'Please enter your feedback');
-                        isValid = false;
-                    } else {
-                        clearError(messageInput);
-                    }
+                // Message validation
+                const messageInput = document.getElementById('message');
+                if (!messageInput.value.trim()) {
+                    showError(messageInput, 'Please enter your message');
+                    isValid = false;
                 } else {
-                    const featureInput = document.getElementById('feature-request');
-                    if (!featureInput.value.trim()) {
-                        showError(featureInput, 'Please describe your feature request');
-                        isValid = false;
-                    } else {
-                        clearError(featureInput);
-                    }
+                    clearError(messageInput);
                 }
                 
                 if (isValid) {
-                    // Simulate form submission - would be replaced with actual AJAX call
-                    const formData = new FormData(contactForm);
-                    const recipient = formData.get('recipient');
+                    submitButton.classList.add('loading');
+                    submitButton.disabled = true;
                     
-                    // Log form data (for demonstration)
-                    console.log('Form submitted to:', recipient);
-                    console.log('Form type:', formType);
-                    console.log('Name:', formData.get('name'));
-                    console.log('Email:', formData.get('email'));
-                    console.log('Message:', formType === 'feedback' ? formData.get('message') : formData.get('feature-request'));
-                    
-                    // Show success message
-                    const successResponse = document.querySelector('.form-response.success');
-                    successResponse.classList.add('show');
-                    
-                    // Hide error message if shown
-                    const errorResponse = document.querySelector('.form-response.error');
-                    errorResponse.classList.remove('show');
-                    
-                    // Reset form
-                    contactForm.reset();
-                    
-                    // Hide success message after 5 seconds
-                    setTimeout(function() {
-                        successResponse.classList.remove('show');
-                    }, 5000);
-                }
-            });
-            
-            // Real-time validation
-            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
-                input.addEventListener('blur', function() {
-                    if (this.getAttribute('required') === 'true' || this.hasAttribute('required')) {
-                        if (!this.value.trim()) {
-                            showError(this, `Please enter your ${this.getAttribute('placeholder') || this.previousElementSibling.textContent.toLowerCase()}`);
-                        } else if (this.type === 'email' && !validateEmail(this.value)) {
-                            showError(this, 'Please enter a valid email address');
+                    try {
+                        const response = await fetch('/api/contact', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: nameInput.value,
+                                email: emailInput.value,
+                                message: messageInput.value,
+                                formType: document.querySelector('input[name="form-type"]').value
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        if (response.ok) {
+                            document.querySelector('.form-response.success').style.display = 'block';
+                            document.querySelector('.form-response.success').setAttribute('aria-hidden', 'false');
+                            this.reset();
+                            document.querySelector('.feedback-field').style.display = 'block';
+                            document.querySelector('.feature-field').style.display = 'none';
+                            document.querySelector('input[name="form-type"]').value = 'feedback';
+                            document.querySelectorAll('.toggle-option').forEach(opt => {
+                                opt.classList.toggle('active', opt.dataset.form === 'feedback');
+                                opt.setAttribute('aria-selected', opt.dataset.form === 'feedback');
+                                opt.setAttribute('tabindex', opt.dataset.form === 'feedback' ? '0' : '-1');
+                            });
+                            document.querySelector('.toggle-slider').classList.remove('right');
+                            setTimeout(() => {
+                                document.querySelector('.form-response.success').style.display = 'none';
+                                document.querySelector('.form-response.success').setAttribute('aria-hidden', 'true');
+                            }, 5000);
                         } else {
-                            clearError(this);
+                            throw new Error(result.message);
                         }
+                    } catch (error) {
+                        document.querySelector('.form-response.error').style.display = 'block';
+                        document.querySelector('.form-response.error').setAttribute('aria-hidden', 'false');
+                        setTimeout(() => {
+                            document.querySelector('.form-response.error').style.display = 'none';
+                            document.querySelector('.form-response.error').setAttribute('aria-hidden', 'true');
+                        }, 5000);
+                    } finally {
+                        submitButton.classList.remove('loading');
+                        submitButton.disabled = false;
                     }
-                });
-            });
-            
-            // Notification Popup
-            const notifyButton = document.getElementById('notify-button');
-            const notifyPopup = document.getElementById('notify-popup');
-            const notifyClose = document.querySelector('.notify-close');
-            const notifyForm = document.getElementById('notify-form');
-            
-            // Open notification popup
-            notifyButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                notifyPopup.classList.add('show');
-                document.body.style.overflow = 'hidden';
-                setTimeout(() => {
-                    document.getElementById('notify-email').focus();
-                }, 300);
-            });
-            
-            // Close notification popup
-            notifyClose.addEventListener('click', function() {
-                notifyPopup.classList.remove('show');
-                document.body.style.overflow = '';
-            });
-            
-            // Close popup when clicking outside content
-            notifyPopup.addEventListener('click', function(e) {
-                if (e.target === notifyPopup) {
-                    notifyPopup.classList.remove('show');
-                    document.body.style.overflow = '';
                 }
             });
             
-            // Escape key to close popup
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && notifyPopup.classList.contains('show')) {
-                    notifyPopup.classList.remove('show');
-                    document.body.style.overflow = '';
-                }
-            });
+            function showError(input, message) {
+                const formRow = input.parentElement;
+                const errorElement = formRow.querySelector('.form-message');
+                errorElement.innerText = message;
+                input.classList.add('error');
+                input.setAttribute('aria-invalid', 'true');
+            }
             
-            // Notification form submission
-            notifyForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const emailInput = document.getElementById('notify-email');
-                const notifyMessage = document.querySelector('.notify-message');
-                
-                if (!emailInput.value.trim()) {
-                    notifyMessage.textContent = 'Please enter your email address';
-                    notifyMessage.classList.add('error');
-                    emailInput.classList.add('error');
-                    return;
-                }
-                
-                if (!validateEmail(emailInput.value)) {
-                    notifyMessage.textContent = 'Please enter a valid email address';
-                    notifyMessage.classList.add('error');
-                    emailInput.classList.add('error');
-                    return;
-                }
-                
-                // Simulate form submission - would be replaced with actual AJAX call
-                const formData = new FormData(notifyForm);
-                const recipient = formData.get('recipient');
-                
-                // Log form data (for demonstration)
-                console.log('Notification submitted to:', recipient);
-                console.log('Email:', formData.get('email'));
-                
-                // Show success message
-                notifyMessage.textContent = 'Thanks! You\'ll be the first to know when HomeHarvest launches.';
-                notifyMessage.classList.remove('error');
-                notifyMessage.classList.add('success');
-                emailInput.classList.remove('error');
-                
-                // Reset form after 3 seconds and close popup
-                setTimeout(function() {
-                    notifyForm.reset();
-                    notifyMessage.textContent = '';
-                    notifyMessage.classList.remove('success');
-                    notifyPopup.classList.remove('show');
-                    document.body.style.overflow = '';
-                }, 3000);
-            });
+            function clearError(input) {
+                const formRow = input.parentElement;
+                const errorElement = formRow.querySelector('.form-message');
+                errorElement.innerText = '';
+                input.classList.remove('error');
+                input.setAttribute('aria-invalid', 'false');
+            }
             
             // Mobile navigation
             const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -3450,7 +2645,6 @@
                 });
             });
             
-            // Close mobile menu when clicking outside
             document.addEventListener('click', function(event) {
                 if (mobileMenu.classList.contains('active') && !mobileMenu.contains(event.target) && event.target !== mobileMenuBtn) {
                     mobileMenu.classList.remove('active');
@@ -3458,107 +2652,119 @@
                 }
             });
             
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                    mobileMenuBtn.focus();
+                }
+            });
+            
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') !== '#') {
-                        e.preventDefault();
-                        
-                        const targetId = this.getAttribute('href').substring(1);
-                        if (targetId === '') return;
-                        
-                        const targetElement = document.getElementById(targetId);
-                        
-                        if (targetElement) {
-                            // Close mobile menu if open
-                            if (mobileMenu.classList.contains('active')) {
-                                mobileMenu.classList.remove('active');
-                                document.body.style.overflow = '';
-                            }
-                            
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href').substring(1);
+                    if (targetId === '') return;
+                    
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
             
-            // Lazy loading images with IntersectionObserver
+            // Lazy loading images
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            
             if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
                         if (entry.isIntersecting) {
                             const img = entry.target;
-                            img.classList.add('loaded');
+                            if (!img.classList.contains('loaded')) {
+                                img.classList.add('loaded');
+                            }
                             imageObserver.unobserve(img);
                         }
                     });
-                }, {
-                    rootMargin: '50px 0px',
-                    threshold: 0.01
                 });
                 
-                document.querySelectorAll('.lazy-image').forEach(img => {
+                lazyImages.forEach(function(img) {
                     imageObserver.observe(img);
                 });
             } else {
-                // Fallback for browsers without IntersectionObserver
-                document.querySelectorAll('.lazy-image').forEach(img => {
+                lazyImages.forEach(function(img) {
                     img.classList.add('loaded');
                 });
             }
             
-            // Animate elements on scroll with IntersectionObserver
+            // Animation on scroll
+            const observeElements = document.querySelectorAll('.feature-card, .stat, .screenshot-card, .testimonial-card, .blog-card');
+            
             if ('IntersectionObserver' in window) {
-                const animationObserver = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
+                const animationObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('animate');
                             animationObserver.unobserve(entry.target);
                         }
                     });
-                }, {
-                    rootMargin: '0px',
-                    threshold: 0.1
-                });
+                }, { threshold: 0.2 });
                 
-                document.querySelectorAll('.feature-card, .screenshot-card, .blog-card').forEach(element => {
+                observeElements.forEach(function(element) {
                     animationObserver.observe(element);
                 });
             } else {
-                // Fallback for browsers without IntersectionObserver
-                document.querySelectorAll('.feature-card, .screenshot-card, .blog-card').forEach(element => {
+                observeElements.forEach(function(element) {
                     element.classList.add('animate');
                 });
             }
             
-            // Add hero section animations
+            function animateOnLoad() {
+                observeElements.forEach(function(element) {
+                    const position = element.getBoundingClientRect();
+                    
+                    if (position.top < window.innerHeight && position.bottom >= 0) {
+                        element.classList.add('animate');
+                    }
+                });
+            }
+            
+            window.addEventListener('load', animateOnLoad);
+            
+            // Hero section animations
             const heroTitle = document.querySelector('.hero-title');
             const heroSubtitle = document.querySelector('.hero-subtitle');
             const appStoreBadge = document.querySelector('.app-store-badge');
             const stats = document.querySelectorAll('.stat');
             
-            setTimeout(() => {
-                heroTitle.classList.add('animate-in');
-            }, 300);
-            
-            setTimeout(() => {
-                heroSubtitle.classList.add('animate-in');
-            }, 600);
-            
-            setTimeout(() => {
-                appStoreBadge.classList.add('animate-in');
-            }, 900);
-            
-            // Animate stats one by one
-            stats.forEach((stat, index) => {
-                setTimeout(() => {
-                    stat.classList.add('animate-in');
-                }, 1200 + (index * 200));
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    heroTitle.classList.add('animate-in');
+                }, 300);
+                
+                setTimeout(function() {
+                    heroSubtitle.classList.add('animate-in');
+                }, 600);
+                
+                setTimeout(function() {
+                    appStoreBadge.classList.add('animate-in');
+                }, 900);
+                
+                stats.forEach((stat, index) => {
+                    setTimeout(function() {
+                        stat.classList.add('animate-in');
+                    }, 1200 + (index * 200));
+                });
             });
         });
     </script>
 </body>
 </html>
+
