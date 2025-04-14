@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LeafyLens Blog - Expert plant care tips, guides, and inspiration for plant lovers">
+    <title>LeafyLens Blog - Plant Care Tips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8FFF6;
+            --primary-color: #2A5F45;
+            --secondary-color: #95D5B2;
+            --accent-color: #D8B365;
+            --text-color: #333333;
+            --text-secondary: #4A4A4A;
+            --light-green: #E0F5E9;
+            --bright-green: #52B788;
+            --gold-gradient: linear-gradient(135deg, #D8B365, #E8C585);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z" fill="none" stroke="%2395D5B2" stroke-width="0.5" opacity="0.3"/><path d="M20,20 C20,10 30,0 40,0 C50,0 60,10 60,20 C60,30 50,40 40,40 C30,40 20,30 20,20 Z" fill="none" stroke="%2395D5B2" stroke-width="0.3" opacity="0.2"/><path d="M70,80 C70,70 80,60 90,60 C100,60 110,70 110,80 C110,90 100,100 90,100 C80,100 70,90 70,80 Z" fill="none" stroke="%2395D5B2" stroke-width="0.3" opacity="0.2"/></svg>');
+            background-attachment: fixed;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+        }
+        
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #F6D68D 100%);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(216, 179, 101, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(216, 179, 101, 0.5);
+        }
+
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #F6D68D 0%, var(--accent-color) 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-button:hover:before {
+            opacity: 1;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(45, 106, 79, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(45, 106, 79, 0);
+            }
+        }
+        
+        .section {
+            padding: 7rem 0;
+            position: relative;
+        }
+        
+        .section-title-container {
+            text-align: center;
+            position: relative;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><path d="M0,5 Q25,0 50,5 Q75,10 100,5" stroke="%2352B788" stroke-width="2" fill="none"/></svg>') 1;
+            border-bottom: 2px solid;
+        }
+        
+        .section-icon {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-color: var(--light-green);
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(149, 213, 178, 0.3);
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+        
+        .section-subtitle {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .blog-section {
+            padding: 7rem 0;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+        
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .blog-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+        }
+        
+        .blog-date {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .blog-date i {
+            margin-right: 0.5rem;
+        }
+        
+        .blog-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .blog-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .blog-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .blog-link:hover i {
+            transform: translateX(5px);
+        }
+        
+        .back-home {
+            display: inline-block;
+            margin: 2rem 0;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="white" fill-opacity="0.05"/></svg>');
+            background-size: 30px 30px;
+            z-index: 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo i {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .footer-description {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-title::before {
+            content: "\f4d8";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 8px;
+            color: var(--accent-color);
+        }
+        
+        .footer-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-link {
+            margin-bottom: 1.2rem;
+        }
+        
+        .footer-link a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .footer-link a i {
+            margin-right: 8px;
+        }
+        
+        .footer-link a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+            color: var(--primary-color);
+            animation: bounce 0.3s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            z-index: 1001;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-menu-logo i {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .mobile-nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mobile-nav-link i {
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .mobile-nav-link:hover {
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        .lazy-image {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lazy-image.loaded {
+            opacity: 1;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s ease;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        @media (max-width: 1200px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .blog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 94%;
+                padding: 0 10px;
+            }
+            
+            .section {
+                padding: 5rem 0;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .blog-title {
+                font-size: 1.2rem;
+            }
+            
+            .blog-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo" aria-label="LeafyLens Home">
+                <i class="fas fa-leaf" aria-hidden="true"></i> LeafyLens
+            </a>
+            <div class="nav-links">
+                <a href="index.html#features" class="nav-link">Features</a>
+                <a href="index.html#gallery" class="nav-link">User Gallery</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="index.html#faq" class="nav-link">FAQ</a>
+                <a href="index.html#download" class="cta-button pulse">Download</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Open menu">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+    
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">
+                <i class="fas fa-leaf" aria-hidden="true"></i> LeafyLens
+            </div>
+            <button class="mobile-menu-close" aria-label="Close menu">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html#features" class="mobile-nav-link"><i class="fas fa-seedling" aria-hidden="true"></i> Features</a>
+            <a href="index.html#gallery" class="mobile-nav-link"><i class="fas fa-images" aria-hidden="true"></i> User Gallery</a>
+            <a href="blog.html" class="mobile-nav-link"><i class="fas fa-book-open" aria-hidden="true"></i> Blog</a>
+            <a href="index.html#faq" class="mobile-nav-link"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a>
+            <a href="index.html#download" class="mobile-nav-link"><i class="fas fa-download" aria-hidden="true"></i> Download</a>
+        </div>
+    </div>
+    
+    <main id="main-content">
+        <section class="blog-section">
+            <div class="container">
+                <div class="section-title-container">
+                    <div class="section-icon">
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
+                    </div>
+                    <h2 class="section-title text-shadow">Plant Care & Tips</h2>
+                    <p class="section-subtitle">Grow your knowledge with our latest plant care articles</p>
+                </div>
+                
+                <a href="index.html" class="cta-button back-home">Back to Home</a>
+                
+                <div class="blog-grid">
+                    <!-- Blog Post 1 -->
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Monstera plant" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date"><i class="far fa-calendar-alt"></i> April 19, 2025</div>
+                            <h3 class="blog-title">Top 10 Low-Maintenance Houseplants for Beginners</h3>
+                            <p class="blog-excerpt">New to plant parenting? Discover the easiest houseplants that thrive with minimal care, perfect for any home.</p>
+                            <p>Starting your plant journey can feel overwhelming, but choosing the right houseplants makes all the difference. Low-maintenance plants are forgiving, requiring little water, light, or fuss. Here are our top 10 picks to green up your space without the stress.</p>
+                            <p>First up, the <strong>Snake Plant</strong> is a champion of neglect. With its upright, sword-like leaves, it thrives in low light and needs watering only every few weeks. It’s also a great air purifier. Next, the <strong>Pothos</strong> offers trailing vines that add charm to shelves. It grows in almost any light and forgives forgotten waterings. The <strong>ZZ Plant</strong> is another gem, with glossy leaves that shine even in dim corners, needing water only once a month.</p>
+                            <p>For a pop of texture, try the <strong>Spider Plant</strong>. It produces baby plantlets and loves bright, indirect light but won’t sulk if conditions aren’t perfect. Finally, the <strong>Peace Lily</strong> adds elegance with white blooms and signals when it’s thirsty by drooping slightly. These plants are your ticket to a thriving indoor jungle, no green thumb required!</p>
+                            <a href="index.html" class="blog-link">Back to Home <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 2 -->
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Fiddle leaf fig" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date"><i class="far fa-calendar-alt"></i> April 18, 2025</div>
+                            <h3 class="blog-title">How to Propagate Your Plants Like a Pro</h3>
+                            <p class="blog-excerpt">Multiply your plant collection for free with these simple propagation techniques anyone can master.</p>
+                            <p>Propagation is like magic—you take one plant and turn it into many! Whether you’re sharing with friends or expanding your collection, it’s a rewarding skill. Let’s dive into the easiest methods to propagate your houseplants.</p>
+                            <p><strong>Stem cuttings</strong> are perfect for plants like pothos and philodendrons. Snip a healthy stem with a few leaves, place it in water, and watch roots grow in 2–4 weeks. Once roots are an inch long, pot them in soil. <strong>Leaf cuttings</strong> work wonders for succulents and snake plants. Lay a leaf on soil, keep it lightly moist, and tiny plantlets will sprout.</p>
+                            <p><strong>Division</strong> is great for clumping plants like peace lilies. Gently separate the root ball into smaller sections and replant. Always use clean tools to avoid disease, and give new plants bright, indirect light to settle in. With patience, you’ll have a thriving plant family!</p>
+                            <a href="index.html" class="blog-link">Back to Home <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 3 -->
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Snake plant arrangement" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date"><i class="far fa-calendar-alt"></i> April 17, 2025</div>
+                            <h3 class="blog-title">Natural Pest Control for Indoor Plants</h3>
+                            <p class="blog-excerpt">Keep your plants pest-free with eco-friendly solutions that are safe for your home and greenery.</p>
+                            <p>Pests like spider mites and aphids can sneak into your indoor jungle, but you don’t need harsh chemicals to fight them. Natural remedies are effective and safe. Here’s how to protect your plants.</p>
+                            <p><strong>Neem oil</strong> is a plant parent’s best friend. Mix a teaspoon with water and a drop of dish soap, then spray leaves weekly to deter pests. For <strong>mealybugs</strong>, dab them with a cotton swab soaked in rubbing alcohol—it works instantly. <strong>Sticky traps</strong> catch flying pests like fungus gnats; place them near soil to reduce populations.</p>
+                            <p>Prevention is key. Inspect new plants before bringing them home, avoid overwatering, and ensure good airflow. If pests persist, rinse leaves under water to dislodge them. Your plants will thank you with vibrant growth!</p>
+                            <a href="index.html" class="blog-link">Back to Home <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 4 -->
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Calathea plant" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date"><i class="far fa-calendar-alt"></i> April 16, 2025</div>
+                            <h3 class="blog-title">Optimizing Light for Your Indoor Jungle</h3>
+                            <p class="blog-excerpt">Learn how to give your plants the perfect light they need to thrive all year round.</p>
+                            <p>Light is the lifeblood of plants, but indoor spaces can be tricky. Understanding your plants’ needs ensures they flourish. Let’s explore how to optimize light for your green friends.</p>
+                            <p><strong>Bright, indirect light</strong> suits most houseplants, like monsteras and calatheas. Place them near east-facing windows or a few feet from south-facing ones with sheer curtains. <strong>Low-light plants</strong>, like ZZ plants, do fine in north-facing rooms but still need some natural light. For <strong>sun-lovers</strong> like cacti, a south-facing sill is ideal.</p>
+                            <p>If natural light is scarce, consider grow lights. LED options mimic sunlight without high energy costs. Rotate plants every few weeks for even growth, and watch for signs like leggy stems (too little light) or scorched leaves (too much). With the right setup, your plants will glow!</p>
+                            <a href="index.html" class="blog-link">Back to Home <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 5 -->
+                    <div class="blog-card">
+                        <img src="https://i.imgur.com/dVhWZ3A.jpeg" alt="Plant collection" class="blog-image lazy-image">
+                        <div class="blog-content">
+                            <div class="blog-date"><i class="far fa-calendar-alt"></i> April 15, 2025</div>
+                            <h3 class="blog-title">Seasonal Plant Care: Spring Refresh</h3>
+                            <p class="blog-excerpt">Get your plants ready for spring with these tips to boost growth and vibrancy.</p>
+                            <p>Spring is a time of renewal, and your plants are eager to grow! A few simple steps will help them thrive as days get longer. Here’s your spring plant care checklist.</p>
+                            <p><strong>Repotting</strong> is key for root-bound plants. Choose a pot one size up, use fresh soil, and water well. <strong>Fertilizing</strong> restarts in spring—use a balanced liquid fertilizer every 4–6 weeks for lush leaves. <strong>Pruning</strong> encourages bushy growth; trim leggy stems on plants like pothos or spider plants.</p>
+                            <p>Increase watering as plants wake up, but check soil first to avoid overdoing it. Move light-loving plants closer to windows to catch spring rays. By giving your plants this seasonal TLC, you’ll set them up for a summer of stunning growth!</p>
+                            <a href="index.html" class="blog-link">Back to Home <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <i class="fas fa-leaf" aria-hidden="true"></i> LeafyLens
+                </div>
+                <p class="footer-description">Turning plant dreams into leafy realities since 2023.</p>
+                <a href="index.html#download" class="cta-app-store">
+                    <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" height="60" loading="lazy">
+                </a>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Features</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="index.html#features"><i class="fas fa-leaf" aria-hidden="true"></i> Identify</a></li>
+                    <li class="footer-link"><a href="index.html#features"><i class="fas fa-book" aria-hidden="true"></i> Journal</a></li>
+                    <li class="footer-link"><a href="index.html#features"><i class="fas fa-users" aria-hidden="true"></i> Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Resources</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="blog.html"><i class="fas fa-rss" aria-hidden="true"></i> Blog</a></li>
+                    <li class="footer-link"><a href="index.html#faq"><i class="fas fa-question-circle" aria-hidden="true"></i> FAQ</a></li>
+                    <li class="footer-link"><a href="index.html#contact"><i class="fas fa-headset" aria-hidden="true"></i> Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-title">Connect</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="TikTok">
+                        <i class="fab fa-tiktok" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2025 LeafyLens. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate blog cards on scroll
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            if ('IntersectionObserver' in window) {
+                const animationObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate');
+                            animationObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2, rootMargin: '100px' });
+                
+                blogCards.forEach(function(card) {
+                    animationObserver.observe(card);
+                });
+            } else {
+                blogCards.forEach(function(card) {
+                    card.classList.add('animate');
+                });
+            }
+            
+            // Lazy loading images
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (!img.classList.contains('loaded')) {
+                                img.classList.add('loaded');
+                            }
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '100px' });
+                
+                lazyImages.forEach(function(img) {
+                    imageObserver.observe(img);
+                });
+            } else {
+                lazyImages.forEach(function(img) {
+                    img.classList.add('loaded');
+                });
+            }
+            
+            // Mobile navigation
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                mobileMenuClose.focus();
+            });
+            
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+                mobileMenuBtn.focus();
+            });
+            
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (mobileMenu.classList.contains('active') && !mobileMenu.contains(event.target) && event.target !== mobileMenuBtn) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                    mobileMenuBtn.focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
