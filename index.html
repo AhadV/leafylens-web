@@ -1523,6 +1523,24 @@
             left: 50%;
             transform: translateX(-50%); /* Center horizontally */
         }
+        .notify-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    max-width: 300px;
+}
+
+.notify-form .form-input {
+    flex: 1;
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+.notify-success {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
         
         /* CTA Section */
         .cta-section {
@@ -2691,7 +2709,7 @@
                             <div class="toggle-slider" aria-hidden="true"></div>
                         </div>
                         
-                        <form id="contact-form" novalidate>
+                        <form id="contact-form" action="https://formspree.io/f/mvgkyzgp" method="POST" novalidate>
                             <input type="hidden" name="form-type" value="feedback">
                             
                             <div class="form-row">
@@ -2724,10 +2742,7 @@
                         <div class="form-response success" role="alert" aria-hidden="true">
                             Thank you for your message! We'll get back to you shortly.
                         </div>
-                        
-                        <div class="form-response error" role="alert" aria-hidden="true">
-                            Oops! Something went wrong. Please try again.
-                        </div>
+                    
                         
                         <div class="promise">
                             We respond to <strong>ALL</strong> inquiries within 24 hours!
@@ -2743,7 +2758,11 @@
                 <div class="coming-soon-content">
                     <h2 class="coming-soon-title">Coming Soon: HomeHarvest</h2>
                     <p class="coming-soon-description">Take your garden from soil to table with fresh, homegrown goodness! Our newest feature will guide you through growing your own fruits and vegetables, with personalized care schedules, harvest timing, and delicious recipes.</p>
-                    <a href="#notify" class="cta-button">Get Notified First</a>
+                    <div class="notify-form">
+    <input type="email" id="notify-email" class="form-input" placeholder="Enter your email" required>
+    <button class="cta-button" onclick="submitNotifyEmail()">Submit</button>
+    <span class="notify-success" style="display: none;">Thanks!</span>
+</div>
                 </div>
                 
                 <div class="coming-soon-mockup">
@@ -2801,10 +2820,10 @@
             <div class="footer-column">
                 <h3 class="footer-title">Connect</h3>
                 <div class="social-links">
-                    <a href="#" class="social-link" aria-label="Instagram">
+                    <a href="#" class="https://www.instagram.com/leafylensapp" aria-label="Instagram">
                         <i class="fab fa-instagram" aria-hidden="true"></i>
                     </a>
-                    <a href="#" class="social-link" aria-label="TikTok">
+                    <a href="#" class="https://www.tiktok.com/@leafylensapp" aria-label="TikTok">
                         <i class="fab fa-tiktok" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -2914,81 +2933,97 @@
             const contactForm = document.getElementById('contact-form');
             
             contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                let isValid = true;
-                const submitButton = this.querySelector('.cta-button');
-                
-                // Name validation
-                const nameInput = document.getElementById('name');
-                if (!nameInput.value.trim()) {
-                    showError(nameInput, 'Please enter your name');
-                    isValid = false;
-                } else {
-                    clearError(nameInput);
-                }
-                
-                // Email validation
-                const emailInput = document.getElementById('email');
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailInput.value.trim() || !emailPattern.test(emailInput.value)) {
-                    showError(emailInput, 'Please enter a valid email address');
-                    isValid = false;
-                } else {
-                    clearError(emailInput);
-                }
-                
-                // Message validation - check both message fields
-                const feedbackMessage = document.getElementById('feedback-message');
-                const featureMessage = document.getElementById('feature-message');
-                const activeMessageField = document.querySelector('.form-row[style*="display: block"] textarea') || feedbackMessage;
-                
-                if (!activeMessageField.value.trim()) {
-                    showError(activeMessageField, 'Please enter your message');
-                    isValid = false;
-                } else {
-                    clearError(activeMessageField);
-                }
-                
-                if (isValid) {
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-                    
-                    try {
-                        // Simulate form submission
-                        await new Promise(resolve => setTimeout(resolve, 1500));
-                        
-                        document.querySelector('.form-response.success').style.display = 'block';
-                        document.querySelector('.form-response.success').setAttribute('aria-hidden', 'false');
-                        contactForm.reset();
-                        
-                        // Reset form to feedback tab
-                        document.querySelector('.feedback-field').style.display = 'block';
-                        document.querySelector('.feature-field').style.display = 'none';
-                        document.querySelector('input[name="form-type"]').value = 'feedback';
-                        document.querySelectorAll('.toggle-option').forEach(opt => {
-                            opt.classList.toggle('active', opt.dataset.form === 'feedback');
-                            opt.setAttribute('aria-selected', opt.dataset.form === 'feedback');
-                            opt.setAttribute('tabindex', opt.dataset.form === 'feedback' ? '0' : '-1');
-                        });
-                        document.querySelector('.toggle-slider').classList.remove('right');
-                        
-                        setTimeout(() => {
-                            document.querySelector('.form-response.success').style.display = 'none';
-                            document.querySelector('.form-response.success').setAttribute('aria-hidden', 'true');
-                        }, 5000);
-                    } catch (error) {
-                        document.querySelector('.form-response.error').style.display = 'block';
-                        document.querySelector('.form-response.error').setAttribute('aria-hidden', 'false');
-                        setTimeout(() => {
-                            document.querySelector('.form-response.error').style.display = 'none';
-                            document.querySelector('.form-response.error').setAttribute('aria-hidden', 'true');
-                        }, 5000);
-                    } finally {
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                    }
-                }
+    e.preventDefault();
+    let isValid = true;
+    const submitButton = this.querySelector('.cta-button');
+    
+    // Name validation
+    const nameInput = document.getElementById('name');
+    if (!nameInput.value.trim()) {
+        showError(nameInput, 'Please enter your name');
+        isValid = false;
+    } else {
+        clearError(nameInput);
+    }
+    
+    // Email validation
+    const emailInput = document.getElementById('email');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput.value.trim() || !emailPattern.test(emailInput.value)) {
+        showError(emailInput, 'Please enter a valid email address');
+        isValid = false;
+    } else {
+        clearError(emailInput);
+    }
+    
+    // Message validation
+    const feedbackMessage = document.getElementById('feedback-message');
+    const featureMessage = document.getElementById('feature-message');
+    const activeMessageField = document.querySelector('.form-row[style*="display: block"] textarea') || feedbackMessage;
+    
+    if (!activeMessageField.value.trim()) {
+        showError(activeMessageField, 'Please enter your message');
+        isValid = false;
+    } else {
+        clearError(activeMessageField);
+    }
+    
+    if (isValid) {
+        submitButton.classList.add('loading');
+        submitButton.disabled = true;
+        
+        try {
+            const formData = new FormData(contactForm);
+            const response = await fetch('https://formspree.io/f/mvgkyzgp', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                },
+                redirect: 'follow' // Handle redirects
             });
+            
+            console.log('Formspree response status:', response.status); // Debug log
+            
+            // Accept 200, 201, or 202 as success
+            if ([200, 201, 202].includes(response.status)) {
+                document.querySelector('.form-response.success').style.display = 'block';
+                document.querySelector('.form-response.success').setAttribute('aria-hidden', 'false');
+                contactForm.reset();
+                
+                // Reset form to feedback tab
+                document.querySelector('.feedback-field').style.display = 'block';
+                document.querySelector('.feature-field').style.display = 'none';
+                document.querySelector('input[name="form-type"]').value = 'feedback';
+                document.querySelectorAll('.toggle-option').forEach(opt => {
+                    opt.classList.toggle('active', opt.dataset.form === 'feedback');
+                    opt.setAttribute('aria-selected', opt.dataset.form === 'feedback');
+                    opt.setAttribute('tabindex', opt.dataset.form === 'feedback' ? '0' : '-1');
+                });
+                document.querySelector('.toggle-slider').classList.remove('right');
+                
+                setTimeout(() => {
+                    document.querySelector('.form-response.success').style.display = 'none';
+                    document.querySelector('.form-response.success').setAttribute('aria-hidden', 'true');
+                }, 5000);
+            } else {
+                console.log('Response details:', await response.text()); // Log error details
+                throw new Error('Form submission failed with status: ' + response.status);
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            document.querySelector('.form-response.error').style.display = 'block';
+            document.querySelector('.form-response.error').setAttribute('aria-hidden', 'false');
+            setTimeout(() => {
+                document.querySelector('.form-response.error').style.display = 'none';
+                document.querySelector('.form-response.error').setAttribute('aria-hidden', 'true');
+            }, 5000);
+        } finally {
+            submitButton.classList.remove('loading');
+            submitButton.disabled = false;
+        }
+    }
+});
             
             function showError(input, message) {
                 const formRow = input.parentElement;
@@ -3092,6 +3127,19 @@
                 });
             }
         });
+
+ function submitNotifyEmail() {
+    const emailInput = document.getElementById('notify-email');
+    const successMsg = document.querySelector('.notify-success');
+    if (emailInput.value.includes('@')) {
+        successMsg.style.display = 'inline';
+        emailInput.value = '';
+        setTimeout(() => { successMsg.style.display = 'none'; }, 2000);
+    } else {
+        emailInput.placeholder = 'Please enter a valid email';
+    }
+}
     </script>
 </body>
 </html>
+
