@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -70,14 +70,14 @@
         .plant-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Ensure plant images fill circular containers */
         }
         
         .plant-1 {
             width: 180px;
             height: 180px;
             top: 15%;
-            left: -50px;
+            left: 0; /* Adjusted to ensure visibility in viewport */
             animation: floatPlant 8s ease-in-out infinite;
         }
         
@@ -85,7 +85,7 @@
             width: 200px;
             height: 200px;
             bottom: 10%;
-            right: -60px;
+            right: 0; /* Adjusted to ensure visibility */
             animation: floatPlant 10s ease-in-out infinite 1s;
         }
         
@@ -467,19 +467,21 @@
         
         .device-screen {
             position: absolute;
-            top: 6%;
-            left: 11.5%;
-            width: 77%;
-            height: 88%;
+            top: 6.5%; /* Adjusted for perfect fit */
+            left: 12%;
+            width: 76%;
+            height: 87%;
             border-radius: 30px;
-            overflow: visible;
+            overflow: hidden;
         }
         
         .device-screen img {
-            width: auto;
+            width: 100%;
             height: 100%;
-            object-fit: contain;
-            max-width: none;
+            object-fit: contain; /* Preserve aspect ratio, no cropping */
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
         }
         
         .app-store-badge {
@@ -694,11 +696,9 @@
         }
         
         .feature-image {
-            width: auto;
-            max-width: 100%;
+            width: 100%;
             height: 220px;
-            object-fit: contain;
-            object-position: center;
+            object-fit: cover; /* Ensure feature images fill containers */
             transition: transform 0.5s ease;
         }
         
@@ -708,8 +708,7 @@
         
         .feature-item:first-child .feature-image {
             height: 100%;
-            width: auto;
-            max-width: none;
+            width: 100%;
         }
         
         .feature-content {
@@ -826,12 +825,12 @@
         
         .screenshot-device-screen {
             position: absolute;
-            top: 6%;
-            left: 11.5%;
-            width: 77%;
-            height: 88%;
+            top: 6.5%; /* Adjusted for perfect fit */
+            left: 12%;
+            width: 76%;
+            height: 87%;
             z-index: 1;
-            overflow: visible;
+            overflow: hidden;
             border-radius: 30px;
             display: flex;
             justify-content: center;
@@ -839,10 +838,12 @@
         }
         
         .screenshot-device-screen img {
-            width: auto;
+            width: 100%;
             height: 100%;
-            object-fit: contain;
-            max-width: none;
+            object-fit: contain; /* Preserve screenshot aspect ratio */
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
         }
         
         .screenshot-title {
@@ -902,7 +903,7 @@
         .gallery-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Ensure gallery images fill containers */
             transition: transform 0.5s ease;
         }
         
@@ -912,7 +913,7 @@
         
         .gallery-item:nth-child(4n+1) {
             grid-column: span 2;
-grid-row: span 2;
+            grid-row: span 2;
             height: auto;
         }
         
@@ -1121,6 +1122,7 @@ grid-row: span 2;
             width: 100%;
             height: auto;
             border-radius: 10px;
+            object-fit: cover; /* Ensure FAQ images display correctly */
         }
         
         /* Blog Section */
@@ -1160,7 +1162,7 @@ grid-row: span 2;
         .blog-image {
             width: 100%;
             height: 200px;
-            object-fit: cover;
+            object-fit: cover; /* Ensure blog images fill containers */
             transition: transform 0.5s ease;
         }
         
@@ -1257,6 +1259,7 @@ grid-row: span 2;
             display: block;
             transform: scale(1);
             transition: transform 0.5s ease;
+            object-fit: cover; /* Ensure contact image displays correctly */
         }
         
         .contact-image:hover img {
@@ -1497,12 +1500,12 @@ grid-row: span 2;
         
         .coming-soon-screen {
             position: absolute;
-            top: 6%;
-            left: 11.5%;
-            width: 77%;
-            height: 88%;
+            top: 6.5%;
+            left: 12%;
+            width: 76%;
+            height: 87%;
             z-index: 1;
-            overflow: visible;
+            overflow: hidden;
             border-radius: 30px;
             transform: rotate(5deg);
             transition: transform 0.5s ease;
@@ -1513,10 +1516,12 @@ grid-row: span 2;
         }
         
         .coming-soon-screen img {
-            width: auto;
+            width: 100%;
             height: 100%;
-            object-fit: contain;
-            max-width: none;
+            object-fit: contain; /* Preserve aspect ratio for coming-soon screenshot */
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
         }
         
         /* CTA Section */
@@ -1948,7 +1953,7 @@ grid-row: span 2;
             }
             
             /* Improve touch targets */
-.nav-link, .footer-link a, .blog-link, .cta-button {
+            .nav-link, .footer-link a, .blog-link, .cta-button {
                 padding: 12px 0;
             }
             
@@ -2054,16 +2059,16 @@ grid-row: span 2;
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
     <div class="plant-img plant-1" aria-hidden="true">
-        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Decorative Plant" loading="lazy">
+        <img src="https://i.imgur.com/CYggmCG.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
     </div>
     <div class="plant-img plant-2" aria-hidden="true">
-        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Decorative Plant" loading="lazy">
+        <img src="https://i.imgur.com/kW8rtDO.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
     </div>
     <div class="plant-img plant-3" aria-hidden="true">
-        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Decorative Plant" loading="lazy">
+        <img src="https://i.imgur.com/AsmozA4.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
     </div>
     <div class="plant-img plant-4" aria-hidden="true">
-        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Decorative Plant" loading="lazy">
+        <img src="https://i.imgur.com/IVGxM1Y.jpeg" alt="Decorative Plant" loading="lazy" class="lazy-image">
     </div>
     
     <div class="leaf-accent leaf-1" aria-hidden="true"></div>
@@ -2153,13 +2158,13 @@ grid-row: span 2;
                                 <div class="device-frame">
                                     <div class="device-img"></div>
                                     <div class="device-screen">
-                                        <img src="https://i.imgur.com/2knj83a.png" alt="LeafyLens Plant Identification" loading="lazy">
+                                        <img src="https://i.imgur.com/2knj83a.png" alt="LeafyLens Plant Identification" loading="lazy" class="lazy-image">
                                     </div>
                                 </div>
                                 <div class="device-frame">
                                     <div class="device-img"></div>
                                     <div class="device-screen">
-                                        <img src="https://i.imgur.com/iMCTbDG.png" alt="LeafyLens Plant Identification in Use" loading="lazy">
+                                        <img src="https://i.imgur.com/iMCTbDG.png" alt="LeafyLens Plant Identification in Use" loading="lazy" class="lazy-image">
                                     </div>
                                 </div>
                             </div>
@@ -2571,7 +2576,7 @@ grid-row: span 2;
                         <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
                             <span class="question-text">How accurate is the plant identification?</span>
                             <span class="question-icon"><i class="fas fa-chevron-down" aria-hidden="true"></i></span>
-</button>
+                        </button>
                         <div class="faq-answer" id="faq-answer-1">
                             <div class="answer-content">
                                 <p>LeafyLens identifies plants with over 95% accuracy for our database of 380,000+ plant species. Our AI has been trained on millions of plant images in various conditions to ensure reliable results even with partial plant photos or unusual lighting conditions.</p>
@@ -2745,7 +2750,7 @@ grid-row: span 2;
                     <div class="coming-soon-device">
                         <div class="coming-soon-frame"></div>
                         <div class="coming-soon-screen">
-                            <img src="https://i.imgur.com/h1wlHtP.png" alt="HomeHarvest Feature Preview" class="lazy-image" style="width: auto; height: 100%; object-fit: contain; max-width: none;">
+                            <img src="https://i.imgur.com/h1wlHtP.png" alt="HomeHarvest Feature Preview" class="lazy-image">
                         </div>
                     </div>
                 </div>
@@ -2949,7 +2954,7 @@ grid-row: span 2;
                     submitButton.disabled = true;
                     
                     try {
-                        // Simulate form submission - in a real application this would be an actual API call
+                        // Simulate form submission
                         await new Promise(resolve => setTimeout(resolve, 1500));
                         
                         document.querySelector('.form-response.success').style.display = 'block';
@@ -3059,7 +3064,7 @@ grid-row: span 2;
                 });
             });
             
-            // Lazy loading images
+            // Lazy loading images with rootMargin to detect off-screen elements
             const lazyImages = document.querySelectorAll('.lazy-image');
             
             if ('IntersectionObserver' in window) {
@@ -3073,6 +3078,9 @@ grid-row: span 2;
                             imageObserver.unobserve(img);
                         }
                     });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '100px' // Detect images slightly off-screen
                 });
                 
                 lazyImages.forEach(function(img) {
@@ -3083,20 +3091,7 @@ grid-row: span 2;
                     img.classList.add('loaded');
                 });
             }
-            
-            // Proper image optimization
-            const imagesToOptimize = document.querySelectorAll('img:not([srcset])');
-            imagesToOptimize.forEach(img => {
-                // Only apply to regular images (not App Store badges, etc.)
-                if (!img.classList.contains('app-store-badge') && !img.src.includes('svg')) {
-                    const originalSrc = img.getAttribute('src');
-                    img.setAttribute('srcset', `${originalSrc} 1x, ${originalSrc.replace('.jpeg', '@2x.jpeg').replace('.png', '@2x.png')} 2x`);
-                    img.setAttribute('loading', 'lazy');
-                }
-            });
         });
     </script>
 </body>
 </html>
-
-
