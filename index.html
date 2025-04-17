@@ -2823,7 +2823,11 @@
                 <div class="footer-logo">
                     <i class="fas fa-leaf" aria-hidden="true"></i> LeafyLens
                 </div>
-                <p class="footer-description">Turning plant dreams into leafy realities since 2023.</p>
+                <p class="footer-description">
+  Made with <span style="color:#e25555;">♥</span> 
+  <a href="https://roostergoose.co" style="color: #fff; text-decoration: underline;" target="_blank" rel="noopener noreferrer">RoosterGoose</a>
+</p>
+
                 <a href="#download" class="cta-app-store">
                     <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" height="60" loading="lazy">
                 </a>
@@ -3068,44 +3072,54 @@
                 input.setAttribute('aria-invalid', 'false');
             }
             
-            // Mobile navigation
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileMenuClose = document.querySelector('.mobile-menu-close');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileMenu.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                mobileMenuClose.focus();
+// Mobile navigation
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            mobileMenuClose.focus();
+        });
+
+        mobileMenuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+            mobileMenuBtn.focus();
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
             });
-            
-            mobileMenuClose.addEventListener('click', function() {
+        });
+
+        document.addEventListener('click', (event) => {
+            if (
+                mobileMenu.classList.contains('active') &&
+                !mobileMenu.contains(event.target) &&
+                event.target !== mobileMenuBtn
+            ) {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = '';
                 mobileMenuBtn.focus();
-            });
-            
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            });
-            
-            document.addEventListener('click', function(event) {
-                if (mobileMenu.classList.contains('active') && !mobileMenu.contains(event.target) && event.target !== mobileMenuBtn) {
-                    mobileMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-                    mobileMenu.classList.remove('active');
-                    document.body.style.overflow = '';
-                    mobileMenuBtn.focus();
-                }
-            });
+            }
+        });
+    }
+});
+
             
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3169,6 +3183,7 @@
     </script>
 </body>
 </html>
+
 
 
 
